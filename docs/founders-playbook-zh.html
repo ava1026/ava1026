@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>创始人手册 · 中文精读 + 执行手册</title>
+<style>
+  /* ---------- Design tokens ---------- */
+  :root {
+    --bg: #faf7f2;
+    --bg-card: #ffffff;
+    --bg-soft: #f3eee5;
+    --ink: #2a2a2a;
+    --ink-soft: #5a5a5a;
+    --ink-mute: #8a8a8a;
+    --rule: #e6dfd2;
+    --rule-soft: #efe9dd;
+    --accent: #b45325;
+    --accent-soft: #f3dccc;
+
+    --c-idea: #2c6cb0;     --c-idea-soft: #e1edf9;
+    --c-mvp: #2f8a55;      --c-mvp-soft: #dff0e6;
+    --c-launch: #c08016;   --c-launch-soft: #f7ead0;
+    --c-scale: #7c4ab8;    --c-scale-soft: #ece1f7;
+
+    --radius: 10px;
+    --radius-lg: 14px;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(40,30,15,.05);
+    --maxw: 760px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15161a;
+      --bg-card: #1d1f24;
+      --bg-soft: #23252b;
+      --ink: #e8e6e1;
+      --ink-soft: #b9b6ae;
+      --ink-mute: #8a8780;
+      --rule: #2d2f36;
+      --rule-soft: #25272d;
+      --accent: #e08552;
+      --accent-soft: #3a2418;
+
+      --c-idea: #6ea8e0;     --c-idea-soft: #1d2a3c;
+      --c-mvp: #66c08c;      --c-mvp-soft: #1c2d24;
+      --c-launch: #e3b059;   --c-launch-soft: #322714;
+      --c-scale: #b48be0;    --c-scale-soft: #2a1f3c;
+    }
+  }
+
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                 "Source Han Sans CN", "Noto Sans CJK SC", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.78;
+    letter-spacing: .01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { line-height: 1.35; letter-spacing: -0.005em; font-weight: 650; }
+  h1 { font-size: 2rem; margin: 0 0 .4em; }
+  h2 { font-size: 1.5rem; margin: 2.6em 0 .8em; padding-top: .2em; }
+  h3 { font-size: 1.2rem; margin: 2em 0 .6em; color: var(--ink); }
+  h4 { font-size: 1.02rem; margin: 1.6em 0 .4em; color: var(--ink-soft); font-weight: 600; }
+
+  p { margin: 0 0 1em; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s; }
+  a:hover { border-bottom-color: var(--accent); }
+  code { font-family: ui-monospace, SFMono-Regular, "Menlo", "Cascadia Code", monospace;
+         font-size: .9em; background: var(--bg-soft); padding: .12em .42em; border-radius: 4px; }
+  blockquote {
+    margin: 1.4em 0; padding: .8em 1.2em;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft); color: var(--ink-soft);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: .96em;
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 1em; }
+  li { margin-bottom: .45em; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 3em 0; }
+
+  /* ---------- Layout ---------- */
+  .page { display: grid; grid-template-columns: 240px 1fr; gap: 48px; max-width: 1240px; margin: 0 auto; padding: 32px 32px 80px; }
+  @media (max-width: 980px) { .page { grid-template-columns: 1fr; padding: 24px; gap: 24px; } }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar { position: sticky; top: 24px; height: max-content; align-self: start; }
+  .sidebar h3 { font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-mute); margin: 0 0 12px; font-weight: 700; }
+  .toc { list-style: none; padding: 0; margin: 0; font-size: .92rem; }
+  .toc li { margin: 0; }
+  .toc a { display: block; padding: 6px 10px; border-left: 2px solid var(--rule); color: var(--ink-soft); border-bottom: 0; transition: all .15s; border-radius: 0 6px 6px 0; }
+  .toc a:hover { color: var(--ink); background: var(--bg-soft); border-left-color: var(--accent); }
+  .toc .toc-sub a { padding-left: 22px; font-size: .86rem; color: var(--ink-mute); }
+  .toc .active > a { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  @media (max-width: 980px) { .sidebar { position: static; border-bottom: 1px solid var(--rule); padding-bottom: 12px; }
+    .toc { display: flex; flex-wrap: wrap; gap: 4px; }
+    .toc li { flex: 0 0 auto; }
+    .toc a { border-left: 0; border: 1px solid var(--rule); border-radius: 6px; padding: 4px 10px; }
+    .toc-sub { display: none; }
+  }
+
+  /* ---------- Main ---------- */
+  .main { max-width: var(--maxw); width: 100%; }
+  .main > section { scroll-margin-top: 20px; }
+
+  /* ---------- Header ---------- */
+  .hero {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .hero .eyebrow { font-size: .78rem; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .hero h1 { margin: 0 0 8px; font-size: 1.8rem; }
+  .hero .subtitle { color: var(--ink-soft); margin: 0 0 12px; font-size: 1rem; line-height: 1.6; }
+  .hero .meta { display: flex; gap: 16px; font-size: .85rem; color: var(--ink-mute); flex-wrap: wrap; margin-top: 8px; }
+  .hero .meta span::before { content: "·"; margin-right: 8px; color: var(--rule); }
+  .hero .meta span:first-child::before { content: ""; margin: 0; }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 16px 0;
+    box-shadow: var(--shadow);
+  }
+  .card.tight { padding: 14px 18px; }
+
+  /* ---------- Tables ---------- */
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius); border: 1px solid var(--rule); background: var(--bg-card); }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule-soft); }
+  th { background: var(--bg-soft); font-weight: 600; color: var(--ink); font-size: .85rem; letter-spacing: .02em; }
+  tr:last-child td { border-bottom: 0; }
+  tr:hover td { background: var(--rule-soft); }
+  td.num { color: var(--ink-mute); font-variant-numeric: tabular-nums; width: 36px; }
+  td .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .76rem; font-weight: 600; letter-spacing: .03em; }
+
+  .tag-idea { background: var(--c-idea-soft); color: var(--c-idea); }
+  .tag-mvp { background: var(--c-mvp-soft); color: var(--c-mvp); }
+  .tag-launch { background: var(--c-launch-soft); color: var(--c-launch); }
+  .tag-scale { background: var(--c-scale-soft); color: var(--c-scale); }
+  .tag-chat { background: #e6e0d5; color: #6b5236; }
+  .tag-cowork { background: #d9e8df; color: #3b6b4d; }
+  .tag-code { background: #dde2ee; color: #3b4b6b; }
+  @media (prefers-color-scheme: dark) {
+    .tag-chat { background: #3a2d18; color: #d6b893; }
+    .tag-cowork { background: #1f3328; color: #92c3a4; }
+    .tag-code { background: #1d2536; color: #94a8d2; }
+  }
+
+  /* ---------- Stage cards ---------- */
+  .stage-grid { display: grid; gap: 16px; margin: 16px 0; }
+  .stage-tabs {
+    display: flex; gap: 4px; border-bottom: 1px solid var(--rule);
+    margin-bottom: 0; padding: 0 0 0; flex-wrap: wrap;
+  }
+  .stage-tab {
+    border: 0; background: transparent; cursor: pointer;
+    padding: 10px 18px; font-size: .95rem; font-weight: 600; color: var(--ink-mute);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all .15s; font-family: inherit;
+  }
+  .stage-tab:hover { color: var(--ink); }
+  .stage-tab.active { color: var(--ink); border-bottom-color: var(--c); }
+  .stage-tab[data-stage="idea"] { --c: var(--c-idea); }
+  .stage-tab[data-stage="mvp"] { --c: var(--c-mvp); }
+  .stage-tab[data-stage="launch"] { --c: var(--c-launch); }
+  .stage-tab[data-stage="scale"] { --c: var(--c-scale); }
+
+  .stage-panel { display: none; padding-top: 8px; }
+  .stage-panel.active { display: block; }
+
+  .stage-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .stage-header .stage-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .85rem; color: white; flex-shrink: 0;
+  }
+  .stage-panel[data-stage="idea"] .stage-num { background: var(--c-idea); }
+  .stage-panel[data-stage="mvp"] .stage-num { background: var(--c-mvp); }
+  .stage-panel[data-stage="launch"] .stage-num { background: var(--c-launch); }
+  .stage-panel[data-stage="scale"] .stage-num { background: var(--c-scale); }
+  .stage-panel h3 { margin: 0; }
+
+  .block-row { display: grid; grid-template-columns: 130px 1fr; gap: 16px; margin: 12px 0; align-items: start; }
+  .block-row .label { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-mute); padding-top: 4px; font-weight: 600; }
+  @media (max-width: 600px) { .block-row { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* ---------- Checklists ---------- */
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 6px 0; line-height: 1.6;
+    border-bottom: 1px dashed var(--rule-soft);
+  }
+  .checklist li:last-child { border-bottom: 0; }
+  .checklist input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px; border: 1.5px solid var(--ink-mute);
+    border-radius: 4px; flex-shrink: 0; margin-top: 4px; cursor: pointer;
+    transition: all .15s; position: relative; background: var(--bg-card);
+  }
+  .checklist input[type="checkbox"]:hover { border-color: var(--accent); }
+  .checklist input[type="checkbox"]:checked {
+    background: var(--accent); border-color: var(--accent);
+  }
+  .checklist input[type="checkbox"]:checked::after {
+    content: ""; position: absolute; left: 4px; top: 0px;
+    width: 6px; height: 11px; border: solid white;
+    border-width: 0 2px 2px 0; transform: rotate(45deg);
+  }
+  .checklist input[type="checkbox"]:checked + label { color: var(--ink-mute); text-decoration: line-through; }
+  .checklist label { cursor: pointer; flex: 1; }
+
+  /* ---------- Pills ---------- */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 16px; }
+  .pill {
+    background: var(--bg-soft); border: 1px solid var(--rule);
+    padding: 4px 10px; border-radius: 999px;
+    font-size: .82rem; color: var(--ink-soft);
+  }
+
+  /* ---------- Decision card ---------- */
+  .tool-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 700px) { .tool-grid { grid-template-columns: 1fr; } }
+  .tool-card {
+    background: var(--bg-card); border: 1px solid var(--rule);
+    border-radius: var(--radius); padding: 18px;
+    border-top: 3px solid var(--c);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .tool-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tool-card[data-tool="chat"] { --c: #b08858; }
+  .tool-card[data-tool="cowork"] { --c: var(--c-mvp); }
+  .tool-card[data-tool="code"] { --c: var(--c-idea); }
+  .tool-card h4 { margin: 0 0 4px; color: var(--ink); font-size: 1.1rem; font-weight: 700; }
+  .tool-card .desc { font-size: .88rem; color: var(--ink-soft); margin: 0 0 12px; line-height: 1.5; }
+  .tool-card .when { font-size: .76rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); margin: 12px 0 6px; font-weight: 600; }
+  .tool-card ul { margin: 0; padding-left: 1.2em; font-size: .88rem; line-height: 1.6; }
+  .tool-card ul li { margin-bottom: .3em; }
+
+  /* ---------- Flow diagram ---------- */
+  .flow {
+    background: var(--bg-card); border: 1px solid var(--rule);
+    border-radius: var(--radius); padding: 24px;
+    font-family: ui-monospace, SFMono-Regular, "Menlo", monospace;
+    font-size: .82rem; line-height: 1.7; color: var(--ink-soft);
+    white-space: pre; overflow-x: auto;
+  }
+
+  /* ---------- Concept highlights ---------- */
+  .highlight {
+    background: var(--accent-soft); padding: .1em .4em;
+    border-radius: 3px; color: var(--accent); font-weight: 600;
+  }
+  .anti { color: #c44; font-weight: 600; }
+  .good { color: #4a8; font-weight: 600; }
+
+  /* ---------- Diff cards ---------- */
+  .compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;
+  }
+  @media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
+  .compare > div {
+    padding: 14px 16px; border-radius: var(--radius);
+    border: 1px solid var(--rule); background: var(--bg-card);
+  }
+  .compare .bad { border-left: 3px solid #c44; }
+  .compare .good { border-left: 3px solid #4a8; }
+  .compare h5 { margin: 0 0 6px; font-size: .85rem; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ---------- Filter for exercise table ---------- */
+  .filter-bar { display: flex; gap: 8px; margin: 16px 0 8px; flex-wrap: wrap; align-items: center; }
+  .filter-bar .label { font-size: .8rem; color: var(--ink-mute); margin-right: 4px; }
+  .filter-btn {
+    border: 1px solid var(--rule); background: var(--bg-card);
+    padding: 5px 12px; border-radius: 999px;
+    font-size: .82rem; cursor: pointer; color: var(--ink-soft);
+    font-family: inherit; transition: all .15s;
+  }
+  .filter-btn:hover { color: var(--ink); border-color: var(--ink-mute); }
+  .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .filter-btn[data-filter="idea"].active { background: var(--c-idea); border-color: var(--c-idea); color: white; }
+  .filter-btn[data-filter="mvp"].active { background: var(--c-mvp); border-color: var(--c-mvp); color: white; }
+  .filter-btn[data-filter="launch"].active { background: var(--c-launch); border-color: var(--c-launch); color: white; }
+  .filter-btn[data-filter="scale"].active { background: var(--c-scale); border-color: var(--c-scale); color: white; }
+
+  /* ---------- Section accent ---------- */
+  h2 { border-top: 1px solid var(--rule); padding-top: 1.6em; }
+  h2:first-of-type { border-top: 0; padding-top: 0; }
+
+  /* ---------- Print ---------- */
+  @media print {
+    .sidebar, .filter-bar, .stage-tabs { display: none; }
+    .page { grid-template-columns: 1fr; max-width: 100%; padding: 0; }
+    .stage-panel { display: block !important; page-break-inside: avoid; }
+    body { background: white; color: black; }
+    .card, .hero, .table-wrap { box-shadow: none; }
+  }
+
+  /* Helper */
+  .quiet { color: var(--ink-mute); font-size: .9em; }
+  .center { text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<aside class="sidebar">
+  <h3>目录</h3>
+  <ul class="toc" id="toc">
+    <li><a href="#part-1">一、原文精读</a></li>
+    <li class="toc-sub"><a href="#ch-1">序：2026 重启</a></li>
+    <li class="toc-sub"><a href="#ch-2">创始人角色在变</a></li>
+    <li class="toc-sub"><a href="#ch-3">Idea 阶段</a></li>
+    <li class="toc-sub"><a href="#ch-4">MVP 阶段</a></li>
+    <li class="toc-sub"><a href="#ch-5">Launch 阶段</a></li>
+    <li class="toc-sub"><a href="#ch-6">Scale 阶段</a></li>
+    <li class="toc-sub"><a href="#ch-7">结语</a></li>
+    <li><a href="#part-2">二、阶段 Checklist</a></li>
+    <li><a href="#part-3">三、Exercise 表</a></li>
+    <li><a href="#part-4">四、工具决策卡</a></li>
+  </ul>
+</aside>
+
+<main class="main">
+
+<header class="hero">
+  <div class="eyebrow">The Founder's Playbook · 中文精读</div>
+  <h1>打造一家 AI 原生创业公司</h1>
+  <p class="subtitle">Anthropic 36 页指南的一手内容精读 + 可执行 Checklist + 25 条 Exercise 表 + 工具决策卡。</p>
+  <div class="meta">
+    <span>原文：<a href="https://claude.com/blog/the-founders-playbook" target="_blank" rel="noopener">claude.com/blog/the-founders-playbook</a></span>
+    <span>发布：2026 年 5 月</span>
+    <span>整理基于一手 PDF</span>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<section id="part-1">
+  <h2>一、原文精读</h2>
+
+  <section id="ch-1">
+    <h3>第 1 章 · 创业生命周期，2026 版本</h3>
+    <p>没写过一行代码的人，今天也在出货生产级应用；"10 人独角兽"从草根传奇变成<span class="highlight">主动选择的路径</span>。</p>
+    <p>2026 年 AI 已经能：写生产代码、做市场调研、综合竞品全景、起草投资人材料、自动化运营流程。</p>
+    <p>传统弧线被改写——<code>验证→融资→招聘→构建→再融资→增长→再招聘→循环</code> 这条路径背后"<span class="highlight">每一阶段都必须扩团队 / 换技能栈 / 再融一轮</span>"的预期被 AI 抹掉了。本手册按 <strong>Idea / MVP / Launch / Scale</strong> 四个阶段重新映射创业旅程。</p>
+  </section>
+
+  <section id="ch-2">
+    <h3>第 2 章 · 创始人的角色在变</h3>
+    <p>过去靠"能做什么"定义创始人：技术型写代码，非技术型搞业务。2026 年，"会做的人"和"有好点子的人"之间的墙被融掉了。</p>
+    <p>创始人从执行者转为 <span class="highlight">agent 编排者（orchestrator of agents）</span>——让专门化 AI 助手读文件、跑命令、执行代码、上网；自己负责"做什么 / 为什么"。</p>
+    <p>真正革命性的是：让有领域专长的非技术创始人被解放，会出现传统技术创始人 pipeline 从没关注过的问题被新人解决。</p>
+
+    <h4>精益初创公司里 AI 的三类能力</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>能力</th><th>类比</th><th>典型用法</th></tr></thead>
+        <tbody>
+          <tr><td>对话式智能 + 研究</td><td>"全领域随叫随到的专家"</td><td>深度研究、文档起草、战略陪练（魔鬼代言人、事前剖析、情景规划）</td></tr>
+          <tr><td>Agentic coding</td><td>"永远在线、永不被堵的工程师"</td><td>自然语言描述要建什么，AI 生成 / 测试 / 调试 / 重构产品级代码</td></tr>
+          <tr><td>工作流自动化</td><td>"随时待命的运营团队"</td><td>CRM 同步、周报生成、文档随产品更新；Cowork 接 PM 工具 / 通讯栈 / 数据源</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Claude 三个产品面（全书反复引用）</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>任务</th><th>用</th><th>为什么</th></tr></thead>
+        <tbody>
+          <tr><td>一个问题、改写、快速头脑风暴</td><td><span class="tag tag-chat">Chat</span></td><td>对话式、无需设置、不离开当前 App</td></tr>
+          <tr><td>调研、分析、用文件和系统拼出成品文档</td><td><span class="tag tag-cowork">Cowork</span></td><td>有文件夹访问、connectors、skills、可定时运行</td></tr>
+          <tr><td>写、测试、发布软件</td><td><span class="tag tag-code">Code</span></td><td>有代码库访问、diffs、git、本地/IDE/沙盒云环境</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="ch-3">
+    <h3>第 3 章 · Idea 阶段</h3>
+    <div class="block-row"><div class="label">目标</div><div>研究驱动的验证——在投入构建前凑齐"问题真实 + 方案对症"的证据。</div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>
+      <ol>
+        <li>问题真实且具体（说得出谁、多频、多严重、目前如何应对）</li>
+        <li>方案对症（针对验证过程<strong>揭示出来的真问题</strong>）</li>
+        <li>信号足以让"做 MVP"是<strong>推理决定</strong>而非<strong>信仰行为</strong></li>
+      </ol>
+    </div></div>
+    <div class="block-row"><div class="label">主要挑战</div><div>
+      <ul>
+        <li><strong class="anti">Mistaking building for validating</strong>：原型 ≠ 验证证据；对话本身才是。先前 42% 创业死于"做了没人要的东西"，AI 时代比例只会上升。</li>
+        <li><strong class="anti">过早扩张</strong>：构建几乎零成本时，执行很容易冲到验证前面。系统里的智能是<strong>你</strong>，要把"理解"保持在"构建"之前。</li>
+        <li><strong class="anti">失去客观性</strong>：让 AI 证明你的信念，它会找证据；解药是<span class="highlight">反着用</span>——让 AI 给你的想法施压。结构化魔鬼代言人是全书每个阶段通用用法。</li>
+      </ul>
+    </div></div>
+  </section>
+
+  <section id="ch-4">
+    <h3>第 4 章 · MVP 阶段</h3>
+    <div class="block-row"><div class="label">目标</div><div>把已验证问题翻成真用户会用的可工作产品；快的同时不积累<strong>会复利</strong>的技术债；<strong>第一天起就投资持久上下文</strong>（如 <code>CLAUDE.md</code>）。</div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>可识别用户群体的 <strong>R³</strong>——Retention / Revenue / Referral 都有真实证据，且模式在多个迭代周期持续。</div></div>
+    <div class="block-row"><div class="label">主要挑战</div><div>
+      <ul>
+        <li><strong class="anti">Agentic 技术债</strong>：与普通技术债不同，会<strong>复利</strong>。没有写下的规格和约束，每次会话都重新推导基础决策、互相漂移，最后代码"没有连贯的心智模型"。</li>
+        <li><strong class="anti">假性 PMF</strong>：早期势能由短暂力量驱动（朋友、组合公司、HN 头条），不能预测 6 周或 12 周后。</li>
+        <li><strong class="anti">零摩擦的范围蔓延</strong>：每个新功能"显得合理"。解药：动工前先写下范围定义。把决策从"我们要做这个吗"挪到"是否有<strong>临界质量</strong>的用户告诉我们没有这个就无法获得价值"。</li>
+        <li><strong class="anti">由经验不足造成的安全漏洞</strong>：agentic coding 产出"能跑"的代码不是"安全"的代码；漏洞在被利用前是隐形的。</li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">PMF 试金石</div><div>
+      <ul>
+        <li><strong>Sean Ellis 测试</strong>：&gt;40% 用户回答"非常失望" = 有意义的 PMF 指标</li>
+        <li><strong>努力测试</strong>：留存从靠创始人英雄式干预（推）变成产品自己工作（拉）</li>
+        <li class="quiet">没有<strong>单一</strong>数据点能确证 PMF——必须是多个迭代周期里都成立的模式</li>
+      </ul>
+    </div></div>
+  </section>
+
+  <section id="ch-5">
+    <h3>第 5 章 · Launch 阶段</h3>
+    <blockquote>MVP 是证明产品该存在；<strong>Launch 是证明业务该长</strong>。</blockquote>
+    <div class="block-row"><div class="label">目标</div><div>把早期势能变成可重复增长引擎；硬化基础设施；<strong>围绕产品造一家公司</strong>。目标不是让你离开公司，而是建运营系统把你的注意力解放出来。</div></div>
+    <div class="block-row"><div class="label">退出标准（全过）</div><div>
+      <ol>
+        <li>增长<strong>可重复、渠道驱动</strong>——CAC / LTV / 回收周期能说清</li>
+        <li>产品能扛<strong>真实</strong>生产负载（不止你测过的条件）</li>
+        <li>运营<strong>无创始人瓶颈</strong></li>
+      </ol>
+    </div></div>
+    <div class="block-row"><div class="label">主要挑战</div><div>
+      <ul>
+        <li><strong class="anti">技术债到期</strong>：MVP 时为速度欠债合理；Launch 时开始<strong>生息</strong>。</li>
+        <li><strong class="anti">创始人成瓶颈</strong>：本应 1 小时的决策要一周；支持请求堆积；任务只在你记得时才发生。</li>
+        <li><strong class="anti">安全合规不能再推迟</strong>：把发现项视为<strong>必须修复</strong>而不是建议。</li>
+        <li><strong class="anti">没准备好就扩张</strong>：新市场让你<strong>失去对自己数据的解读能力</strong>。</li>
+      </ul>
+    </div></div>
+    <div class="card">
+      <strong>结构性关键</strong>：Claude Code 造产品 + Cowork 围绕产品造公司 + Claude 把产品与组织知识可操作化——三者<span class="highlight">互为输入、有机复利</span>，这就是<strong>超精益创业模式在结构上能成立的原因</strong>。
+    </div>
+  </section>
+
+  <section id="ch-6">
+    <h3>第 6 章 · Scale 阶段</h3>
+    <p>创始人重心从构建者变成<strong>对外的公众型高管</strong>（分析师 briefing、IPO 路演加入日程），同时维持"以 AI 为核心的精益结构优势"。</p>
+    <div class="block-row"><div class="label">目标</div><div>用户从千级到百万、市场从一个到多个；建一条"通过<strong>累积深度（accumulated depth）</strong>打造的护城河"——产品里凝固的专业知识 + 与用户依赖工具的集成深度 + 自有系统数据和工作流。</div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>不再是某个里程碑，而是<strong>阈值事件</strong>：公司在创始人逐步不再亲自管日常的情况下可持续。能回答<strong>"如果一个资金充裕的在位者今天复制你的产品，用户会留下吗？"</strong> 落到三种形态之一：
+      <ul>
+        <li>不需要外部资本的可持续盈利</li>
+        <li>IPO 就绪</li>
+        <li>被收购</li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">主要挑战</div><div>
+      <ul>
+        <li><strong class="anti">运营层交接</strong>：交得太多太快 → 关键决策失去创始人独有上下文；握得太久 → 你成瓶颈。把"只活在脑子里"的工作流知识编码成可文档化、可审计、可移交的系统。</li>
+        <li><strong class="anti">技术运营要规模化</strong>：客户要的不只是产品，而是"组织能做可靠基础设施伙伴"。</li>
+        <li><strong class="anti">组织职能要规模化</strong>：招聘 / 薪酬 / 会计 / 法务等迟早要建。</li>
+        <li><strong class="anti">GTM 函数构建</strong>：有机增长有天花板，多数 Scale 创始人在撞墙前从没真正建过 GTM。</li>
+      </ul>
+    </div></div>
+  </section>
+
+  <section id="ch-7">
+    <h3>第 7 章 · 同样的工作，新的规则</h3>
+    <ul>
+      <li>验证：几个月 → 几个下午</li>
+      <li>原型：不再需要带正确技术栈的联合创始人，只需<strong>清晰问题 + 几次专注 coding agent 会话</strong></li>
+      <li>发布就绪：从临阵磨枪 → 一条<strong>持续工作流</strong></li>
+      <li>规模：早期招聘里被迫做救火的运营负担越来越多可交给 AI</li>
+    </ul>
+    <blockquote><strong>瓶颈不再是"你能造什么"，而是"你选择造什么"。</strong></blockquote>
+  </section>
+</section>
+
+<!-- ============================================================ -->
+<section id="part-2">
+  <h2>二、四阶段可执行 Checklist</h2>
+  <p class="quiet">勾选可保存进度（基于浏览器本地存储）。</p>
+
+  <div class="stage-tabs" id="stageTabs">
+    <button class="stage-tab active" data-stage="idea">Idea</button>
+    <button class="stage-tab" data-stage="mvp">MVP</button>
+    <button class="stage-tab" data-stage="launch">Launch</button>
+    <button class="stage-tab" data-stage="scale">Scale</button>
+  </div>
+
+  <!-- Idea -->
+  <div class="stage-panel active" data-stage="idea">
+    <div class="stage-header"><div class="stage-num">1</div><h3>Idea 阶段</h3></div>
+    <div class="block-row"><div class="label">进入条件</div><div>你有一个挥之不去的问题观察。</div></div>
+    <div class="block-row"><div class="label">必做动作</div><div>
+      <ul class="checklist" data-key="idea">
+        <li><input type="checkbox" id="i1"/><label for="i1">把"问题陈述"打磨到具体可测（<strong>谁 / 多频 / 多严重 / 现状</strong>）</label></li>
+        <li><input type="checkbox" id="i2"/><label for="i2">让 Claude <strong>反驳</strong>你的想法、找反证</label></li>
+        <li><input type="checkbox" id="i3"/><label for="i3">按层映射竞品（直接 / 间接 / 潜在收购方 / 邻近）+ 为每层论证"为何是真威胁"</label></li>
+        <li><input type="checkbox" id="i4"/><label for="i4">用 Cowork 综合竞品在各渠道评价 → 找出未被解决的最痛点</label></li>
+        <li><input type="checkbox" id="i5"/><label for="i5">搭 TAM / SAM / SOM 并压测假设</label></li>
+        <li><input type="checkbox" id="i6"/><label for="i6">找 3 个外部趋势（监管 / 技术 / 人口）→ 标注顺/逆风</label></li>
+        <li><input type="checkbox" id="i7"/><label for="i7">定义客户画像（职位、公司类型、团队结构、资历）+ 聚集社区</label></li>
+        <li><input type="checkbox" id="i8"/><label for="i8">手写访谈题 → Claude 审"引导性 / 未来式 / 社会期许式" → 加追问</label></li>
+        <li><input type="checkbox" id="i9"/><label for="i9">Cowork 跑触达：名单 + 个性化邮件 + Gmail/Calendar + 节奏跟进</label></li>
+        <li><input type="checkbox" id="i10"/><label for="i10">每 5 访谈让 Cowork 出两份清单（支持 / 反对），不对称时让 Claude 判读</label></li>
+        <li><input type="checkbox" id="i11"/><label for="i11">让 Claude 找方案概念最依赖的 3 个假设</label></li>
+        <li><input type="checkbox" id="i12"/><label for="i12">Claude Code 只建<strong>单一核心交互</strong>，放到 5 个目标用户面前</label></li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">产出物</div><div><div class="pill-row">
+      <span class="pill">可测试假设句</span><span class="pill">竞品分层图</span><span class="pill">TAM-SAM-SOM 模型</span><span class="pill">客户画像 + 反馈库</span><span class="pill">单一核心交互原型</span>
+    </div></div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>
+      <ul>
+        <li>问题真实且具体 ✓</li>
+        <li>方案对症（不是最初假设的那个）✓</li>
+        <li>信号足以让"做 MVP"是推理决定而非信仰 ✓</li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">反模式</div><div><span class="anti">把原型当验证证据 / 让 AI 帮你证明已有信念 / 问"未来时通用"而非"过去时具体"</span></div></div>
+  </div>
+
+  <!-- MVP -->
+  <div class="stage-panel" data-stage="mvp">
+    <div class="stage-header"><div class="stage-num">2</div><h3>MVP 阶段</h3></div>
+    <div class="block-row"><div class="label">进入条件</div><div>Idea 三条退出标准全过。</div></div>
+    <div class="block-row"><div class="label">必做动作</div><div>
+      <ul class="checklist" data-key="mvp">
+        <li><input type="checkbox" id="m1"/><label for="m1">在打开 Claude Code 之前，先和 Claude 写下架构原则 / 禁用依赖 / 接受取舍</label></li>
+        <li><input type="checkbox" id="m2"/><label for="m2">把上一步输出存为 <code>CLAUDE.md</code></label></li>
+        <li><input type="checkbox" id="m3"/><label for="m3">写 MVP <strong>范围文档</strong>（做什么 / 刻意不做 / 修订标准）</label></li>
+        <li><input type="checkbox" id="m4"/><label for="m4">建会话模板（架构上下文 + 本次任务 + 约束）</label></li>
+        <li><input type="checkbox" id="m5"/><label for="m5">每次会话结束写 5 分钟日志（做了什么 / 决策 / 引入假设）</label></li>
+        <li><input type="checkbox" id="m6"/><label for="m6"><strong>上线前</strong>安全清单：认证与会话、API 数据暴露、输入校验、已知漏洞依赖</label></li>
+        <li><input type="checkbox" id="m7"/><label for="m7">在<strong>第一个用户出现前</strong>定义度量：留存、激活、Day 7 / Day 30、假阳性</label></li>
+        <li><input type="checkbox" id="m8"/><label for="m8">Cowork 跑反馈闭环（外联、约会、bug/feature 收件、周综合）</label></li>
+        <li><input type="checkbox" id="m9"/><label for="m9">周综合<strong>先自己读</strong>，再让 Claude 找漏点</label></li>
+        <li><input type="checkbox" id="m10"/><label for="m10">PMF litmus：Sean Ellis（&gt;40% "非常失望"）+ 努力测试（产品从"推"变"拉"）</label></li>
+        <li><input type="checkbox" id="m11"/><label for="m11">3+ 个迭代周期无 PMF 移动 → Claude 三问诊断</label></li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">产出物</div><div><div class="pill-row">
+      <span class="pill"><code>CLAUDE.md</code></span><span class="pill">范围文档 + 会话模板</span><span class="pill">度量框架（含假阳性）</span><span class="pill">安全审报告</span><span class="pill">周反馈综合</span>
+    </div></div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>可识别用户群体的 R³（Retention / Revenue / Referral）都有真实证据 + 模式在多个迭代周期持续</div></div>
+    <div class="block-row"><div class="label">反模式</div><div><span class="anti">零摩擦范围蔓延 / 把短暂势能当 PMF / 上线后才追指标 / 无 spec 无 <code>CLAUDE.md</code> 让 AI 自由发挥</span></div></div>
+  </div>
+
+  <!-- Launch -->
+  <div class="stage-panel" data-stage="launch">
+    <div class="stage-header"><div class="stage-num">3</div><h3>Launch 阶段</h3></div>
+    <div class="block-row"><div class="label">进入条件</div><div>MVP 阶段 PMF 证据成立。</div></div>
+    <div class="block-row"><div class="label">必做动作</div><div>
+      <ul class="checklist" data-key="launch">
+        <li><input type="checkbox" id="l1"/><label for="l1">Claude Code 跑<strong>全架构审计</strong>：结构弱点 / 测试覆盖缺口 / 重构候选（优先级化）</label></li>
+        <li><input type="checkbox" id="l2"/><label for="l2">把 MVP "只在脑子里"的架构决策<strong>补写进</strong> <code>CLAUDE.md</code></label></li>
+        <li><input type="checkbox" id="l3"/><label for="l3">Claude 把修复任务<strong>编排成 Sprint 序列</strong>（必修 / 可缓 / 持续债）</label></li>
+        <li><input type="checkbox" id="l4"/><label for="l4">Cowork 做运营审计：列每个常规任务 / 决策 / 只因你记得才发生的工作流</label></li>
+        <li><input type="checkbox" id="l5"/><label for="l5">Cowork 分类：全自动 / 需人但非你 / 必须创始人</label></li>
+        <li><input type="checkbox" id="l6"/><label for="l6">为自动化候选设计工作流逻辑（触发 / 规则 / 输出 / 去向）</label></li>
+        <li><input type="checkbox" id="l7"/><label for="l7">Claude Code 跑面向目标市场框架（SOC 2 / GDPR / HIPAA）的代码级安全审</label></li>
+        <li><input type="checkbox" id="l8"/><label for="l8">Claude 输出 (a) 优先级修复序列 (b) 企业合规审所需文档/控制清单</label></li>
+        <li><input type="checkbox" id="l9"/><label for="l9">合规做成<strong>开发周期里持续工作流</strong>，不是一次性项目</label></li>
+        <li><input type="checkbox" id="l10"/><label for="l10">Claude 设计轻量 PM 操作系统：Sprint 节奏 / 最简 spec 模板 / bug 分诊决策树 / 周指标 brief</label></li>
+        <li><input type="checkbox" id="l11"/><label for="l11">Cowork 实施并跑运营层</label></li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">产出物</div><div><div class="pill-row">
+      <span class="pill">架构审计 + Sprint 计划</span><span class="pill">运营审计 + 自动化清单</span><span class="pill">合规修复序列 + 文档矩阵</span><span class="pill">PM 操作系统</span>
+    </div></div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>
+      <ol>
+        <li>增长可重复、渠道驱动——CAC / LTV / 回收周期说得清</li>
+        <li>产品能扛真实生产负载</li>
+        <li>运营无创始人瓶颈</li>
+      </ol>
+    </div></div>
+    <div class="block-row"><div class="label">反模式</div><div><span class="anti">把 AI 扫描当合规审查替代 / 创始人坚持留在每个回路 / 早期向不同市场扩张</span></div></div>
+  </div>
+
+  <!-- Scale -->
+  <div class="stage-panel" data-stage="scale">
+    <div class="stage-header"><div class="stage-num">4</div><h3>Scale 阶段</h3></div>
+    <div class="block-row"><div class="label">进入条件</div><div>Launch 三条退出标准全过。</div></div>
+    <div class="block-row"><div class="label">必做动作</div><div>
+      <ul class="checklist" data-key="scale">
+        <li><input type="checkbox" id="s1"/><label for="s1">Claude 列<strong>只有你应做的事</strong>清单</label></li>
+        <li><input type="checkbox" id="s2"/><label for="s2">Claude 产<strong>瓶颈地图</strong> + "你一周不在每条会怎样"</label></li>
+        <li><input type="checkbox" id="s3"/><label for="s3">修补 / 重写对应 Cowork 自动化的故障点</label></li>
+        <li><input type="checkbox" id="s4"/><label for="s4">Claude 起草并维护企业采购期望的书面基础设施：产品文档 / 支持 playbook / SLA</label></li>
+        <li><input type="checkbox" id="s5"/><label for="s5">Claude Code 按企业合同的可靠性 + 安全标准硬化代码库</label></li>
+        <li><input type="checkbox" id="s6"/><label for="s6">建技术支持基础设施：日志 / 监控 / 事故响应 / 可观测层</label></li>
+        <li><input type="checkbox" id="s7"/><label for="s7">Cowork 跑企业支持运营：工单路由、升级、文档随产品变化更新、续约跟踪</label></li>
+        <li><input type="checkbox" id="s8"/><label for="s8">选 3 个理想企业客户 → Claude 做<strong>差距分析</strong></label></li>
+        <li><input type="checkbox" id="s9"/><label for="s9">Claude 搭 GTM 资产：分层、信息架构、分析师关系、销售 playbook、投资人指标叙事</label></li>
+        <li><input type="checkbox" id="s10"/><label for="s10">Cowork 跑战术执行：内容 / 外呼 / 分析师 briefing / PR / CRM / pipeline</label></li>
+        <li><input type="checkbox" id="s11"/><label for="s11">Claude Code 建产品营销基础设施：交互式 demo、集成文档、沙盒租户、API 参考</label></li>
+        <li><input type="checkbox" id="s12"/><label for="s12">Claude 项目 + 记忆 externalize 领域专长</label></li>
+        <li><input type="checkbox" id="s13"/><label for="s13"><strong>Skills</strong> 把反复出现的工作流固化成可复用例程</label></li>
+        <li><input type="checkbox" id="s14"/><label for="s14">找通才竞品一定会做错的边角案例 → Claude Code 写场景测试 → <strong>测试集 = 护城河地图</strong></label></li>
+        <li><input type="checkbox" id="s15"/><label for="s15">喂交互数据摘要 → Claude 找 3 个最高信号行为模式 + 反馈环 → 起草护城河叙事一页纸</label></li>
+        <li><input type="checkbox" id="s16"/><label for="s16">前 10 大客户工作流集成审计 + 跨群规律 → 反哺产品深度</label></li>
+      </ul>
+    </div></div>
+    <div class="block-row"><div class="label">产出物</div><div><div class="pill-row">
+      <span class="pill">创始人专属任务清单</span><span class="pill">瓶颈地图</span><span class="pill">企业差距分析</span><span class="pill">GTM 资产 + 产品营销基础设施</span><span class="pill">自有知识底层</span><span class="pill">护城河地图 + 叙事</span><span class="pill">工作流集成审计</span>
+    </div></div></div>
+    <div class="block-row"><div class="label">退出标准</div><div>阈值事件：公司在创始人逐步不再亲自管日常的情况下可持续；落到 <strong>可持续盈利 / IPO 就绪 / 被收购</strong>。</div></div>
+    <div class="block-row"><div class="label">反模式</div><div><span class="anti">交得太多太快 / 握得太久 / 把脑子里的知识当隐性资产不外显 / 用 demo 视频 + 销售 deck 代替产品营销基础设施</span></div></div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="part-3">
+  <h2>三、全部 Exercise 抽出表</h2>
+  <p class="quiet">25 条。点标签按阶段筛选。</p>
+
+  <div class="filter-bar" id="filterBar">
+    <span class="label">筛选：</span>
+    <button class="filter-btn active" data-filter="all">全部</button>
+    <button class="filter-btn" data-filter="idea">Idea</button>
+    <button class="filter-btn" data-filter="mvp">MVP</button>
+    <button class="filter-btn" data-filter="launch">Launch</button>
+    <button class="filter-btn" data-filter="scale">Scale</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="exerciseTable">
+      <thead>
+        <tr><th>#</th><th>阶段</th><th>任务</th><th>工具</th><th>输入</th><th>产出</th><th>通过标准</th></tr>
+      </thead>
+      <tbody>
+        <tr data-stage="idea"><td class="num">1</td><td><span class="tag tag-idea">Idea</span></td><td>问题陈述 → 可测试假设</td><td><span class="tag tag-chat">Chat</span></td><td>你的初步观察</td><td>含"谁 / 多频 / 多严重 / 现状"的假设</td><td>能写出反例</td></tr>
+        <tr data-stage="idea"><td class="num">2</td><td><span class="tag tag-idea">Idea</span></td><td>竞品分层 + 威胁论证</td><td><span class="tag tag-chat">Chat</span></td><td>你的方案领域</td><td>4 层竞品地图 + 每层为何是真威胁</td><td>含潜在收购方与邻近玩家</td></tr>
+        <tr data-stage="idea"><td class="num">3</td><td><span class="tag tag-idea">Idea</span></td><td>竞品评论综合找最痛点</td><td><span class="tag tag-cowork">Cowork</span></td><td>竞品评测渠道列表</td><td>现有方案未解决的痛点清单</td><td>命中 ≥1 项 = 强 PSF 证据</td></tr>
+        <tr data-stage="idea"><td class="num">4</td><td><span class="tag tag-idea">Idea</span></td><td>TAM/SAM/SOM 建模</td><td><span class="tag tag-cowork">Cowork</span></td><td>公开数据</td><td>三层市场规模 + 买家全景</td><td>区分预算持有者 / 决策影响者</td></tr>
+        <tr data-stage="idea"><td class="num">5</td><td><span class="tag tag-idea">Idea</span></td><td>找 3 个外部趋势</td><td><span class="tag tag-chat">Chat</span></td><td>你的市场假设</td><td>监管 / 技术 / 人口各 1 + 顺逆风</td><td>未来 2 年时间维度</td></tr>
+        <tr data-stage="idea"><td class="num">6</td><td><span class="tag tag-idea">Idea</span></td><td>访谈题审计 + 追问</td><td><span class="tag tag-chat">Chat</span></td><td>你手写的访谈题</td><td>修订题目 + 2~3 处追问</td><td>无引导/未来/社会期许</td></tr>
+        <tr data-stage="idea"><td class="num">7</td><td><span class="tag tag-idea">Idea</span></td><td>每 5 访谈做证据对账</td><td><span class="tag tag-cowork">Cowork</span></td><td>访谈笔记批次</td><td>支持证据 + 反对证据清单</td><td>不对称时让 Claude 判读</td></tr>
+        <tr data-stage="idea"><td class="num">8</td><td><span class="tag tag-idea">Idea</span></td><td>触达管道自动化</td><td><span class="tag tag-cowork">Cowork</span></td><td>客户画像</td><td>名单 + 个性化邮件 + 跟踪表 + 日 7 跟进</td><td>Gmail + Calendar 接通</td></tr>
+        <tr data-stage="idea"><td class="num">9</td><td><span class="tag tag-idea">Idea</span></td><td>方案概念三大假设审</td><td><span class="tag tag-chat">Chat</span></td><td>你的方案设计</td><td>3 个最依赖假设 + 各自破产后果</td><td>给出"必须什么为真"</td></tr>
+        <tr data-stage="idea"><td class="num">10</td><td><span class="tag tag-idea">Idea</span></td><td>单一核心交互原型</td><td><span class="tag tag-code">Code</span></td><td>已验证的核心交互</td><td>一个能让人摸到的小原型</td><td>5 个目标用户测试反馈</td></tr>
+        <tr data-stage="mvp"><td class="num">11</td><td><span class="tag tag-mvp">MVP</span></td><td>写架构原则并存 <code>CLAUDE.md</code></td><td><span class="tag tag-chat">Chat</span></td><td>业务说明 + 6 月规模预期</td><td>架构原则 / 禁用依赖 / 接受取舍</td><td>保存为项目根 <code>CLAUDE.md</code></td></tr>
+        <tr data-stage="mvp"><td class="num">12</td><td><span class="tag tag-mvp">MVP</span></td><td>会话模板 + 会话日志</td><td><span class="tag tag-chat">Chat</span></td><td>本次任务 + 约束</td><td>模板 + 会后 5 分钟日志</td><td>每个会话都执行</td></tr>
+        <tr data-stage="mvp"><td class="num">13</td><td><span class="tag tag-mvp">MVP</span></td><td>上线前安全审</td><td><span class="tag tag-chat">Chat</span></td><td>核心应用代码</td><td>认证/数据/校验/依赖发现项</td><td>触认证/密钥/数据必须人审</td></tr>
+        <tr data-stage="mvp"><td class="num">14</td><td><span class="tag tag-mvp">MVP</span></td><td>MVP 反馈闭环</td><td><span class="tag tag-cowork">Cowork</span></td><td>用户列表</td><td>周综合（bug / feature / 主题）</td><td>自己先读，再让 Claude 找漏点</td></tr>
+        <tr data-stage="mvp"><td class="num">15</td><td><span class="tag tag-mvp">MVP</span></td><td>PMF 滞后诊断</td><td><span class="tag tag-chat">Chat</span></td><td>留存数据 + 反馈 + 原假设</td><td>三问答案</td><td>据此决定调 / pivot / 回 Idea</td></tr>
+        <tr data-stage="launch"><td class="num">16</td><td><span class="tag tag-launch">Launch</span></td><td>架构审 + Sprint 排程</td><td><span class="tag tag-code">Code</span> → <span class="tag tag-chat">Chat</span></td><td>MVP 代码库</td><td>优先级化弱点表 + Sprint 序列</td><td>区分必修 / 可缓 / 可接受</td></tr>
+        <tr data-stage="launch"><td class="num">17</td><td><span class="tag tag-launch">Launch</span></td><td>代码级合规安全审</td><td><span class="tag tag-code">Code</span> → <span class="tag tag-chat">Chat</span></td><td>目标市场合规框架</td><td>修复序列 + 文档与控制清单</td><td>文档可供企业采购阅读</td></tr>
+        <tr data-stage="launch"><td class="num">18</td><td><span class="tag tag-launch">Launch</span></td><td>轻量 PM 操作系统</td><td><span class="tag tag-chat">Chat</span> → <span class="tag tag-cowork">Cowork</span></td><td>团队节奏需求</td><td>Sprint 节奏 + spec 模板 + 分诊树 + 周指标 brief</td><td>Cowork 自动排程跑起来</td></tr>
+        <tr data-stage="scale"><td class="num">19</td><td><span class="tag tag-scale">Scale</span></td><td>创始人专属任务 + 瓶颈地图</td><td><span class="tag tag-chat">Chat</span></td><td>当前所有经你的工作流</td><td>只你应做清单 + 一周不在后果</td><td>找出会停的工作流</td></tr>
+        <tr data-stage="scale"><td class="num">20</td><td><span class="tag tag-scale">Scale</span></td><td>工作流故障点修补</td><td><span class="tag tag-chat">Chat</span> → <span class="tag tag-cowork">Cowork</span></td><td>瓶颈地图</td><td>失败点分析 + 修复后自动化</td><td>移交标准、升级路径、例外处理齐全</td></tr>
+        <tr data-stage="scale"><td class="num">21</td><td><span class="tag tag-scale">Scale</span></td><td>企业客户差距分析</td><td><span class="tag tag-chat">Chat</span> → <span class="tag tag-code">Code</span> / <span class="tag tag-cowork">Cowork</span></td><td>目标客户名单</td><td>各自所需文档 / SLA / 支持差距</td><td>输出可接续的任务序列</td></tr>
+        <tr data-stage="scale"><td class="num">22</td><td><span class="tag tag-scale">Scale</span></td><td>边角案例 → 场景测试集</td><td><span class="tag tag-code">Code</span></td><td>你在垂直里见过的真实场景</td><td>场景测试用例（非单元测试）</td><td>持续新增，测试集 = 护城河地图</td></tr>
+        <tr data-stage="scale"><td class="num">23</td><td><span class="tag tag-scale">Scale</span></td><td>数据飞轮 + 护城河叙事</td><td><span class="tag tag-chat">Chat</span></td><td>交互数据摘要</td><td>3 个高信号模式 + 反馈环 + 1 页叙事</td><td>解释"为何资金充裕竞品 2 年内复制不了"</td></tr>
+        <tr data-stage="scale"><td class="num">24</td><td><span class="tag tag-scale">Scale</span></td><td>前 10 客户集成审计</td><td><span class="tag tag-chat">Chat</span> → <span class="tag tag-code">Code</span></td><td>客户使用数据</td><td>自动化 / 集成 / 工作流 / 切换成本</td><td>找跨客户共性 → 深化方向</td></tr>
+        <tr data-stage="scale"><td class="num">25</td><td><span class="tag tag-scale">Scale</span></td><td>GTM 全套 + 营销基础设施</td><td><span class="tag tag-chat">Chat</span> → <span class="tag tag-cowork">Cowork</span> → <span class="tag tag-code">Code</span></td><td>当前增长瓶颈</td><td>分层 + 销售 playbook + demo 环境 + 集成文档</td><td>异步可成交（不在也能赢单）</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="part-4">
+  <h2>四、Chat / Cowork / Code 决策卡</h2>
+
+  <h3>一句话定义</h3>
+  <div class="tool-grid">
+    <div class="tool-card" data-tool="chat">
+      <h4>Claude Chat</h4>
+      <p class="desc">一次性、对话式、不离开当前 App。<strong>对话</strong>。</p>
+      <div class="when">立刻使用</div>
+      <ul>
+        <li>在密集投资人备忘录里抓一句要点</li>
+        <li>开董事会前对一个数据做 sanity check</li>
+        <li>一长串 Slack 讨论里提炼上下文</li>
+        <li>给一段文案做改写、起标题</li>
+        <li>让 AI <strong>反驳</strong>你的某个想法</li>
+      </ul>
+    </div>
+    <div class="tool-card" data-tool="cowork">
+      <h4>Claude Cowork</h4>
+      <p class="desc">多源拉取、产出成品、可定时、可连工具。<strong>工作会话</strong>。</p>
+      <div class="when">立刻使用</div>
+      <ul>
+        <li>一文件夹访谈转录 → 主题发现文档</li>
+        <li>融资前十几家供应商拼竞品全景</li>
+        <li>每周从已接入工具拉指标 → KPI brief</li>
+        <li>自动外联 + 排期 + 跟进 + 跟踪</li>
+        <li>bug 分诊路由、文档随产品更新、续约提醒</li>
+      </ul>
+    </div>
+    <div class="tool-card" data-tool="code">
+      <h4>Claude Code</h4>
+      <p class="desc">直接动代码库，写、测、提交、合。<strong>工程环境</strong>。</p>
+      <div class="when">立刻使用</div>
+      <ul>
+        <li>跨多文件改动并跑测试</li>
+        <li>Plan Mode 先给方案再执行</li>
+        <li>架构审计 / 安全审 / 重构</li>
+        <li>原型迁生产</li>
+        <li>建集成、API、webhook、SDK、demo 环境</li>
+        <li>把脑子里的边角案例固化为场景测试</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>不该用 / 易混淆的边界</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>场景</th><th>❌ 别用</th><th>✅ 应该用</th><th>原因</th></tr></thead>
+      <tbody>
+        <tr><td>用户调研综合（10+ 份访谈）</td><td>Chat</td><td>Cowork</td><td>Chat 没文件夹访问 / 没记忆持久度</td></tr>
+        <tr><td>修改业务代码 + 跑测试</td><td>Cowork</td><td>Code</td><td>Cowork 没 diff / git / 沙盒</td></tr>
+        <tr><td>替代有资质的合规审</td><td>Code / Cowork</td><td>人类专家</td><td>原文明示：AI 扫描是辅助</td></tr>
+        <tr><td>MVP 安全审涉真数据</td><td>Code 一遍过</td><td>Code + 人类复核</td><td>触认证 / 密钥 / 数据必须人审</td></tr>
+        <tr><td>用户反馈细腻语义解读</td><td>Cowork 全自动</td><td>自己先读，再 AI 找漏点</td><td>保留人在采集环里</td></tr>
+        <tr><td>早期假设求证（想被支持时）</td><td>"Claude 帮我证一下"</td><td>"Claude 帮我反驳"</td><td>反着用 = 反 AI 确认偏误</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>同时用三者的"复利模式"</h3>
+  <p class="quiet">Launch / Scale 阶段的关键。三者互为输入。</p>
+  <div class="flow">  Claude Code 造产品   ──→   产出：代码、审计结果、安全发现
+                                            │
+                                            ▼
+  Claude 综合 / 决策    ──→   产出：优先级、Sprint 序列、控制矩阵
+                                            │
+                                            ▼
+  Claude Cowork 跑运营  ──→   产出：工单、文档更新、报告节奏
+                                            │
+                                            └──→ 反馈进入 Claude Code 的下一轮工作</div>
+
+  <blockquote>原文原话：<em>"This is what makes the ultra-lean startup model structurally possible."</em><br>
+  三者<strong>互为输入、有机复利</strong>，是超精益创业能成立的结构原因。</blockquote>
+</section>
+
+<div class="center quiet" style="margin-top:64px;border-top:1px solid var(--rule);padding-top:24px;">
+  本文档基于 Anthropic 36 页 PDF 一手整理 · 个人学习用
+</div>
+
+</main>
+</div>
+
+<script>
+  // ---------- Stage tabs ----------
+  const tabs = document.querySelectorAll('.stage-tab');
+  const panels = document.querySelectorAll('.stage-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.stage-panel[data-stage="${tab.dataset.stage}"]`).classList.add('active');
+    });
+  });
+
+  // ---------- Persist checkboxes ----------
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(cb => {
+    const key = 'fp-' + cb.id;
+    if (localStorage.getItem(key) === '1') cb.checked = true;
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked ? '1' : '0');
+    });
+  });
+
+  // ---------- Exercise filter ----------
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const rows = document.querySelectorAll('#exerciseTable tbody tr');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      rows.forEach(r => {
+        r.style.display = (f === 'all' || r.dataset.stage === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // ---------- TOC active highlight ----------
+  const tocLinks = document.querySelectorAll('#toc a');
+  const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(l => l.parentElement.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`#toc a[href="#${id}"]`);
+        if (link) link.parentElement.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
