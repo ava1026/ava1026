@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Uxento 发币 / 交易工具分析 · 尽调报告</title>
+<style>
+  :root {
+    --bg: #faf7f2; --bg-card: #ffffff; --bg-soft: #f3eee5;
+    --ink: #2a2a2a; --ink-soft: #5a5a5a; --ink-mute: #8a8a8a;
+    --rule: #e6dfd2; --rule-soft: #efe9dd;
+    --accent: #b45325; --accent-soft: #f3dccc;
+    --warn: #b3261e; --warn-soft: #f7dedb;
+    --radius: 10px; --radius-lg: 14px;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(40,30,15,.05);
+    --maxw: 780px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15161a; --bg-card: #1d1f24; --bg-soft: #23252b;
+      --ink: #e8e6e1; --ink-soft: #b9b6ae; --ink-mute: #8a8780;
+      --rule: #2d2f36; --rule-soft: #25272d;
+      --accent: #e08552; --accent-soft: #3a2418;
+      --warn: #e07a72; --warn-soft: #3a1f1c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                 "Source Han Sans CN", "Noto Sans CJK SC", system-ui, sans-serif;
+    font-size: 16px; line-height: 1.78; letter-spacing: .01em;
+    text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { line-height: 1.35; letter-spacing: -0.005em; font-weight: 650; }
+  h1 { font-size: 2rem; margin: 0 0 .4em; }
+  h2 { font-size: 1.5rem; margin: 2.6em 0 .8em; padding-top: .3em; border-top: 1px solid var(--rule-soft); }
+  h2:first-of-type { border-top: 0; }
+  h3 { font-size: 1.18rem; margin: 1.9em 0 .5em; color: var(--ink); }
+  h4 { font-size: 1.02rem; margin: 1.5em 0 .4em; color: var(--ink-soft); font-weight: 600; }
+  p { margin: 0 0 1em; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s; word-break: break-all; }
+  a:hover { border-bottom-color: var(--accent); }
+  code { font-family: ui-monospace, SFMono-Regular, "Menlo", "Cascadia Code", monospace;
+         font-size: .86em; background: var(--bg-soft); padding: .12em .42em; border-radius: 4px; word-break: break-all; }
+  blockquote {
+    margin: 1.4em 0; padding: .8em 1.2em;
+    border-left: 3px solid var(--warn); background: var(--warn-soft); color: var(--ink-soft);
+    border-radius: 0 var(--radius) var(--radius) 0; font-size: .95em;
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 1em; }
+  li { margin-bottom: .4em; }
+  strong { font-weight: 650; }
+
+  .page { display: grid; grid-template-columns: 240px 1fr; gap: 48px; max-width: 1240px; margin: 0 auto; padding: 32px 32px 80px; }
+  @media (max-width: 980px) { .page { grid-template-columns: 1fr; padding: 24px; gap: 24px; } }
+
+  .sidebar { position: sticky; top: 24px; height: max-content; align-self: start; }
+  .sidebar h3 { font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-mute); margin: 0 0 12px; font-weight: 700; }
+  .toc { list-style: none; padding: 0; margin: 0; font-size: .9rem; }
+  .toc a { display: block; padding: 6px 10px; border-left: 2px solid var(--rule); color: var(--ink-soft); border-bottom: 0; transition: all .15s; border-radius: 0 6px 6px 0; }
+  .toc a:hover { color: var(--ink); background: var(--bg-soft); border-left-color: var(--accent); }
+  @media (max-width: 980px) { .sidebar { position: static; border-bottom: 1px solid var(--rule); padding-bottom: 12px; }
+    .toc { display: flex; flex-wrap: wrap; gap: 4px; }
+    .toc a { border-left: 0; border: 1px solid var(--rule); border-radius: 6px; padding: 4px 10px; }
+  }
+
+  .main { max-width: var(--maxw); width: 100%; min-width: 0; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
+    border: 1px solid var(--rule); border-radius: var(--radius-lg);
+    padding: 28px 32px; margin-bottom: 28px; box-shadow: var(--shadow);
+  }
+  .hero .eyebrow { font-size: .78rem; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .hero h1 { margin: 0 0 8px; font-size: 1.8rem; }
+  .hero .subtitle { color: var(--ink-soft); margin: 0 0 12px; font-size: 1rem; line-height: 1.6; }
+  .hero .meta { display: flex; gap: 16px; font-size: .85rem; color: var(--ink-mute); flex-wrap: wrap; margin-top: 8px; }
+  .hero .badge { display: inline-block; background: var(--warn-soft); color: var(--warn); font-weight: 700; font-size: .78rem; padding: 3px 12px; border-radius: 999px; letter-spacing: .04em; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius); border: 1px solid var(--rule); background: var(--bg-card); box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule-soft); }
+  th { background: var(--bg-soft); font-weight: 600; color: var(--ink); font-size: .85rem; }
+  tr:last-child td { border-bottom: 0; }
+  tr:hover td { background: var(--rule-soft); }
+
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5em 0; }
+
+  .footer { max-width: var(--maxw); margin: 40px 0 0; padding-top: 16px; border-top: 1px solid var(--rule); font-size: .82rem; color: var(--ink-mute); }
+
+  @media print {
+    @page { margin: 16mm 14mm; }
+    body { background: #fff; color: #1a1a1a; font-size: 11.5pt; }
+    .page { display: block; max-width: 100%; padding: 0; }
+    .sidebar { display: none; }
+    .main { max-width: 100%; }
+    .hero { box-shadow: none; background: #f6f1e9; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .table-wrap { box-shadow: none; overflow: visible; }
+    th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    blockquote { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2, h3, h4 { break-after: avoid; }
+    table, blockquote, .table-wrap { break-inside: avoid; }
+    a { color: #1a1a1a; border-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <aside class="sidebar">
+    <h3>目录</h3>
+    <ul class="toc">
+<li><a href="#一Uxento-是什么">一、Uxento 是什么</a></li>
+<li><a href="#二发展历史--时间线">二、发展历史 / 时间线</a></li>
+<li><a href="#三核心功能全景">三、核心功能全景</a></li>
+<li><a href="#四UXTO-代币经济链上视角">四、UXTO 代币经济(链上视角)</a></li>
+<li><a href="#五X--社区与用户反馈">五、X / 社区与用户反馈</a></li>
+<li><a href="#六扩展权限与签名钓鱼技术拆解防御视角">六、扩展权限与签名钓鱼技术拆解(防御视角)</a></li>
+<li><a href="#七风险与尽调要点总览">七、风险与尽调要点(总览)</a></li>
+<li><a href="#八结论中立评估">八、结论(中立评估)</a></li>
+<li><a href="#参考来源">参考来源</a></li>
+    </ul>
+  </aside>
+  <main class="main">
+    <header class="hero">
+      <div class="eyebrow">尽职调查报告 · Crypto / Memecoin 工具</div>
+      <h1>Uxento 发币 / 交易工具分析</h1>
+      <p class="subtitle">Solana 多链 memecoin 部署 · 抄盘 · 狙击 · 信息追踪自动化工具 —— 功能、发展史、代币经济、扩展安全与风险评估</p>
+      <div class="meta">
+        <span class="badge">整体风险:高</span>
+        <span>整理日期 2026-06-17</span>
+        <span>仅供研究参考,不构成投资/使用建议</span>
+      </div>
+    </header>
+    <section>
+<h1 id="Uxento-发币--交易工具分析">Uxento 发币 / 交易工具分析</h1>
+<blockquote>
+<p>整理日期:2026-06-17。本文基于公开网络资料(官网、GitBook 文档、Chrome Web Store / chrome-stats、X/Twitter、DEX Screener、第三方信誉评级站点)整理。<strong>部分官网、文档与行情页在采集时返回 403,链上/行情/用户数为公开快照,可能与实时不符。本文仅供研究与尽职调查参考,不构成任何投资或使用建议。</strong> 加密领域(尤其是 memecoin 工具)风险极高,使用前请独立核实。</p>
+</blockquote>
+<h2 id="一Uxento-是什么">一、Uxento 是什么</h2>
+<p>Uxento 是一套面向加密货币(主要是 Solana 生态,并扩展到多链)的 <strong>&quot;degen&quot; 投机交易者与代币发行者</strong>工具集,核心卖点是&quot;既能交易、又能一键发币 / 抄盘(vamp)&quot;。它<strong>不是</strong>传统意义上的合规募资平台(launchpad),而更接近 <strong>pump.fun 一类 memecoin 的&quot;部署 + 狙击 + 跟单 + 信息追踪&quot;自动化工具</strong>。</p>
+<p>产品形态主要有三块:</p>
+<ol>
+<li><strong>uxtension(Chrome 浏览器扩展)</strong> —— 主力交易与发币工具,内嵌交易面板、狙击、跟单、信息流追踪,深度集成 Axiom 交易前端。</li>
+<li><strong>uxento.io 主站 / app(uLaunch 平台)</strong> —— CT(Crypto Twitter)、Truth Social、Streamflow 锁仓、Telegram 合约地址(CA)、DEX、News 等多源&quot;alpha 信息&quot;追踪看板,以及面向活跃 deployer 的页面。</li>
+<li><strong>uDev</strong> —— 发币(部署 / 抄盘)引擎,贯穿扩展与主站。</li>
+</ol>
+<p>官方自报数据(未经第三方审计,应视为营销口径):2026 年&quot;#1 部署平台&quot;,约 2 万+ 扩展用户、1 万+ 网站注册、63.1 万+ 次部署。</p>
+<h2 id="二发展历史--时间线">二、发展历史 / 时间线</h2>
+<blockquote>
+<p>时间点据 X 官方/社区帖与 Chrome 商店元数据推断,可能有数日误差。</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>时间</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>2025 年 5 月</strong></td>
+<td>uxtension 浏览器扩展正式上架 Chrome Web Store,<strong>免费</strong>下载;早期以&quot;快速 CT/meme 追踪器 + Axiom 增强&quot;切入,积累首批用户。</td>
+</tr>
+<tr>
+<td><strong>2025 年 7 月 11 日</strong></td>
+<td><strong>主平台正式上线</strong>:整合 CT 追踪、Truth Social 追踪、Streamflow 锁仓追踪、Telegram CA 追踪,以及 uDev 发币/抄盘。</td>
+</tr>
+<tr>
+<td><strong>2025 年下半年</strong></td>
+<td>推出 <strong>uLaunch</strong>(私有 CT Tracker、大量 UI 自定义、面向活跃 deployer 的新页面);bundler 钱包上限由 3 个提升到 <strong>10 个</strong>;多链发币(BNB、Monad、BASE)陆续加入。</td>
+</tr>
+<tr>
+<td><strong>后续迭代</strong></td>
+<td>推出 <strong>uAI</strong>(AI 自动发币/自动跟单&quot;自动驾驶&quot;),uPoints 积分与多级返佣体系。</td>
+</tr>
+<tr>
+<td><strong>2026 年(快照)</strong></td>
+<td>扩展最新版本约 <strong>2.8.x</strong>(2026-05 前后更新),Chrome 商店评分约 <strong>4.4 星 / 约 58 条评分</strong>,在架用户约 <strong>2 万</strong>。</td>
+</tr>
+</tbody></table></div>
+<p>总体节奏:<strong>先用免费追踪器扩展引流 → 再叠加发币/抄盘等高变现工具 → 再用积分/返佣/AI 自动化做留存与裂变</strong>,迭代频率高。</p>
+<h2 id="三核心功能全景">三、核心功能全景</h2>
+<h3 id="1-发币--部署uDev">1. 发币 / 部署:uDev</h3>
+<ul>
+<li><strong>基本流程</strong>:填写代币字段(名称、符号、图片/元数据)→ 选择附加工具 → 输入首发买入的 SOL 或代币百分比 → 点击 <strong>Deploy</strong> 上链。</li>
+<li><strong>最低推荐启动资金:0.1 SOL</strong>;默认 Solana,经左上角币种切换可在 <strong>BNB Chain、Monad、BASE</strong> 发币。</li>
+<li>各链能力差异:Monad 支持 multi/cross-deploy;BASE 支持 multi/cross-deploy 与 auto-sell。</li>
+</ul>
+<h3 id="2-抄盘Vamp--Insta-Vamp">2. 抄盘:Vamp / Insta Vamp</h3>
+<ul>
+<li>一键<strong>克隆已有(通常正在热炒的)代币</strong>的元数据/形象并在数秒内重新发行。Insta Vamp 为一键动作。</li>
+</ul>
+<h3 id="3-批量与开发者工具">3. 批量与开发者工具</h3>
+<ul>
+<li><strong>Multi-Deploy / Cross-Deploy</strong>:批量/跨链同时部署多个代币。</li>
+<li><strong>uDupe / uPloys</strong>:复制、批量化部署。</li>
+<li><strong>Bundler + Sniper</strong>:面向用多个钱包发币的 dev,可通过 Snipe/Bundle 配置按钮联动 uDev;<strong>捆绑钱包上限 10 个</strong>(可用 10 个钱包同时买入自己发的币——典型的&quot;开盘护盘/做量/控盘&quot;用途)。</li>
+<li><strong>Feed-based deployment</strong>:基于信息流热点快速部署。</li>
+</ul>
+<h3 id="4-信息追踪Vision--AIO">4. 信息追踪:Vision / AIO</h3>
+<ul>
+<li><strong>AIO</strong>:All-In-One 单一聚合信息流;<strong>Vision</strong>:把不同追踪器拆成多个独立流,<strong>最多同时 3 个</strong>(开 AIO 可看更多)。</li>
+<li>可追踪来源:CA、CT、DEX、Streamflow Lock、Truth Social、Telegram、News。</li>
+<li>支持关键词高亮、CA 检测自动狙击(Auto-Snipe)、关键词触发买入、通知声音等。</li>
+</ul>
+<h3 id="5-AI-自动化uAI">5. AI 自动化:uAI</h3>
+<ul>
+<li>&quot;自动驾驶&quot;发币与交易:Quick Deploy 预设、Scraper(抓取)、Auto-Deployer、Auto-Sniper。</li>
+</ul>
+<h3 id="6-交易与账户">6. 交易与账户</h3>
+<ul>
+<li>内置交易面板,买/卖<strong>手续费 0.75%</strong>;狙击、双击发币、键位(keybinds)、白名单、组合(portfolio)跟踪。</li>
+<li><strong>Reclaim SOL</strong>:关闭空代币账户、回收租金(rent)。</li>
+</ul>
+<h3 id="7-经济激励uPoints--返佣">7. 经济激励:uPoints + 返佣</h3>
+<ul>
+<li><strong>uPoints</strong>:通过交易量与拉新获取积分。</li>
+<li><strong>多级返佣</strong>:推荐他人(直接/间接/扩展三级)可分得其费用的一部分,外加 uPoints。</li>
+</ul>
+<h2 id="四UXTO-代币经济链上视角">四、UXTO 代币经济(链上视角)</h2>
+<blockquote>
+<p>链上行情页(DEX Screener / Bitget)在采集时返回 403,以下为公开快照与推导值,<strong>非实时,务必自行在区块浏览器核验</strong>。</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值(快照)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>符号</td>
+<td><strong>UXTO</strong></td>
+<td>平台自有代币</td>
+</tr>
+<tr>
+<td>总供应量</td>
+<td><strong>1,000,000,000(10 亿)</strong></td>
+<td>公开口径</td>
+</tr>
+<tr>
+<td>参考价</td>
+<td><strong>≈ $0.00078</strong></td>
+<td>快照价,波动剧烈</td>
+</tr>
+<tr>
+<td>完全稀释估值 FDV</td>
+<td><strong>≈ $78 万</strong>(0.00078 × 10 亿)</td>
+<td>与 DEX Screener 页面标题显示的 &quot;≈ $783K&quot; 吻合</td>
+</tr>
+<tr>
+<td>主交易场所</td>
+<td><strong>Solana / FluxBeam</strong>(SPL / Token-2022 系)</td>
+<td>pair 地址 <code>cx5naje7v5a8cljwstzstw2r2uqcp1ovzbjkrx61repo</code></td>
+</tr>
+<tr>
+<td>流动性 / 深度</td>
+<td>低(微市值 + 小众 DEX)</td>
+<td>滑点大、易被大单冲击</td>
+</tr>
+</tbody></table></div>
+<p><strong>关键观察与风险:</strong></p>
+<ol>
+<li><strong>微市值、薄流动性</strong>:约 78 万美元 FDV、且主要挂在 FluxBeam 这类相对小众的 DEX 上,<strong>深度薄、滑点高、价格易被操纵</strong>,大额进出困难。</li>
+<li><strong>同名代币跨链并存 → 身份混淆 / 仿冒风险</strong>:公开检索可见多个 ticker 为 &quot;UXTO&quot; 的合约——Solana(FluxBeam)、<strong>BNB Chain</strong>(<code>0x2D91…4444</code>)、<strong>Avalanche</strong>(<code>0x2Aa9…7B4</code>,持有人仅约 12 个,很可能是蹭名/仿冒)。<strong>买错链、买到仿冒合约的风险真实存在</strong>;务必以官方公布的唯一合约地址为准。</li>
+<li><strong>效用 / 价值捕获不透明</strong>:公开资料<strong>未清晰披露 UXTO 的具体效用或收入分成机制</strong>。平台可见的激励是 <strong>uPoints + 多级返佣</strong>,但 uPoints 与 UXTO 的兑换/绑定关系、费用收入是否回流 UXTO 等均无明确文档——<strong>代币与现金流的关系不清晰是典型估值红旗</strong>。</li>
+<li><strong>多级返佣 + 自有币 + 积分</strong>的组合,需警惕沦为<strong>靠拉新驱动的反身性投机</strong>结构(新用户费用→返佣/积分→买盘)而非真实效用支撑。</li>
+</ol>
+<blockquote>
+<p>结论:UXTO 应被视为<strong>高波动、薄流动性的微市值投机品</strong>,而非具备清晰效用/现金流支撑的资产。任何持仓都应假设可能归零。</p>
+</blockquote>
+<h2 id="五X--社区与用户反馈">五、X / 社区与用户反馈</h2>
+<blockquote>
+<p>综合 X(Twitter)官方与社区帖、Chrome Web Store / chrome-stats 用户评价。评分约 4.4 星(全时)、近期评分约 3.1,呈现明显两极分化。</p>
+</blockquote>
+<h3 id="正面反馈">正面反馈</h3>
+<ul>
+<li><strong>快</strong>:CT/追踪器响应快、可靠,被反复称赞&quot;抓 runner(早期暴涨币)很快&quot;。</li>
+<li><strong>免费 + 高频更新</strong>:扩展免费,更新勤,社区活跃。</li>
+<li><strong>集成顺手</strong>:与 Axiom 深度集成,All-in-One 工作流和 UI 增强受好评,被部分用户称为打 meme 的&quot;alpha 利器&quot;。</li>
+</ul>
+<h3 id="负面反馈--警示重点">负面反馈 / 警示(重点)</h3>
+<ul>
+<li><strong>钱包被盗(wallet drain)与疑似欺诈行为</strong>在评论中<strong>反复出现</strong>——这是最严重、最值得警惕的信号。</li>
+<li>与 Axiom 同用时<strong>卡顿/性能问题</strong>。</li>
+<li>个别用户反映<strong>账号被封</strong>、申诉无回应。</li>
+<li>注意:此类社区/商店评论真假混杂,既可能是真实安全事件,也可能是竞品抹黑或仿冒站连带影响,<strong>不能单凭评论定性,但 &quot;wallet drain&quot; 反复出现必须高度重视</strong>。</li>
+</ul>
+<h2 id="六扩展权限与签名钓鱼技术拆解防御视角">六、扩展权限与签名钓鱼技术拆解(防御视角)</h2>
+<blockquote>
+<p>本节从安全防御角度说明&quot;为什么交易/发币类浏览器扩展风险天然偏高&quot;,帮助做尽调与自我保护,<strong>不含任何攻击操作指引</strong>。</p>
+</blockquote>
+<h3 id="61-攻击面为何这么大">6.1 攻击面为何这么大</h3>
+<p>一个深度集成交易站、且需要<strong>连接钱包</strong>的扩展,通常会申请较宽的 Chrome 权限——典型是 <strong>host permissions(在所有网站读取并更改数据)</strong> 与持续运行的 content script。这意味着扩展可以:</p>
+<ul>
+<li>注入页面、读取/改写交易站 DOM 与网络请求;</li>
+<li>介入与钱包(Phantom/Solflare 等)的连接,<strong>在你点击&quot;签名&quot;前构造/篡改交易内容</strong>;</li>
+<li>长期后台运行,自动化执行(auto-snipe/auto-deploy)。</li>
+</ul>
+<h3 id="62-常见的资金被盗--钓鱼模式识别用">6.2 常见的资金被盗 / 钓鱼模式(识别用)</h3>
+<ol>
+<li><strong>盲签恶意交易</strong>:界面显示&quot;买入 X 币&quot;,实际交易里夹带<strong>转账 / SetAuthority / CloseAccount</strong> 等额外指令,用户未逐条核对即签名 → 资金被转走。</li>
+<li><strong>授权 / 委托滥用(approve / delegate)</strong>:诱导你给某地址 <strong>delegate</strong> 权限,事后即可随时划走代币。</li>
+<li><strong>signMessage 钓鱼</strong>:用&quot;登录/验证&quot;名义索取签名,换取站点会话甚至误导你&quot;导入钱包&quot;。</li>
+<li><strong>私钥 / 助记词索取</strong>:任何要求你<strong>把助记词/私钥贴进扩展或网页</strong>的 UI 都应直接判定为恶意——合规工具永远不需要。</li>
+<li><strong>自动化 = 预授权热钱包</strong>:auto-snipe/auto-deploy 要&quot;无人值守&quot;地签名,往往意味着<strong>热私钥被存储或被代理</strong>;一旦扩展或其后端被攻破,等于私钥泄露。</li>
+<li><strong>供应链/更新风险</strong>:扩展<strong>自动更新</strong>。&quot;今天可信&quot;不代表&quot;明天可信&quot;——一次恶意更新或开发者账号被盗,即可在你毫无察觉时获得同样的钱包访问(&quot;trusted today, drained tomorrow&quot;)。</li>
+<li><strong>显示层欺骗(配合预付费骗局)</strong>:通过自有 RPC/界面<strong>显示虚假余额或虚假盈利</strong>,诱导你继续充值或缴&quot;解锁/提现费&quot;——这正是第三方评级给出的&quot;advance-fee scam&quot;警告所描述的套路。</li>
+</ol>
+<h3 id="63-防护清单给使用者尽调者">6.3 防护清单(给使用者/尽调者)</h3>
+<ul>
+<li><strong>隔离</strong>:专用 <strong>burner 钱包 + 极小额资金 + 独立浏览器配置</strong>;绝不在装有大额资产的主钱包上连接此类扩展。</li>
+<li><strong>硬件钱包</strong>:任何有意义的金额走硬件钱包,并<strong>逐条核对指令</strong>;优先用能<strong>模拟/解码交易</strong>并对高风险操作弹窗告警的钱包。</li>
+<li><strong>永不泄露助记词</strong>;遇到索取即判定恶意。</li>
+<li><strong>定期 revoke</strong>:周期性撤销不再需要的 token approve / delegate 授权。</li>
+<li><strong>盯更新与权限</strong>:留意扩展版本更新与<strong>权限是否突然扩大</strong>;host permissions 越宽越要警惕。</li>
+<li><strong>独立核验</strong>:用你信任的 RPC,并在<strong>独立区块浏览器</strong>上交叉核对余额与交易,破解&quot;虚假余额/盈利&quot;型预付费骗局。</li>
+<li><strong>不缴任何&quot;解锁/提现/税费&quot;</strong>:经典预付费骗局特征,缴了也提不出来。</li>
+</ul>
+<h2 id="七风险与尽调要点总览">七、风险与尽调要点(总览)</h2>
+<ol>
+<li><strong>工具性质</strong>:Vamp 抄盘克隆、批量/跨链发币、10 钱包捆绑买入、狙击、AI 自动发币——<strong>天然服务于 memecoin 的高风险投机乃至&quot;拉盘—砸盘(pump &amp; dump)/收割&quot;玩法</strong>,与 rug pull 生态高度重合。使用者既可能获利,也极易成为接盘方。&quot;0.1 SOL 即可发币 + 一键克隆热门币 + 10 钱包护盘&quot;显著降低了发行欺诈性 memecoin 的门槛。</li>
+<li><strong>扩展安全(最现实威胁)</strong>:见第六节;商店评论已多次出现 wallet drain 投诉,官方&quot;不收集数据&quot;为自我声明、无第三方审计。</li>
+<li><strong>域名仿冒与评级矛盾</strong>:存在 <code>uxento.io</code> / <code>.to</code> / <code>.cc</code> 等多个相似域名(钓鱼高发信号);Scam Detector 对 <code>.to</code> 给极低分(疑似通用模板误报),Scamadviser 对 <code>.io</code> 表示<strong>无法确定、不推荐</strong>。</li>
+<li><strong>代币不透明</strong>:UXTO 同名跨链并存、效用/价值捕获不清晰、薄流动性(见第四节)。</li>
+<li><strong>整体透明度不足</strong>:团队匿名、无可验证的合约/扩展代码审计、自报数据无法核验——信任成本全由用户承担。</li>
+</ol>
+<h2 id="八结论中立评估">八、结论(中立评估)</h2>
+<ul>
+<li><strong>定位</strong>:Uxento 是一款功能完整、迭代积极、在 degen 圈有真实用户量的 <strong>Solana 多链 memecoin 交易 + 发币 + 信息追踪自动化工具</strong>;追踪快、集成 Axiom、免费引流是其真实优势。</li>
+<li><strong>它没有板上钉钉是骗局的定论,但其核心功能服务于高风险投机/收割生态</strong>;叠加商店里反复出现的 wallet drain 投诉、域名仿冒风险、扩展权限风险、UXTO 代币不透明与薄流动性、透明度不足、评级矛盾——<strong>整体风险等级判定为&quot;高&quot;</strong>。</li>
+<li><strong>给尽调者/使用者的底线建议</strong>:<ol>
+<li>只通过官方核实域名访问,警惕 .to/.cc 等仿冒站;</li>
+<li>任何&quot;发币/交易&quot;操作都用 burner 钱包 + 小额,逐笔审签,定期 revoke;</li>
+<li>不向任何&quot;解锁/提现/税费&quot;名目转账(经典预付费骗局特征);</li>
+<li>UXTO 视为高波动、薄流动性的微市值投机品,而非有明确效用的资产,并核对唯一官方合约地址以防买到仿冒;</li>
+<li>多数司法辖区用此类工具批量发币/拉盘可能触及证券、欺诈、市场操纵红线,合规风险自担。</li>
+</ol>
+</li>
+</ul>
+<h2 id="参考来源">参考来源</h2>
+<ul>
+<li>Uxento 官网:<a href="https://www.uxento.io/">https://www.uxento.io/</a> ；app:<a href="https://app.uxento.io/login">https://app.uxento.io/login</a> ；状态页:<a href="https://status.uxento.io/">https://status.uxento.io/</a></li>
+<li>uDev 文档(GitBook):<a href="https://uxento.gitbook.io/uxento/tools/udev">https://uxento.gitbook.io/uxento/tools/udev</a></li>
+<li>Uxento Vision 文档:<a href="https://uxento.gitbook.io/uxento/tools/uxento-vision">https://uxento.gitbook.io/uxento/tools/uxento-vision</a></li>
+<li>uxtension(Chrome Web Store):<a href="https://chromewebstore.google.com/detail/uxtension/pljeffieceahpjcgldlglfidenecjloh">https://chromewebstore.google.com/detail/uxtension/pljeffieceahpjcgldlglfidenecjloh</a></li>
+<li>uxtension 用户评价(chrome-stats):<a href="https://chrome-stats.com/d/pljeffieceahpjcgldlglfidenecjloh/reviews">https://chrome-stats.com/d/pljeffieceahpjcgldlglfidenecjloh/reviews</a></li>
+<li>DEX Screener(UXTO 行情 / pair):<a href="https://dexscreener.com/solana/cx5naje7v5a8cljwstzstw2r2uqcp1ovzbjkrx61repo">https://dexscreener.com/solana/cx5naje7v5a8cljwstzstw2r2uqcp1ovzbjkrx61repo</a></li>
+<li>Bitget Wiki(UXTO 代币信息):<a href="https://web3.bitget.com/en/wiki/uxto-wallet">https://web3.bitget.com/en/wiki/uxto-wallet</a></li>
+<li>X:扩展发布帖 <a href="https://x.com/twizzyGen/status/1921320397644959892">https://x.com/twizzyGen/status/1921320397644959892</a> ；主平台上线 <a href="https://x.com/SolTraderLS/status/1943531244396122408">https://x.com/SolTraderLS/status/1943531244396122408</a> ；uLaunch 更新 <a href="https://x.com/uxento/status/1963035017472282917">https://x.com/uxento/status/1963035017472282917</a> ；官方账号 <a href="https://x.com/uxento">https://x.com/uxento</a></li>
+<li>Scamadviser:<a href="https://www.scamadviser.com/check-website/uxento.io">https://www.scamadviser.com/check-website/uxento.io</a></li>
+<li>Scam Detector:<a href="https://www.scam-detector.com/validator/uxento-to-review/">https://www.scam-detector.com/validator/uxento-to-review/</a></li>
+</ul>
+
+    </section>
+    <div class="footer">
+      本报告基于公开网络资料整理;部分官网/行情页采集时返回 403,链上与统计数据为公开快照,可能与实时不符,使用前请独立核验。
+    </div>
+  </main>
+</div>
+</body>
+</html>
