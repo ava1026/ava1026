@@ -289,7 +289,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
 <!-- ========== 数据 3 ========== -->
 <section id="s3">
   <div class="sec-head"><span class="sec-no">数据 3</span><h2>双端用户的流转方向</h2></div>
-  <p class="sec-sub">对 34,494 个双端用户，按窗内首次 App 成交与首次 Web 成交的自然日先后判定方向。转向后交易额 = 首次跨端时点之后的全部 App+Web 成交额。</p>
+  <p class="sec-sub">对 34,942 个双端用户（07-28 快照），按窗内首次 App 成交与首次 Web 成交的自然日先后判定方向。跨端时点 = 两个首次中较晚者；转向前 = 窗内首笔成交至跨端时点，转向后 = 跨端时点至窗末。</p>
 
   <div class="card">
     <div class="chart-title">流转方向构成</div>
@@ -302,22 +302,25 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     </div>
     <div class="tbl-scroll" style="margin-top:14px">
     <table>
-      <thead><tr><th>方向</th><th>用户数</th><th>占比</th><th>跨端间隔中位数</th><th>转向后人均交易额</th><th>转向后人均中位数</th><th>转向后人均笔数</th></tr></thead>
+      <thead><tr><th rowspan="2" style="vertical-align:bottom">方向</th><th rowspan="2" style="vertical-align:bottom">用户数</th><th rowspan="2" style="vertical-align:bottom">占比</th><th rowspan="2" style="vertical-align:bottom">跨端间隔<br>中位数</th><th colspan="3" style="text-align:center;border-left:1px solid var(--grid)">转向前</th><th colspan="3" style="text-align:center;border-left:1px solid var(--grid)">转向后</th><th colspan="2" style="text-align:center;border-left:1px solid var(--grid)">日均交易额中位</th></tr>
+      <tr><th style="border-left:1px solid var(--grid)">人均</th><th>人均中位</th><th>人均笔数</th><th style="border-left:1px solid var(--grid)">人均</th><th>人均中位</th><th>人均笔数</th><th style="border-left:1px solid var(--grid)">转向前</th><th>转向后</th></tr></thead>
       <tbody>
-        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--web)"></span> 先 Web 后 App</td><td>15,854</td><td>46.0%</td><td>6.0 天</td><td>$152,971</td><td>$5,779</td><td>1,499</td></tr>
-        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--app)"></span> 先 App 后 Web</td><td>9,966</td><td>28.9%</td><td>7.1 天</td><td>$86,577</td><td>$4,276</td><td>1,055</td></tr>
-        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--both)"></span> 同日首次成交</td><td>8,674</td><td>25.1%</td><td>2.7 小时</td><td>$157,946</td><td>$3,188</td><td>1,697</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--web)"></span> 先 Web 后 App</td><td>16,054</td><td>46.0%</td><td>6.0 天</td><td style="border-left:1px solid var(--grid)">$46,331</td><td>$1,118</td><td>385</td><td style="border-left:1px solid var(--grid)">$154,109</td><td>$5,769</td><td>1,514</td><td style="border-left:1px solid var(--grid)">$180/天</td><td>$71/天</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--app)"></span> 先 App 后 Web</td><td>10,114</td><td>28.9%</td><td>7.2 天</td><td style="border-left:1px solid var(--grid)">$13,593</td><td>$641</td><td>241</td><td style="border-left:1px solid var(--grid)">$86,713</td><td>$4,221</td><td>1,060</td><td style="border-left:1px solid var(--grid)">$96/天</td><td>$50/天</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--both)"></span> 同日首次成交</td><td>8,774</td><td>25.1%</td><td>2.7 小时</td><td style="border-left:1px solid var(--grid)" class="dim">$957</td><td class="dim">$112</td><td class="dim">17</td><td style="border-left:1px solid var(--grid)">$158,242</td><td>$3,159</td><td>1,706</td><td style="border-left:1px solid var(--grid)" class="dim">—</td><td>$41/天</td></tr>
       </tbody>
     </table>
     </div>
+    <div class="chart-sub" style="margin-top:8px;margin-bottom:0">同日组「转向前」时段中位仅 2.7 小时，其转向前指标无解释意义（置灰）。日均口径 = 人均交易额 ÷ 该时段天数（不足 1 天按 1 天计），用于消除前后时段长度不等的偏差。</div>
   </div>
 
   <div class="conclusion">
     <span class="tag">结论 · 更支持「App 承接 Web 溢出」</span>
     <ul>
-      <li><b>先 Web 后 App（15,854 人，46.0%）是先 App 后 Web（9,966 人，28.9%）的 1.6 倍</b>——双端用户主要由 Web 起步。</li>
-      <li>Web→App 方向质量更高：转向后人均 <b>$153.0K vs $86.6K</b>，中位数 $5.8K vs $4.3K——是 Web 高价值用户在向 App 延伸，而非 App 向 Web 输送高价值用户。</li>
-      <li>首次跨端间隔中位数 6~7 天；另有 <b>25.1% 同日双端成交</b>（间隔中位数约 2.7 小时），更像天然多端用户而非「被转化」，解读时应单列。</li>
+      <li><b>先 Web 后 App（16,054 人，46.0%）是先 App 后 Web（10,114 人，28.9%）的 1.6 倍</b>——双端用户主要由 Web 起步；且该方向无论转向前还是转向后价值都全面更高（转向前人均 <b>$46.3K vs $13.6K</b>，转向后 <b>$154.1K vs $86.7K</b>）。</li>
+      <li><b>方向间的价值差在转向前就已存在</b>——Web 吸引的本来就是更重的用户；转向后人均总额的抬升主要来自统计时段变长（转向前中位仅 6~7 天），跨端更像高价值用户生命周期中的一站，而非价值跃迁的原因。</li>
+      <li>以日均交易额中位数做公平对比，两个方向转向后均低于转向前（$180→$71、$96→$50），符合首期热度自然衰减——<b>没有证据显示跨端本身提升单位时间交易强度</b>。</li>
+      <li>首次跨端间隔中位数 6~7 天；<b>25.1% 同日双端成交</b>（间隔中位约 2.7 小时）更像天然多端用户而非「被转化」，其转向前指标无解释意义。</li>
     </ul>
   </div>
 </section>
@@ -406,7 +409,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
       <dt>数据 3 的「首次」限于时间窗内</dt>
       <dd>2026 年以前已有双端行为的老用户，其窗内「首次」并非真实首次，方向判定反映的是本时间窗内的行为顺序。「同日」按 Asia/Shanghai 自然日比较，同日内不再分先后。</dd>
       <dt>数据 4 / 数据 5 的增补口径</dt>
-      <dd>数据 4、数据 5 与数据 1 主表（月度行）查询于 2026-07-28 快照；数据 1 的分链/新老拆分及数据 2、数据 3 查询于 07-26 快照，7 月相关绝对值略低于最新值，占比类指标不受影响。留存口径：不要求连续留存、不区分回访端；目标月为 7 月的留存点受 7 月行情放量影响偏高（M+6 相对 M+5 出现翘尾）。日度「双端」= 同一自然日两端均有成交，口径严于月度。</dd>
+      <dd>数据 3（转向前/转向后）、数据 4、数据 5 与数据 1 主表（月度行）查询于 2026-07-28 快照（数据 3 双端用户 34,942，较 07-26 快照多 448 人）；数据 1 的分链/新老拆分及数据 2 查询于 07-26 快照，7 月相关绝对值略低于最新值，占比类指标不受影响。留存口径：不要求连续留存、不区分回访端；目标月为 7 月的留存点受 7 月行情放量影响偏高（M+6 相对 M+5 出现翘尾）。日度「双端」= 同一自然日两端均有成交，口径严于月度。</dd>
       <dt>其他</dt>
       <dd>数据 1 各月用户数不可跨月加总（跨月活跃用户会重复）；数据 2 分位数是「每用户总交易额」的用户维度分布，不是单笔金额分布；7 月为不完整月（数据到 07-26），绝对值偏低但占比类指标可比；表为实时更新，不同查询批次的合计存在 &lt;0.01% 的快照差异。</dd>
     </dl>
@@ -720,10 +723,10 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
 
   // ---------- 7. direction bar (数据3) ----------
   chart(function () {
-  shareBar('dir-bar', '双端用户 34,494 人', [
-    { label: '先 Web 后 App', v: 15854, color: C_WEB },
-    { label: '先 App 后 Web', v: 9966, color: C_APP },
-    { label: '同日首次成交', v: 8674, color: C_BOTH },
+  shareBar('dir-bar', '双端用户 34,942 人', [
+    { label: '先 Web 后 App', v: 16054, color: C_WEB },
+    { label: '先 App 后 Web', v: 10114, color: C_APP },
+    { label: '同日首次成交', v: 8774, color: C_BOTH },
   ], v => fmt(v) + ' 人');
   });
 
