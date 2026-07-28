@@ -277,8 +277,9 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
   </div>
 
   <div class="card">
-    <div class="chart-title">SOL 单链拆分 · 三组用户价值指标</div>
-    <div class="chart-sub">分组按用户在 SOL 链上的端使用判定 · 07-28 快照 · 括号内为大盘同口径值</div>
+    <div class="chart-title">单链拆分 · 三组用户价值指标（SOL / BSC / Robinhood）</div>
+    <div class="chart-sub">分组按用户在该链上的端使用判定 · 07-28 快照 · Robinhood 于 2026-07 上线，实际窗口仅 7 月</div>
+    <h3 style="margin-top:6px">SOL</h3>
     <div class="tbl-scroll">
     <table>
       <thead><tr><th>用户分组</th><th>用户数</th><th>总交易额</th><th>人均交易额</th><th>人均笔数</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th></tr></thead>
@@ -290,7 +291,48 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
       </tbody>
     </table>
     </div>
-    <div class="chart-sub" style="margin-top:10px;margin-bottom:0">端级对比：SOL 上 App 用户 65,495 反超 Web 63,454；App 交易额占 <b style="color:var(--ink)">36.4%</b>（大盘 20.3%）、笔数占 40.0%。双端占用户 23.2%（大盘 24.8%），贡献交易额 61.7%（大盘 67.4%）。</div>
+    <div class="chart-sub" style="margin-top:10px">端级对比：SOL 上 App 用户 65,495 反超 Web 63,454；App 交易额占 <b style="color:var(--ink)">36.4%</b>（大盘 20.3%）、笔数占 40.0%。</div>
+
+    <h3>BSC</h3>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>用户分组</th><th>用户数</th><th>总交易额</th><th>人均交易额</th><th>人均笔数</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--app)"></span> 仅 App</td><td>15,075</td><td>$1.61亿</td><td>$10,658</td><td>212</td><td>$51</td><td>$415</td><td>$2,848</td><td>$15,766</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--web)"></span> 仅 Web</td><td>14,886</td><td>$7.77亿</td><td>$52,173</td><td>394</td><td>$124</td><td>$919</td><td>$7,776</td><td>$54,436</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--both)"></span> 双端</td><td>12,688</td><td>$26.19亿</td><td>$206,432</td><td>1,817</td><td>$1,880</td><td>$12,915</td><td>$79,702</td><td>$379,999</td></tr>
+        <tr><td><b>合计</b></td><td><b>42,649</b></td><td><b>$35.57亿</b></td><td><b>$83,392</b></td><td><b>753</b></td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="chart-sub" style="margin-top:10px">端级对比：App 用户 27,763 / Web 27,574 基本持平；App 交易额仅占 <b style="color:var(--ink)">15.8%</b>、笔数占 23.0%。</div>
+
+    <h3>Robinhood（仅 7 月）</h3>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>用户分组</th><th>用户数</th><th>总交易额</th><th>人均交易额</th><th>人均笔数</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--app)"></span> 仅 App</td><td>10,016</td><td>$1.14亿</td><td>$11,347</td><td>137</td><td>$142</td><td>$840</td><td>$4,925</td><td>$22,223</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--web)"></span> 仅 Web</td><td>13,111</td><td>$5.65亿</td><td>$43,102</td><td>438</td><td>$266</td><td>$1,848</td><td>$14,887</td><td>$84,568</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--both)"></span> 双端</td><td>8,772</td><td>$6.26亿</td><td>$71,321</td><td>731</td><td>$1,649</td><td>$9,231</td><td>$46,404</td><td>$165,989</td></tr>
+        <tr><td><b>合计</b></td><td><b>31,899</b></td><td><b>$13.04亿</b></td><td><b>$40,891</b></td><td><b>424</b></td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="chart-sub" style="margin-top:10px">端级对比：App 用户 18,788 / Web 21,883；App 交易额占 <b style="color:var(--ink)">16.9%</b>、笔数占 17.3%。</div>
+
+    <h3>跨链对比</h3>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>链</th><th>总交易用户</th><th>App交易额占比</th><th>双端用户占比</th><th>双端交易额贡献</th><th>双端人均</th><th>双端÷仅App倍数</th><th>双端P50</th></tr></thead>
+      <tbody>
+        <tr><td>大盘（全链）</td><td>141,014</td><td>20.3%</td><td>24.8%</td><td>67.4%</td><td>$161,103</td><td>13.4x</td><td>$7,010</td></tr>
+        <tr><td>sol</td><td>104,685</td><td><b>36.4%</b></td><td>23.2%</td><td>61.7%</td><td>$53,128</td><td>6.2x</td><td>$3,306</td></tr>
+        <tr><td>bsc</td><td>42,649</td><td>15.8%</td><td><b>29.8%</b></td><td><b>73.6%</b></td><td><b>$206,432</b></td><td><b>19.4x</b></td><td><b>$12,915</b></td></tr>
+        <tr><td>robinhood</td><td>31,899</td><td>16.9%</td><td>27.5%</td><td>48.0%</td><td>$71,321</td><td>6.3x</td><td>$9,231</td></tr>
+      </tbody>
+    </table>
+    </div>
   </div>
 
   <div class="conclusion">
@@ -300,6 +342,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
       <li>「轻量用户主导 App」<b>成立</b>：仅App 组人均 $12.0K、中位数 $315，全面低于仅Web 组（$38.4K / $491），人均笔数也最低（251 vs 383）。</li>
       <li>真正的量主力是<b>双端用户：24.8% 的用户贡献 67.4% 的交易额</b>，人均 $161.1K，是仅App 组的 13.4 倍——提升双端转化比单纯拉 App 新客对量的杠杆更大。</li>
       <li>SOL 单链拆分改变了对 App 的判断：<b>SOL 上 App 交易额占 36.4%、用户数反超 Web</b>——大盘的 App 低占比主要被 ETH/BSC/base 等 Web 主导链拉低，SOL 是 App 的基本盘。结构性结论在 SOL 上依然成立但幅度收窄（双端贡献 61.7%、人均为仅App 的 6.2 倍）；SOL 各组人均/中位数全面低于大盘同组（双端 P50 $3,306 vs $7,010），小额高频用户聚集，大额资金更多在其他链经 Web 成交。</li>
+      <li>BSC 与 Robinhood 拆分进一步说明幅度由链上资金结构决定：<b>BSC 是双端溢价最极端的链</b>（双端占 29.8% 用户、贡献 73.6% 交易额、人均是仅App 的 19.4 倍），大额/跟单资金高度集中于双端重度用户并主要经 Web 成交；<b>Robinhood 上线首月呈「Web 重、App 轻」</b>（仅Web 组 P50 $1,848 为全链单端最高），双端贡献 48.0% 全链最低——主因是新用户尚未来得及跨端，后续几个月是观察其双端化的关键窗口。</li>
     </ul>
   </div>
 </section>
