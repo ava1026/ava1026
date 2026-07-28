@@ -180,7 +180,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     <span class="chip">表 <code>ods.trade_broker_order</code></span>
     <span class="chip">口径 <code>state='30' AND kind='1'</code></span>
     <span class="chip">App = <code>source LIKE '%_app'</code> · Web = <code>LIKE '%_web'</code></span>
-    <span class="chip">数据截至 2026-07-26</span>
+    <span class="chip">数据截至 2026-07-28</span>
   </div>
 </header>
 
@@ -233,7 +233,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
   <div class="conclusion">
     <span class="tag">结论</span>
     <ul>
-      <li>双端占比全年稳定在 <b>22.8% ~ 25.4%</b>，1~6 月缓慢下行、7 月回升至 24.3%，<b>没有出现双端融合加速的趋势</b>。</li>
+      <li>双端占比全年稳定在 <b>22.8% ~ 25.4%</b>，1~6 月缓慢下行、7 月回升至 24.4%，<b>没有出现双端融合加速的趋势</b>。</li>
       <li>分链看，<b>BSC 双端占比（26%~32%）显著高于 SOL（22%~24%）</b>；7 月新上的 robinhood 链首月即 27.3%，高于大盘。ETH / base 以 Web-only 为主。</li>
       <li>新老差异是最大的结构性事实：<b>新用户当月双端占比仅 12%~19%，老用户稳定 29%~31%</b>——双端行为主要由存量老用户贡献。</li>
     </ul>
@@ -322,6 +322,76 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
   </div>
 </section>
 
+<!-- ========== 数据 4 ========== -->
+<section id="s4d">
+  <div class="sec-head"><span class="sec-no">数据 4</span><h2>双端重合率每日曲线</h2></div>
+  <p class="sec-sub">口径与数据 1 一致，粒度为 Asia/Shanghai 自然日。注意日度「双端」要求同一天内两端都有成交，口径天然严于月度，两者数值不可直接比较。</p>
+
+  <div class="card">
+    <div class="chart-title">日度双端占比</div>
+    <div class="chart-sub">当日双端用户 ÷ 当日总交易用户 · 细线为逐日值，粗线为 7 日移动平均 · 悬停查看明细</div>
+    <div class="chart-box" id="daily-ratio"></div>
+  </div>
+
+  <div class="card">
+    <div class="chart-title">日度交易用户构成</div>
+    <div class="chart-sub">单位：人 · 堆叠面积 · 悬停查看当日明细</div>
+    <div class="legend">
+      <span class="li"><span class="sw" style="background:var(--app)"></span>仅 App</span>
+      <span class="li"><span class="sw" style="background:var(--web)"></span>仅 Web</span>
+      <span class="li"><span class="sw" style="background:var(--both)"></span>双端</span>
+    </div>
+    <div class="chart-box" id="daily-stack"></div>
+  </div>
+
+  <div class="conclusion">
+    <span class="tag">结论</span>
+    <ul>
+      <li>日度双端占比全期在 <b>11.6% ~ 19.3%</b> 之间波动（中位数 15.2%），显著低于月度口径的 23%~25%——<b>双端用户以「跨日切换」为主</b>，同一天内两端并用的只是少数。</li>
+      <li>日度占比与大盘活跃同向：1 月中旬、7 月上旬两波行情期抬升至 17%~19%，6 月低谷期回落至 12%~13%，双端并用更多发生在高活跃时段。</li>
+      <li>7 月上旬起三类日活同步放量（总日活约 1.0 万 → 2.0 万，主要由 robinhood 链上线带动），但日度双端占比仅小幅上行——<b>新增用户以单端起步为主</b>，与数据 1 的新用户结论一致。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== 数据 5 ========== -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">数据 5</span><h2>仅App / 仅Web / 双端用户的留存</h2></div>
+  <p class="sec-sub">月度滚动留存：基准月按当月端使用分组（与数据 1 一致），M+k 留存 = 基准组用户在基准月后第 k 个自然月仍有任一端成交的比例。基准月取 2026-01 ~ 2026-06，各基准月加权合并。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="chart-title">三组用户留存曲线（合并基准月）</div>
+      <div class="chart-sub">留存判定不区分回访端 · 悬停查看各期数值</div>
+      <div class="legend">
+        <span class="li"><span class="sw line" style="background:var(--both)"></span>双端</span>
+        <span class="li"><span class="sw line" style="background:var(--app)"></span>仅 App</span>
+        <span class="li"><span class="sw line" style="background:var(--web)"></span>仅 Web</span>
+      </div>
+      <div class="chart-box" id="ret-curve"></div>
+    </div>
+    <div class="card">
+      <div class="chart-title">M+1 次月留存 · 按基准月</div>
+      <div class="chart-sub">双端组各基准月恒定领先 25pp 以上</div>
+      <div class="tbl-scroll">
+      <table id="ret-m1-tbl">
+        <thead><tr><th>基准月</th><th>仅App</th><th>仅Web</th><th>双端</th><th>双端领先</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <span class="tag">结论</span>
+    <ul>
+      <li><b>双端用户留存断层式领先</b>：M+1 留存 77.4% vs 仅App 51.0% / 仅Web 49.6%；到 M+6 双端仍有 47.1%，约为单端组（22%~27%）的 2 倍。</li>
+      <li>仅App 与仅Web 的留存曲线几乎重合（各期差距 &lt;4pp）——<b>端本身不带来留存差异，真正的分水岭是「是否双端使用」</b>。</li>
+      <li>各基准月结构稳定，且 M+1 留存逐月走高（1 月基准 45%/72% → 6 月基准 60%/85%），留存基本盘在改善。注意：双端与高留存是相关关系（重度用户更可能双端），不能直接推因果。</li>
+    </ul>
+  </div>
+</section>
+
 <!-- ========== 口径 ========== -->
 <section id="s4">
   <div class="sec-head"><span class="sec-no">附</span><h2>口径存疑处与异常值处理</h2></div>
@@ -335,6 +405,8 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
       <dd>新用户判定取该 user_id 全表（不限时间窗、不限 source）中 <code>state='30' AND kind='1'</code> 的最早成交——经 openapi/bot 首次成交的也算老用户。</dd>
       <dt>数据 3 的「首次」限于时间窗内</dt>
       <dd>2026 年以前已有双端行为的老用户，其窗内「首次」并非真实首次，方向判定反映的是本时间窗内的行为顺序。「同日」按 Asia/Shanghai 自然日比较，同日内不再分先后。</dd>
+      <dt>数据 4 / 数据 5 的增补口径</dt>
+      <dd>数据 4、数据 5 与数据 1 主表（月度行）查询于 2026-07-28 快照；数据 1 的分链/新老拆分及数据 2、数据 3 查询于 07-26 快照，7 月相关绝对值略低于最新值，占比类指标不受影响。留存口径：不要求连续留存、不区分回访端；目标月为 7 月的留存点受 7 月行情放量影响偏高（M+6 相对 M+5 出现翘尾）。日度「双端」= 同一自然日两端均有成交，口径严于月度。</dd>
       <dt>其他</dt>
       <dd>数据 1 各月用户数不可跨月加总（跨月活跃用户会重复）；数据 2 分位数是「每用户总交易额」的用户维度分布，不是单笔金额分布；7 月为不完整月（数据到 07-26），绝对值偏低但占比类指标可比；表为实时更新，不同查询批次的合计存在 &lt;0.01% 的快照差异。</dd>
     </dl>
@@ -362,7 +434,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     { m: '2026-04', app: 13797, web: 15587, both: 9153 },
     { m: '2026-05', app: 14581, web: 15218, both: 9355 },
     { m: '2026-06', app: 13605, web: 12495, both: 7715 },
-    { m: '2026-07', app: 21323, web: 20963, both: 13541 },
+    { m: '2026-07', app: 22138, web: 21736, both: 14125 },
   ];
   M.forEach(d => { d.total = d.app + d.web + d.both; d.ratio = d.both / d.total; });
 
@@ -653,6 +725,167 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     { label: '先 App 后 Web', v: 9966, color: C_APP },
     { label: '同日首次成交', v: 8674, color: C_BOTH },
   ], v => fmt(v) + ' 人');
+  });
+
+
+  // ---------- 8. daily data (数据4) ----------
+  const D_DATES = ["2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-25", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-28", "2026-03-29", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-25", "2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14", "2026-05-15", "2026-05-16", "2026-05-17", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22", "2026-05-23", "2026-05-24", "2026-05-25", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-06", "2026-06-07", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-13", "2026-06-14", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-20", "2026-06-21", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", "2026-06-27", "2026-06-28", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-03", "2026-07-04", "2026-07-05", "2026-07-06", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10", "2026-07-11", "2026-07-12", "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-18", "2026-07-19", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-25", "2026-07-26", "2026-07-27", "2026-07-28"];
+  const D_APP = [2936, 2891, 3212, 3319, 3300, 3814, 3715, 3729, 3861, 4425, 5036, 4747, 4867, 5068, 4922, 5040, 4997, 5023, 5115, 4996, 5324, 5374, 5301, 5450, 5617, 5363, 5515, 5412, 5407, 5461, 5429, 5053, 4986, 5046, 5166, 4958, 4705, 4390, 4339, 4640, 4582, 4676, 4419, 4447, 4489, 4582, 5032, 4840, 4722, 4518, 4719, 4655, 4466, 4449, 4394, 4418, 4459, 4742, 4899, 4298, 4452, 4353, 4364, 4248, 4381, 4199, 4084, 4276, 4604, 4487, 4476, 4526, 4306, 4135, 4153, 4498, 4322, 4106, 4099, 4038, 4071, 4119, 4055, 4134, 4073, 3969, 3707, 3677, 3914, 4061, 4007, 3933, 3779, 3709, 3505, 3653, 3671, 3825, 3675, 3871, 3735, 3607, 3722, 3962, 3961, 3828, 4091, 3937, 3919, 3707, 3659, 3534, 3684, 3667, 3512, 3808, 3836, 4059, 4211, 4004, 4043, 4069, 4201, 4114, 4006, 4130, 4169, 4476, 4219, 4123, 4271, 4423, 4368, 4403, 4391, 4274, 3897, 3995, 3922, 3880, 4074, 4215, 4244, 3936, 4032, 3923, 3993, 4085, 3907, 3997, 3972, 4280, 4145, 3876, 3933, 3984, 3659, 3554, 3734, 3813, 3868, 4032, 4031, 3672, 3461, 3824, 3808, 3761, 3681, 3603, 3492, 3249, 3546, 3565, 3646, 3640, 3364, 3387, 3830, 4031, 4352, 4381, 4294, 4156, 4632, 5178, 5335, 5291, 5815, 6078, 6634, 7257, 8031, 7865, 7895, 8020, 7510, 7320, 7241, 7137, 7200, 7379, 7393, 7606, 7589, 7248, 6713, 7626, 6612];
+  const D_WEB = [3461, 3638, 4397, 4577, 4588, 5081, 4997, 4917, 4944, 5609, 6417, 6406, 6421, 6973, 6662, 6633, 5873, 5716, 6118, 6237, 6773, 6965, 6813, 6578, 6304, 6339, 6703, 6510, 6324, 6331, 6953, 6454, 6528, 6707, 6604, 6219, 5655, 5239, 5012, 5523, 5604, 5621, 5252, 5085, 4924, 4470, 4893, 4852, 4771, 4516, 4541, 4599, 4484, 4648, 4942, 5175, 5241, 5330, 5201, 4606, 5229, 5192, 5277, 5191, 5141, 4520, 4322, 4886, 5279, 5402, 5506, 5476, 5009, 4694, 5216, 5437, 5255, 5191, 4907, 4581, 4284, 4821, 4970, 4935, 4902, 4526, 4100, 3879, 4804, 4796, 4789, 4502, 4506, 3814, 3340, 3810, 4398, 4686, 4642, 4738, 4217, 3928, 4593, 5263, 4979, 4762, 5159, 4585, 5163, 5534, 5494, 6160, 6214, 6474, 5422, 5582, 5813, 6007, 5854, 5619, 5058, 4684, 4689, 5087, 5314, 5504, 5742, 5700, 5116, 4884, 5534, 5676, 5401, 5685, 5290, 4994, 4652, 5094, 5488, 5182, 5504, 5336, 4725, 4495, 5133, 5162, 5085, 4919, 4672, 4297, 4351, 5109, 5026, 4622, 4671, 4498, 3814, 3624, 4306, 4418, 4455, 4487, 4386, 3499, 3274, 4189, 4231, 4294, 4047, 3813, 3345, 3147, 3851, 3757, 3833, 3919, 3602, 3408, 3710, 4183, 4407, 4695, 4519, 4208, 4240, 5240, 5703, 5608, 7303, 8155, 8935, 9144, 8933, 9168, 9295, 9339, 8589, 8332, 7626, 6999, 7505, 8197, 8311, 8543, 8671, 7673, 6883, 8104, 7476];
+  const D_BOTH = [1048, 985, 1288, 1492, 1452, 1605, 1533, 1581, 1763, 2395, 2732, 2426, 2478, 2792, 2596, 2545, 2192, 2320, 2518, 2503, 2816, 2886, 2634, 2593, 2357, 2463, 2596, 2484, 2527, 2489, 2586, 2149, 2281, 2436, 2448, 2095, 1853, 1581, 1543, 1937, 1957, 2042, 1756, 1800, 1578, 1513, 1697, 1575, 1563, 1451, 1542, 1524, 1405, 1464, 1581, 1620, 1625, 1847, 1965, 1569, 1763, 1722, 1902, 1652, 1758, 1651, 1507, 1672, 1982, 2073, 2035, 2040, 1888, 1695, 1855, 2171, 2012, 1906, 1855, 1677, 1521, 1707, 1782, 1797, 1794, 1605, 1437, 1449, 1773, 1731, 1809, 1556, 1546, 1282, 984, 1274, 1445, 1631, 1536, 1756, 1414, 1304, 1601, 1752, 1763, 1563, 1612, 1417, 1481, 1392, 1358, 1498, 1706, 1545, 1364, 1380, 1587, 1712, 1809, 1587, 1484, 1359, 1405, 1574, 1546, 1805, 1752, 1900, 1517, 1450, 1591, 1601, 1653, 1853, 1617, 1552, 1324, 1525, 1546, 1586, 1857, 1830, 1492, 1404, 1621, 1521, 1399, 1567, 1462, 1492, 1584, 1859, 1506, 1301, 1449, 1458, 1076, 1098, 1386, 1468, 1343, 1420, 1362, 962, 938, 1248, 1273, 1350, 1182, 1134, 900, 893, 1103, 1109, 1169, 1178, 988, 984, 1167, 1348, 1585, 1501, 1412, 1295, 1397, 1980, 2350, 2002, 2272, 2467, 2910, 3182, 3447, 3293, 3355, 3289, 2814, 2806, 2605, 2489, 2691, 2968, 2888, 3044, 2967, 2611, 2158, 2981, 2188];
+  const D_RATIO = D_APP.map((a, i) => D_BOTH[i] / (a + D_WEB[i] + D_BOTH[i]));
+  const D_MA7 = D_RATIO.map((_, i) => {
+    const s = Math.max(0, i - 6), win = D_RATIO.slice(s, i + 1);
+    return win.reduce((x, y) => x + y, 0) / win.length;
+  });
+  const MONTH_STARTS = D_DATES.map((d, i) => [d, i]).filter(([d]) => d.endsWith('-01')).map(([, i]) => i);
+
+  // daily ratio line
+  chart(function () {
+    const W = 1040, H = 300, L = 56, R = 16, T = 18, B = 34, N = D_DATES.length;
+    const box = document.getElementById('daily-ratio');
+    box.innerHTML = '';
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': '日度双端占比折线图' });
+    box.appendChild(svg);
+    const y0 = 0.10, y1 = 0.20;
+    const X = i => L + (W - L - R) * (i / (N - 1));
+    const Y = v => T + (H - T - B) * (1 - (v - y0) / (y1 - y0));
+    for (let v = 0.10; v <= 0.201; v += 0.02) {
+      el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === 0.10 ? css('--baseline') : css('--grid'), 'stroke-width': 1 }, svg);
+      el('text', { x: L - 8, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 11, fill: css('--muted') }, svg).textContent = Math.round(v * 100) + '%';
+    }
+    MONTH_STARTS.forEach(i => {
+      el('line', { x1: X(i), x2: X(i), y1: T, y2: H - B, stroke: css('--grid'), 'stroke-width': 1, 'stroke-dasharray': '2,3' }, svg);
+      el('text', { x: X(i), y: H - 10, 'text-anchor': 'start', 'font-size': 11, fill: css('--muted') }, svg).textContent = MONTHS[MONTH_STARTS.indexOf(i)];
+    });
+    const clamp = v => Math.max(y0, Math.min(y1, v));
+    el('polyline', { points: D_RATIO.map((v, i) => `${X(i)},${Y(clamp(v))}`).join(' '), fill: 'none', stroke: css('--both'), 'stroke-width': 1, opacity: 0.45, 'stroke-linejoin': 'round' }, svg);
+    el('polyline', { points: D_MA7.map((v, i) => `${X(i)},${Y(clamp(v))}`).join(' '), fill: 'none', stroke: css('--both'), 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+    const last = N - 1;
+    el('circle', { cx: X(last), cy: Y(clamp(D_MA7[last])), r: 4, fill: css('--both'), stroke: css('--surface'), 'stroke-width': 2 }, svg);
+    el('text', { x: X(last) - 4, y: Y(clamp(D_MA7[last])) - 10, 'text-anchor': 'end', 'font-size': 12, 'font-weight': 600, fill: css('--ink') }, svg).textContent = '7日均 ' + pct1(D_MA7[last]);
+    const cross = el('line', { y1: T, y2: H - B, stroke: css('--baseline'), 'stroke-width': 1, 'stroke-dasharray': '3,3', visibility: 'hidden' }, svg);
+    const overlay = el('rect', { x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent' }, svg);
+    overlay.addEventListener('mousemove', ev => {
+      const r = svg.getBoundingClientRect();
+      const px = (ev.clientX - r.left) * (W / r.width);
+      let i = Math.round((px - L) / ((W - L - R) / (N - 1)));
+      i = Math.max(0, Math.min(N - 1, i));
+      cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i));
+      cross.setAttribute('visibility', 'visible');
+      const tot = D_APP[i] + D_WEB[i] + D_BOTH[i];
+      showTip(`<div class="t">${D_DATES[i]}</div>
+        <div class="row"><span class="sw" style="background:var(--both)"></span>日度双端占比<b>${pct1(D_RATIO[i])}</b></div>
+        <div class="row">7日移动平均<b>${pct1(D_MA7[i])}</b></div>
+        <div class="row">双端用户<b>${fmt(D_BOTH[i])}</b></div>
+        <div class="row">当日总用户<b>${fmt(tot)}</b></div>`, ev);
+    });
+    overlay.addEventListener('mouseleave', () => { cross.setAttribute('visibility', 'hidden'); hideTip(); });
+  });
+
+  // daily stacked area
+  chart(function () {
+    const W = 1040, H = 300, L = 56, R = 16, T = 14, B = 34, N = D_DATES.length;
+    const box = document.getElementById('daily-stack');
+    box.innerHTML = '';
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': '日度交易用户构成堆叠面积图' });
+    box.appendChild(svg);
+    const maxV = 22000;
+    const X = i => L + (W - L - R) * (i / (N - 1));
+    const Y = v => T + (H - T - B) * (1 - v / maxV);
+    for (let v = 0; v <= maxV; v += 5000) {
+      el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === 0 ? css('--baseline') : css('--grid'), 'stroke-width': 1 }, svg);
+      el('text', { x: L - 8, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 11, fill: css('--muted') }, svg).textContent = v === 0 ? '0' : (v / 1000) + 'k';
+    }
+    MONTH_STARTS.forEach(i => {
+      el('text', { x: X(i), y: H - 10, 'text-anchor': 'start', 'font-size': 11, fill: css('--muted') }, svg).textContent = MONTHS[MONTH_STARTS.indexOf(i)];
+    });
+    const cum0 = D_APP.map(() => 0);
+    const cum1 = D_APP.map((v, i) => v);
+    const cum2 = cum1.map((v, i) => v + D_WEB[i]);
+    const cum3 = cum2.map((v, i) => v + D_BOTH[i]);
+    function area(lower, upper, color) {
+      const up = upper.map((v, i) => `${X(i)},${Y(v)}`).join(' ');
+      const lo = lower.map((v, i) => `${X(i)},${Y(v)}`).reverse().join(' ');
+      el('polygon', { points: up + ' ' + lo, fill: color, opacity: 0.85 }, svg);
+    }
+    area(cum0, cum1, css('--app'));
+    area(cum1, cum2, css('--web'));
+    area(cum2, cum3, css('--both'));
+    const cross = el('line', { y1: T, y2: H - B, stroke: css('--ink'), 'stroke-width': 1, 'stroke-dasharray': '3,3', visibility: 'hidden' }, svg);
+    const overlay = el('rect', { x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent' }, svg);
+    overlay.addEventListener('mousemove', ev => {
+      const r = svg.getBoundingClientRect();
+      const px = (ev.clientX - r.left) * (W / r.width);
+      let i = Math.round((px - L) / ((W - L - R) / (N - 1)));
+      i = Math.max(0, Math.min(N - 1, i));
+      cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i));
+      cross.setAttribute('visibility', 'visible');
+      showTip(`<div class="t">${D_DATES[i]}</div>
+        <div class="row"><span class="sw" style="background:var(--app)"></span>仅 App<b>${fmt(D_APP[i])}</b></div>
+        <div class="row"><span class="sw" style="background:var(--web)"></span>仅 Web<b>${fmt(D_WEB[i])}</b></div>
+        <div class="row"><span class="sw" style="background:var(--both)"></span>双端<b>${fmt(D_BOTH[i])}</b></div>
+        <div class="row">合计<b>${fmt(cum3[i])}</b></div>`, ev);
+    });
+    overlay.addEventListener('mouseleave', () => { cross.setAttribute('visibility', 'hidden'); hideTip(); });
+  });
+
+  // ---------- 9. retention (数据5) ----------
+  const RET = {"app_only": [0.51, 0.373, 0.3128, 0.2695, 0.2363, 0.2222], "web_only": [0.4957, 0.3756, 0.3365, 0.2952, 0.2607, 0.2651], "both": [0.7741, 0.6497, 0.5807, 0.5253, 0.4721, 0.4708]};
+  const RET_M1 = [["2026-01", 0.4515, 0.4432, 0.7223], ["2026-02", 0.4824, 0.466, 0.7577], ["2026-03", 0.4973, 0.4999, 0.7738], ["2026-04", 0.5424, 0.5371, 0.815], ["2026-05", 0.5083, 0.4675, 0.7635], ["2026-06", 0.6005, 0.5989, 0.8476]];
+
+  chart(function () {
+    const W = 520, H = 300, L = 46, R = 86, T = 16, B = 32;
+    const box = document.getElementById('ret-curve');
+    box.innerHTML = '';
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': '三组用户留存曲线' });
+    box.appendChild(svg);
+    const y0 = 0, y1 = 0.9;
+    const X = k => L + (W - L - R) * ((k - 1) / 5);
+    const Y = v => T + (H - T - B) * (1 - (v - y0) / (y1 - y0));
+    for (let v = 0; v <= 0.901; v += 0.2) {
+      el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === 0 ? css('--baseline') : css('--grid'), 'stroke-width': 1 }, svg);
+      el('text', { x: L - 6, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 10.5, fill: css('--muted') }, svg).textContent = Math.round(v * 100) + '%';
+    }
+    for (let k = 1; k <= 6; k++) {
+      el('text', { x: X(k), y: H - 8, 'text-anchor': 'middle', 'font-size': 10.5, fill: css('--muted') }, svg).textContent = 'M+' + k;
+    }
+    const series = [
+      { k: 'both', label: '双端', color: css('--both') },
+      { k: 'app_only', label: '仅 App', color: css('--app') },
+      { k: 'web_only', label: '仅 Web', color: css('--web') },
+    ];
+    series.forEach(s => {
+      const vals = RET[s.k];
+      el('polyline', { points: vals.map((v, i) => `${X(i + 1)},${Y(v)}`).join(' '), fill: 'none', stroke: s.color, 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+      vals.forEach((v, i) => el('circle', { cx: X(i + 1), cy: Y(v), r: 3.5, fill: s.color, stroke: css('--surface'), 'stroke-width': 1.5 }, svg));
+      const lastV = vals[vals.length - 1];
+      const dy = s.k === 'app_only' ? 12 : 4;
+      el('text', { x: X(6) + 8, y: Y(lastV) + dy, 'text-anchor': 'start', 'font-size': 11, 'font-weight': 600, fill: css('--ink') }, svg).textContent = s.label + ' ' + pct1(lastV);
+    });
+    const cross = el('line', { y1: T, y2: H - B, stroke: css('--baseline'), 'stroke-width': 1, 'stroke-dasharray': '3,3', visibility: 'hidden' }, svg);
+    const overlay = el('rect', { x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent' }, svg);
+    overlay.addEventListener('mousemove', ev => {
+      const r = svg.getBoundingClientRect();
+      const px = (ev.clientX - r.left) * (W / r.width);
+      let k = Math.round((px - L) / ((W - L - R) / 5)) + 1;
+      k = Math.max(1, Math.min(6, k));
+      cross.setAttribute('x1', X(k)); cross.setAttribute('x2', X(k));
+      cross.setAttribute('visibility', 'visible');
+      showTip(`<div class="t">M+${k} 留存</div>
+        <div class="row"><span class="sw" style="background:var(--both)"></span>双端<b>${pct1(RET.both[k - 1])}</b></div>
+        <div class="row"><span class="sw" style="background:var(--app)"></span>仅 App<b>${pct1(RET.app_only[k - 1])}</b></div>
+        <div class="row"><span class="sw" style="background:var(--web)"></span>仅 Web<b>${pct1(RET.web_only[k - 1])}</b></div>`, ev);
+    });
+    overlay.addEventListener('mouseleave', () => { cross.setAttribute('visibility', 'hidden'); hideTip(); });
+  });
+
+  chart(function () {
+    const tb = document.querySelector('#ret-m1-tbl tbody');
+    tb.innerHTML = RET_M1.map(([m, a, w, b]) => {
+      const lead = b - Math.max(a, w);
+      return `<tr><td>${m}</td><td>${pct1(a)}</td><td>${pct1(w)}</td><td><b>${pct1(b)}</b></td><td style="color:var(--both-ink);font-weight:600">+${(lead * 100).toFixed(1)}pp</td></tr>`;
+    }).join('');
   });
 
   // re-render charts when the theme changes (OS setting or viewer toggle)
