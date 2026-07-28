@@ -335,6 +335,30 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     </div>
   </div>
 
+  <div class="card">
+    <div class="chart-title">双端用户的端内价值拆分</div>
+    <div class="chart-sub">34,974 个双端用户按「每用户 App 金额占比」分桶 · App 金额占比 = App 端成交额 ÷ (App+Web) · 每用户占比分位数 P25 7.8% / P50 32.3% / P75 75.1% · 悬停查看数值</div>
+    <div id="dual-side-amt" class="sharebar"></div>
+    <div id="dual-side-trades" class="sharebar"></div>
+    <div class="legend" style="margin-top:2px">
+      <span class="li"><span class="sw" style="background:var(--app)"></span>App 端</span>
+      <span class="li"><span class="sw" style="background:var(--web)"></span>Web 端</span>
+    </div>
+    <div class="tbl-scroll" style="margin-top:14px">
+    <table>
+      <thead><tr><th>分桶（按App金额占比）</th><th>用户数</th><th>用户占比</th><th>App端交易额</th><th>Web端交易额</th><th>占双端组总额</th><th>人均总额中位</th></tr></thead>
+      <tbody>
+        <tr><td>App主导（≥90%）</td><td>5,474</td><td>15.7%</td><td>$3.89亿</td><td>$0.09亿</td><td>7.1%</td><td>$6,503</td></tr>
+        <tr><td>偏App（70-90%）</td><td>4,248</td><td>12.1%</td><td>$1.58亿</td><td>$0.38亿</td><td>3.5%</td><td>$3,040</td></tr>
+        <tr><td>均衡（30-70%）</td><td>8,328</td><td>23.8%</td><td>$2.69亿</td><td>$3.12亿</td><td>10.3%</td><td>$3,882</td></tr>
+        <tr><td>偏Web（10-30%）</td><td>6,971</td><td>19.9%</td><td>$1.79亿</td><td>$8.51亿</td><td>18.3%</td><td>$7,797</td></tr>
+        <tr><td><b>Web主导（≤10%）</b></td><td><b>9,953</b></td><td><b>28.5%</b></td><td>$0.89亿</td><td><b>$33.41亿</b></td><td><b>60.9%</b></td><td><b>$15,540</b></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="chart-sub" style="margin-top:10px;margin-bottom:0">单笔差异：双端用户 App 端笔均 $73 vs Web 端笔均 $103——App 承担小额/移动场景下单，大额执行留在 Web。</div>
+  </div>
+
   <div class="conclusion">
     <span class="tag">结论 · 假设部分成立，需修正表述</span>
     <ul>
@@ -342,6 +366,7 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
       <li>「轻量用户主导 App」<b>成立</b>：仅App 组人均 $12.0K、中位数 $315，全面低于仅Web 组（$38.4K / $491），人均笔数也最低（251 vs 383）。</li>
       <li>真正的量主力是<b>双端用户：24.8% 的用户贡献 67.4% 的交易额</b>，人均 $161.1K，是仅App 组的 13.4 倍——提升双端转化比单纯拉 App 新客对量的杠杆更大。</li>
       <li>SOL 单链拆分改变了对 App 的判断：<b>SOL 上 App 交易额占 36.4%、用户数反超 Web</b>——大盘的 App 低占比主要被 ETH/BSC/base 等 Web 主导链拉低，SOL 是 App 的基本盘。结构性结论在 SOL 上依然成立但幅度收窄（双端贡献 61.7%、人均为仅App 的 6.2 倍）；SOL 各组人均/中位数全面低于大盘同组（双端 P50 $3,306 vs $7,010），小额高频用户聚集，大额资金更多在其他链经 Web 成交。</li>
+      <li>双端用户的价值也主要在 Web 端产生：<b>App 端只占其成交额的 19.2%、笔数的 25.3%</b>，且越重的双端用户越 Web 主导（Web主导桶 28.5% 的人贡献 60.9% 的额、人均中位 $15,540 最高）——双端的价值增量不在「App 承载交易」而在多触点粘性，App 是 engagement 层、Web 是 execution 层。</li>
       <li>BSC 与 Robinhood 拆分进一步说明幅度由链上资金结构决定：<b>BSC 是双端溢价最极端的链</b>（双端占 29.8% 用户、贡献 73.6% 交易额、人均是仅App 的 19.4 倍），大额/跟单资金高度集中于双端重度用户并主要经 Web 成交；<b>Robinhood 上线首月呈「Web 重、App 轻」</b>（仅Web 组 P50 $1,848 为全链单端最高），双端贡献 48.0% 全链最低——主因是新用户尚未来得及跨端，后续几个月是观察其双端化的关键窗口。</li>
     </ul>
   </div>
@@ -737,6 +762,14 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     { label: '仅 Web', v: 2118959392, color: C_WEB },
     { label: '双端', v: 5629898001, color: C_BOTH },
   ], v => '$' + (v / 1e8).toFixed(1) + '亿');
+  shareBar('dual-side-amt', '双端用户交易额（按成交端）', [
+    { label: 'App 端', v: 1083860510, color: C_APP },
+    { label: 'Web 端', v: 4551504233, color: C_WEB },
+  ], v => '$' + (v / 1e8).toFixed(1) + '亿');
+  shareBar('dual-side-trades', '双端用户笔数（按成交端）', [
+    { label: 'App 端', v: 14855602, color: C_APP },
+    { label: 'Web 端', v: 43987828, color: C_WEB },
+  ], v => (v / 1e4).toFixed(0) + ' 万笔');
   });
 
   // ---------- 6. percentile range (log axis) ----------
