@@ -276,12 +276,30 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
     <div class="chart-box" id="pct-range"></div>
   </div>
 
+  <div class="card">
+    <div class="chart-title">SOL 单链拆分 · 三组用户价值指标</div>
+    <div class="chart-sub">分组按用户在 SOL 链上的端使用判定 · 07-28 快照 · 括号内为大盘同口径值</div>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>用户分组</th><th>用户数</th><th>总交易额</th><th>人均交易额</th><th>人均笔数</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--app)"></span> 仅 App</td><td>41,231</td><td>$3.55亿</td><td>$8,605</td><td>210</td><td>$33</td><td>$216</td><td>$1,575</td><td>$10,110</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--web)"></span> 仅 Web</td><td>39,190</td><td>$4.47亿</td><td>$11,405</td><td>258</td><td>$39</td><td>$272</td><td>$1,871</td><td>$11,069</td></tr>
+        <tr><td><span class="sw" style="display:inline-block;vertical-align:-1px;background:var(--both)"></span> 双端</td><td>24,264</td><td>$12.89亿</td><td>$53,128</td><td>1,001</td><td>$513</td><td>$3,306</td><td>$20,361</td><td>$87,452</td></tr>
+        <tr><td><b>合计</b></td><td><b>104,685</b></td><td><b>$20.91亿</b></td><td><b>$19,972</b></td><td><b>412</b></td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="chart-sub" style="margin-top:10px;margin-bottom:0">端级对比：SOL 上 App 用户 65,495 反超 Web 63,454；App 交易额占 <b style="color:var(--ink)">36.4%</b>（大盘 20.3%）、笔数占 40.0%。双端占用户 23.2%（大盘 24.8%），贡献交易额 61.7%（大盘 67.4%）。</div>
+  </div>
+
   <div class="conclusion">
     <span class="tag">结论 · 假设部分成立，需修正表述</span>
     <ul>
       <li>「App 用户数多」<b>不成立</b>：窗内 App 去重用户 85,778 略少于 Web 90,182；成立的是<b>交易额占比悬殊</b>（App 20.3% vs Web 79.7%）。</li>
       <li>「轻量用户主导 App」<b>成立</b>：仅App 组人均 $12.0K、中位数 $315，全面低于仅Web 组（$38.4K / $491），人均笔数也最低（251 vs 383）。</li>
       <li>真正的量主力是<b>双端用户：24.8% 的用户贡献 67.4% 的交易额</b>，人均 $161.1K，是仅App 组的 13.4 倍——提升双端转化比单纯拉 App 新客对量的杠杆更大。</li>
+      <li>SOL 单链拆分改变了对 App 的判断：<b>SOL 上 App 交易额占 36.4%、用户数反超 Web</b>——大盘的 App 低占比主要被 ETH/BSC/base 等 Web 主导链拉低，SOL 是 App 的基本盘。结构性结论在 SOL 上依然成立但幅度收窄（双端贡献 61.7%、人均为仅App 的 6.2 倍）；SOL 各组人均/中位数全面低于大盘同组（双端 P50 $3,306 vs $7,010），小额高频用户聚集，大额资金更多在其他链经 Web 成交。</li>
     </ul>
   </div>
 </section>
