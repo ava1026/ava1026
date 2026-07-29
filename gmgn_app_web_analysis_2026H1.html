@@ -481,6 +481,55 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
   </div>
 </section>
 
+<!-- ========== 数据 6 ========== -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">数据 6</span><h2>App 交易用户的单链 vs 多链结构</h2></div>
+  <p class="sec-sub">仅 App 端交易（source LIKE '%_app'），链数 = 该用户当月成交过的去重 chain 数。注意本组时间窗为 2026-01-01 ~ 2026-07-27（其余数据为 ~07-28），7 月为不完整月。</p>
+
+  <div class="card">
+    <div class="chart-title">按当月使用链数分层 · 月度</div>
+    <div class="chart-sub">单链占比按用户数计；完整的用户数/交易额/笔数明细见 xlsx「数据6」sheet</div>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>月份</th><th>App交易用户</th><th>单链用户占比</th><th>单链交易额占比</th><th>2链用户</th><th>3链用户</th><th>4+链用户</th><th>2链交易额</th><th>3链交易额</th><th>4+链交易额</th><th>4+链人均</th></tr></thead>
+      <tbody>
+        <tr><td>1月</td><td>30,598</td><td><b>77.4%</b></td><td>36.9%</td><td>5,957</td><td>915</td><td>36</td><td>$1.49亿</td><td>$80.1M</td><td>$7.5M</td><td>$207,799</td></tr>
+        <tr><td>2月</td><td>26,414</td><td><b>80.4%</b></td><td>47.4%</td><td>3,831</td><td>1,241</td><td>93</td><td>$56.3M</td><td>$50.5M</td><td>$12.2M</td><td>$131,555</td></tr>
+        <tr><td>3月</td><td>24,236</td><td><b>80.8%</b></td><td>47.8%</td><td>3,969</td><td>664</td><td>23</td><td>$69.5M</td><td>$33.1M</td><td>$2.9M</td><td>$125,367</td></tr>
+        <tr><td>4月</td><td>22,950</td><td><b>77.7%</b></td><td>44.6%</td><td>3,611</td><td>1,256</td><td>245</td><td>$37.2M</td><td>$33.8M</td><td>$16.4M</td><td>$67,110</td></tr>
+        <tr><td>5月</td><td>23,936</td><td><b>75.1%</b></td><td>39.7%</td><td>3,499</td><td>1,495</td><td>956</td><td>$32.1M</td><td>$33.0M</td><td>$53.3M</td><td>$55,748</td></tr>
+        <tr><td>6月</td><td>21,320</td><td><b>80.4%</b></td><td>51.5%</td><td>2,904</td><td>870</td><td>411</td><td>$29.8M</td><td>$19.7M</td><td>$20.4M</td><td>$49,673</td></tr>
+        <tr><td>7月</td><td>36,411</td><td><b>64.1%</b></td><td>21.0%</td><td>7,703</td><td>3,276</td><td>2,090</td><td>$87.2M</td><td>$77.0M</td><td>$1.49亿</td><td>$71,080</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="chart-sub" style="margin-top:12px">单链用户 Top 链（人数/交易额）：</div>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>月份</th><th>单链用户 Top 3 链</th></tr></thead>
+      <tbody>
+        <tr><td>1月</td><td>sol 15,762人/$82.8M · bsc 7,627人/$53.7M · base 242人/$1.4M</td></tr>
+        <tr><td>2月</td><td>sol 15,357人/$77.7M · bsc 4,915人/$22.6M · base 936人/$7.1M</td></tr>
+        <tr><td>3月</td><td>sol 13,655人/$63.4M · bsc 5,551人/$30.9M · base 339人/$2.2M</td></tr>
+        <tr><td>4月</td><td>sol 12,312人/$51.2M · bsc 4,266人/$14.7M · eth 994人/$3.9M</td></tr>
+        <tr><td>5月</td><td>sol 12,947人/$59.4M · bsc 3,526人/$12.6M · eth 865人/$3.3M</td></tr>
+        <tr><td>6月</td><td>sol 12,988人/$61.3M · bsc 3,336人/$10.8M · base 410人/$0.8M</td></tr>
+        <tr><td>7月</td><td>sol 13,736人/$39.7M · robinhood 6,986人/$37.5M · bsc 2,210人/$5.5M</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <span class="tag">结论</span>
+    <ul>
+      <li><b>App 用户以单链为主，但价值在多链</b>：1~6 月单链用户占 75%~81%，却只贡献 37%~52% 的 App 交易额；人均价值随链数陡增（1 月 4+链用户人均 $207.8K vs 单链 $5.8K）。</li>
+      <li>单链用户中 <b>SOL 恒为第一</b>（1.2万~1.6万人，占单链用户 55%~75%），BSC 第二但持续萎缩（7,627 → 2,210 人）；多链以 2 链为主（占多链用户 62%~77%，主组合 SOL+BSC），3 链及以上人少而极重（900~5,400 人贡献 App 交易额的 23%~51%）。</li>
+      <li><b>7 月结构剧变</b>：robinhood 上线当月即有 6,986 个 App 单链用户（直升单链第二，带来的是纯新增而非存量迁移），同时多链用户从约 4,200 暴涨至 13,069（4+链 411 → 2,090），单链占比 80% → 64.1%、单链交易额占比掉到 21.0%——robinhood 既拉新、也诱发存量跨链。</li>
+    </ul>
+  </div>
+</section>
+
 <!-- ========== 口径 ========== -->
 <section id="s4">
   <div class="sec-head"><span class="sec-no">附</span><h2>口径存疑处与异常值处理</h2></div>
@@ -496,6 +545,8 @@ footer { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--gri
       <dd>2026 年以前已有双端行为的老用户，其窗内「首次」并非真实首次，方向判定反映的是本时间窗内的行为顺序。「同日」按 Asia/Shanghai 自然日比较，同日内不再分先后。</dd>
       <dt>数据 4 / 数据 5 的增补口径</dt>
       <dd>数据 2、数据 3（转向前/转向后）、数据 4、数据 5 与数据 1 主表（月度行）及页头指标卡均为 2026-07-28 快照；仅数据 1 的分链/新老拆分仍为 07-26 快照，7 月相关绝对值略低于最新值，占比类指标不受影响。表为实时更新，同快照日不同批次仍可能有 <0.05% 的差异（如数据 2 双端 34,946 vs 数据 3 的 34,942）。留存口径：不要求连续留存、不区分回访端；目标月为 7 月的留存点受 7 月行情放量影响偏高（M+6 相对 M+5 出现翘尾）。日度「双端」= 同一自然日两端均有成交，口径严于月度。</dd>
+      <dt>数据 6 时间窗</dt>
+      <dd>数据 6（App 单链/多链）按需求使用 2026-01-01 ~ 2026-07-27 窗口（其余数据为 ~07-28）；链数按当月去重 chain 判定，跨月使用不同链的用户在每个月内独立计数。</dd>
       <dt>其他</dt>
       <dd>数据 1 各月用户数不可跨月加总（跨月活跃用户会重复）；数据 2 分位数是「每用户总交易额」的用户维度分布，不是单笔金额分布；7 月为不完整月（数据到 07-26），绝对值偏低但占比类指标可比；表为实时更新，不同查询批次的合计存在 &lt;0.01% 的快照差异。</dd>
     </dl>
