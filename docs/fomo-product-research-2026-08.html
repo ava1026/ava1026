@@ -1,0 +1,961 @@
+<title>FOMO 竞品调研 · 2026-08</title>
+<style>
+/* ============ tokens: light is the base ============ */
+:root{
+  --ground:#EDF0F3;
+  --surface:#FFFFFF;
+  --surface-2:#F5F7F9;
+  --line:#D3DAE1;
+  --line-soft:#E3E8ED;
+  --ink:#121820;
+  --ink-2:#3A4551;
+  --muted:#66727F;
+  --accent:#A8500B;
+  --accent-soft:#F3E3D2;
+  --accent-line:#D8A46B;
+  --hot:#A8291F;
+  --hot-soft:#F6DEDA;
+  --ours:#0B6E6C;
+  --ours-soft:#D9EDEC;
+  --warm:#8A6209;
+  --warm-soft:#F5E9CC;
+  --shadow:0 1px 2px rgba(18,24,32,.05), 0 8px 24px -16px rgba(18,24,32,.18);
+
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Songti SC","Source Han Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1319;
+    --surface:#151C24;
+    --surface-2:#1B242E;
+    --line:#2C3945;
+    --line-soft:#222C37;
+    --ink:#E6EBF0;
+    --ink-2:#BCC7D2;
+    --muted:#8695A3;
+    --accent:#E9A44C;
+    --accent-soft:#33261A;
+    --accent-line:#7A5828;
+    --hot:#EE8378;
+    --hot-soft:#3A1F1C;
+    --ours:#54C9C4;
+    --ours-soft:#123331;
+    --warm:#D9AE4A;
+    --warm-soft:#332A16;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1319;
+  --surface:#151C24;
+  --surface-2:#1B242E;
+  --line:#2C3945;
+  --line-soft:#222C37;
+  --ink:#E6EBF0;
+  --ink-2:#BCC7D2;
+  --muted:#8695A3;
+  --accent:#E9A44C;
+  --accent-soft:#33261A;
+  --accent-line:#7A5828;
+  --hot:#EE8378;
+  --hot-soft:#3A1F1C;
+  --ours:#54C9C4;
+  --ours-soft:#123331;
+  --warm:#D9AE4A;
+  --warm-soft:#332A16;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -20px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px 96px}
+.col{max-width:68ch}
+
+/* ============ masthead ============ */
+.masthead{
+  border-bottom:1px solid var(--line);
+  padding:56px 0 28px;
+  margin-bottom:40px;
+}
+.kicker{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 18px;
+}
+h1{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(2.1rem,5vw,3.1rem);
+  line-height:1.12;
+  letter-spacing:-.015em;
+  margin:0 0 14px;
+  text-wrap:balance;
+}
+.dek{
+  font-family:var(--serif);
+  font-size:clamp(1.05rem,2.2vw,1.28rem);
+  line-height:1.6;
+  color:var(--ink-2);
+  margin:0 0 26px;
+  max-width:60ch;
+  text-wrap:pretty;
+}
+.byline{
+  display:flex;flex-wrap:wrap;gap:8px 22px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+}
+.byline b{color:var(--ink-2);font-weight:500}
+
+/* ============ provenance chips ============ */
+.legend{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin:26px 0 0;padding:16px 18px;
+  background:var(--surface-2);border:1px solid var(--line-soft);border-radius:3px;
+}
+.legend p{margin:0 8px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);align-self:center}
+.tag{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  padding:3px 8px;border-radius:2px;white-space:nowrap;
+  border:1px solid transparent;
+}
+.t1{background:var(--ours-soft);color:var(--ours);border-color:var(--ours)}
+.t2{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.t3{background:var(--surface);color:var(--muted);border-color:var(--line)}
+
+/* ============ sections ============ */
+section{margin:72px 0 0;scroll-margin-top:24px}
+.snum{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  color:var(--accent);text-transform:uppercase;margin:0 0 10px;
+  display:flex;align-items:center;gap:12px;
+}
+.snum::after{content:"";flex:1;height:1px;background:var(--line)}
+h2{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.5rem,3.2vw,2rem);line-height:1.2;letter-spacing:-.01em;
+  margin:0 0 20px;text-wrap:balance;
+}
+h3{
+  font-family:var(--sans);font-weight:650;font-size:1.02rem;
+  letter-spacing:.005em;margin:38px 0 12px;
+}
+h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:28px 0 10px;font-weight:600}
+p{margin:0 0 16px;max-width:68ch;text-wrap:pretty}
+strong{font-weight:650;color:var(--ink)}
+em{font-style:italic;color:var(--ink-2)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-line)}
+a:hover{background:var(--accent-soft)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:2px;padding:1px 5px;word-break:break-all}
+ul,ol{margin:0 0 18px;padding-left:22px;max-width:68ch}
+li{margin:0 0 8px}
+li::marker{color:var(--accent)}
+
+/* ============ verdict ============ */
+.verdict{
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:3px;padding:26px 28px;box-shadow:var(--shadow);
+  margin:0 0 32px;
+}
+.verdict h3{margin-top:0}
+.verdict p:last-child{margin-bottom:0}
+.pull{
+  font-family:var(--serif);font-size:1.16rem;line-height:1.55;
+  color:var(--ink);border-top:1px solid var(--line-soft);
+  margin:22px 0 0;padding:20px 0 0;max-width:60ch;
+}
+
+/* ============ metric strip ============ */
+.metrics{
+  display:grid;gap:1px;background:var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;
+  margin:0 0 34px;
+}
+.metric{background:var(--surface);padding:16px 18px}
+.metric .v{
+  font-family:var(--mono);font-size:1.42rem;font-weight:600;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+  color:var(--ink);display:block;line-height:1.2;
+}
+.metric .k{display:block;font-size:12px;color:var(--muted);margin-top:5px;line-height:1.4}
+.metric .d{font-family:var(--mono);font-size:11px;color:var(--accent);margin-top:4px;display:block}
+
+/* ============ tables ============ */
+.scroll{overflow-x:auto;margin:0 0 24px;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.55}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+thead th{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;background:var(--surface-2);
+  border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:12px;word-break:break-all}
+caption{caption-side:bottom;padding:10px 14px;font-size:12px;color:var(--muted);text-align:left;border-top:1px solid var(--line-soft)}
+
+/* severity pills */
+.pill{
+  display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;letter-spacing:.04em;
+  border:1px solid transparent;
+}
+.p-hi{background:var(--hot-soft);color:var(--hot);border-color:var(--hot)}
+.p-mid{background:var(--warm-soft);color:var(--warm);border-color:var(--warm)}
+.p-lo{background:var(--surface-2);color:var(--muted);border-color:var(--line)}
+.p-us{background:var(--ours-soft);color:var(--ours);border-color:var(--ours)}
+
+/* winner marks in comparison table */
+.win-us{color:var(--ours);font-weight:650}
+.win-them{color:var(--hot);font-weight:650}
+.win-tie{color:var(--muted)}
+
+/* ============ callout ============ */
+.note{
+  background:var(--surface-2);border:1px solid var(--line-soft);
+  border-left:3px solid var(--muted);border-radius:3px;
+  padding:16px 20px;margin:0 0 24px;font-size:14.5px;
+}
+.note.alert{border-left-color:var(--hot);background:var(--hot-soft)}
+.note.gain{border-left-color:var(--ours);background:var(--ours-soft)}
+.note p:last-child{margin-bottom:0}
+.note h4{margin-top:0}
+
+/* ============ action list ============ */
+.actions{display:flex;flex-direction:column;gap:14px;margin:0 0 20px}
+.act{
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  padding:18px 20px;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;
+}
+.act .prio{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;
+  padding:3px 8px;border-radius:2px;align-self:start;white-space:nowrap;
+}
+.prio-0{background:var(--hot-soft);color:var(--hot);border:1px solid var(--hot)}
+.prio-1{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.prio-2{background:var(--warm-soft);color:var(--warm);border:1px solid var(--warm)}
+.prio-3{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.act h3{margin:0;font-size:.98rem;grid-column:2}
+.act p{margin:0;grid-column:2;font-size:14.5px;color:var(--ink-2)}
+.act p+p{margin-top:8px}
+
+/* ============ flow diagram ============ */
+.flow{
+  font-family:var(--mono);font-size:12.5px;line-height:1.85;
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  padding:18px 20px;overflow-x:auto;margin:0 0 24px;white-space:pre;
+  color:var(--ink-2);
+}
+.flow b{color:var(--accent);font-weight:600}
+
+/* ============ details ============ */
+details{
+  border:1px solid var(--line);border-radius:3px;background:var(--surface);
+  padding:0;margin:0 0 14px;
+}
+summary{
+  cursor:pointer;padding:13px 18px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;
+}
+summary:hover{color:var(--accent)}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+details[open] summary{border-bottom:1px solid var(--line-soft)}
+.dbody{padding:18px}
+.dbody .scroll{margin-bottom:0;border:none}
+.dbody table{font-size:13px}
+
+/* ============ sources ============ */
+.src{columns:2;column-gap:34px;font-size:13.5px;line-height:1.6}
+.src h4{column-span:all}
+.src p{margin:0 0 10px;break-inside:avoid;max-width:none}
+@media (max-width:720px){.src{columns:1}}
+
+footer{
+  margin:80px 0 0;padding:24px 0 0;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.7;
+}
+
+@media (max-width:640px){
+  .wrap{padding:0 18px 64px}
+  .masthead{padding-top:36px}
+  .verdict{padding:20px}
+  .act{grid-template-columns:1fr}
+  .act h3,.act p{grid-column:1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">竞品情报 · 内部使用 · 非对外材料</p>
+  <h1>FOMO 全面产品调研</h1>
+  <p class="dek">一款自托管、移动端优先、社交优先的多链交易 App。它不在跟我们抢"更好的终端"，它在抢<strong>整个市场的新增用户入口</strong>。</p>
+  <div class="byline">
+    <span>作者 <b>Ava</b></span>
+    <span>数据截止 <b>2026-08-11</b></span>
+    <span>一手来源 <b>链上实测 · HAR 抓包 · 影子测试 · 社群监控</b></span>
+  </div>
+  <div class="legend">
+    <p>证据分级</p>
+    <span class="tag t1">一手 — GMGN 实测</span>
+    <span class="tag t2">公开 — 外部报道 / 官方口径</span>
+    <span class="tag t3">推断 — 未经验证的推理</span>
+  </div>
+</header>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+  <p class="snum">01 — 一页结论</p>
+  <h2>它做对的事，和它做不到的事</h2>
+
+  <div class="verdict">
+    <h3>FOMO 是什么</h3>
+    <p>核心命题不是"更快的终端"，而是<strong>把链上交易变成一件社交的、零门槛的事</strong>：一个 USDC 余额买全网、Apple Pay 直接入金、gas 全代付、交易实时进 feed 被人抄。用户<em>感知不到自己在跨链</em>。</p>
+    <p class="pull">FOMO 走的是消费级金融 App 路线，不是专业终端路线。它在专业性上短期不会赢我们——但它可能把新增用户入口整个吃掉，然后再往上做专业功能。这是入口战，不是功能战。</p>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span class="v">$2.64M</span><span class="k">单周协议收入 ATH（8/08）</span><span class="d">较 7/27 +68%</span></div>
+    <div class="metric"><span class="v">625k+</span><span class="k">用户（官方口径，未审计）</span><span class="d">日增 3,000+</span></div>
+    <div class="metric"><span class="v">$4B+</span><span class="k">累计交易量</span><span class="d">2025-05 上线至今</span></div>
+    <div class="metric"><span class="v">$550M</span><span class="k">B 轮估值 · 累计融资 $94M</span><span class="d">Index / USV / Benchmark</span></div>
+    <div class="metric"><span class="v">98.5%</span><span class="k">收入来自 Solana 现货</span><span class="d">perps 仅 $38.8K/周</span></div>
+    <div class="metric"><span class="v">≈$0.76</span><span class="k">每笔平均平台费（07-13 实测）</span><span class="d">笔数生意，非客单价</span></div>
+  </div>
+
+  <h3>为什么必须重视</h3>
+  <ol>
+    <li><strong>增长没有减速</strong> —— 已连续 6 周交易量创新高；单周收入超过 Phantom、Jupiter，24h 收入曾超 Hyperliquid。<span class="tag t2">公开</span></li>
+    <li><strong>已在 Solana 上超过 Axiom 的日交易量</strong> —— memecoin 终端战场的权力转移信号。Photon 份额从 1 月 30.7% 跌到 7 月不足 10%。<span class="tag t2">公开</span></li>
+    <li><strong>它拿的是我们不占的用户层</strong> —— 68,000+ 首次买币用户从 Apple Pay 进来（$25M）；KOL 反馈"很多巨鲸的高市值币交易跑到 FOMO 上去了"。<span class="tag t1">一手</span></li>
+    <li><strong>正面抢心智</strong> —— 热门代币推送先于我们上线，07-23 对 GME 一天推 11 次；同时 <strong>FOMO 的交易在我们的 Wallet Tracker 里追踪不到</strong>，用户已在投诉。<span class="tag t1">一手</span></li>
+    <li><strong>迭代极快</strong> —— Robinhood Chain 7/01 主网上线，创始人 7/05 对"支持 RH 链"只回了一个 👀，<strong>7/13 我们已抓到 FOMO 在 RH 链上的完整跨链交易</strong>。从表态到落地 ≤ 8 天。<span class="tag t1">一手</span></li>
+  </ol>
+
+  <h3>它的结构性弱点</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>弱点</th><th>本质</th><th>可打击性</th></tr></thead>
+    <tbody>
+      <tr><td><strong>不支持内盘</strong></td><td>跨链只询价 Uniswap V3 标准 AMM，未毕业代币无法交易</td><td><span class="pill p-hi">高</span> alpha 最集中处</td></tr>
+      <tr><td><strong>交易参数不可控</strong></td><td>无滑点自定义、无加速 / priority fee</td><td><span class="pill p-hi">高</span> 专业用户刚需</td></tr>
+      <tr><td>跨链 ~3s 延迟</td><td>Intent-based 异步结算，非原子</td><td><span class="pill p-mid">中</span> 散户无感，大户敏感</td></tr>
+      <tr><td><strong>分析深度浅</strong></td><td>无自研数据，靠外部路由 + 简单看板</td><td><span class="pill p-hi">高</span> 我们的护城河</td></tr>
+      <tr><td>BNB 链执行差</td><td>高波动时不填充 / 延迟填充，官方承认在修但方案未定</td><td><span class="pill p-mid">中</span> 窗口期有限</td></tr>
+      <tr><td>"限价单"非链上真单</td><td>创始人公开承认非托管跨 5 链做真限价单"极难"，只能先做 SOL</td><td><span class="pill p-mid">中</span></td></tr>
+      <tr><td>技术全外包</td><td>路由、跨链、密钥、入金、出金全靠第三方</td><td><span class="pill p-lo">长期</span> 短期反是它的速度优势</td></tr>
+      <tr><td><strong>本地化几乎为零</strong></td><td>仅英文，无阿拉伯语等 RTL</td><td><span class="pill p-hi">高</span> 新兴市场空白</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+  <p class="snum">02 — 公司与资本</p>
+  <h2>被当作消费级 fintech 在定价</h2>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>项</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>产品 / 域名</td><td>fomo（品牌全小写）· <code>fomo.family</code></td></tr>
+      <tr><td>主体</td><td>FOMO Labs，纽约</td></tr>
+      <tr><td>时间线</td><td>公司 2024 年成立，产品 <strong>2025-05-06</strong> 公开上线</td></tr>
+      <tr><td>创始人</td><td>Paul Erlanger、Se Yong Park（X: @seyong）、Prashan Dharmasena</td></tr>
+      <tr><td>团队背景</td><td>三人均出自 <strong>dYdX</strong>（Erlanger 2021-07~2024-10 任 BD 负责人；Park 与其先后共事于 Deutsche Bank、dYdX 约 5 年）；团队还有 Uniswap、OpenSea、Square、Google 背景</td></tr>
+      <tr><td>自我定位</td><td>"social-first crypto trading app"、"#1 cross-chain trading app in crypto"</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>融资历史 <span class="tag t2">公开</span></h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>轮次</th><th>时间</th><th class="num">金额</th><th class="num">估值</th><th>投资人</th></tr></thead>
+    <tbody>
+      <tr><td>早期</td><td>2024~2025</td><td class="num">~$2M</td><td class="num">—</td><td>（由累计口径推得）</td></tr>
+      <tr><td>Series A</td><td>2025-11</td><td class="num">$17M</td><td class="num">—</td><td><strong>Benchmark</strong> 领投（Benchmark 罕见的加密投资）</td></tr>
+      <tr><td>Series B</td><td>2026-06-22</td><td class="num"><strong>$75M</strong></td><td class="num"><strong>$550M</strong></td><td><strong>Index Ventures</strong> 领投，Union Square Ventures、Benchmark 跟投</td></tr>
+      <tr><td><strong>累计</strong></td><td></td><td class="num"><strong>≈$94M</strong></td><td class="num"></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <h4>资本含义</h4>
+    <p><strong>$550M + Index / USV / Benchmark 组合</strong> = 它被当作消费级 fintech 而非 crypto 工具在定价。这决定了它的战略必然是"用户规模优先"，会持续烧钱补贴费率、KOL、入金。</p>
+    <p><strong>无代币</strong>：截至 2026-06 官方从未提及发币计划。这意味着它目前的增长是纯产品 + 纯现金补贴驱动的，<strong>没有代币预期带来的虚假繁荣</strong>——增长质量比 airdrop farming 型竞品更硬。</p>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+  <p class="snum">03 — 业务数据与增长曲线</p>
+  <h2>7 月中到 8 月初，收入翻了约 3.9 倍</h2>
+
+  <h3>用户与交易量 <span class="tag t2">公开</span></h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>时点</th><th class="num">用户</th><th class="num">累计交易量</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td>2025-11（A 轮）</td><td class="num">120,000 / 交易者 35,000</td><td class="num">—</td><td>trader/user = <strong>29%</strong>；净新增币圈用户 ~15,000；onramp 入金 $5M</td></tr>
+      <tr><td>A 轮后某时点</td><td class="num">250,000</td><td class="num">$1.5B</td><td></td></tr>
+      <tr><td>2026 年中</td><td class="num">470,000+</td><td class="num">$2.5B</td><td>Crossmint 口径</td></tr>
+      <tr><td>2026-06（B 轮）</td><td class="num"><strong>625,000+</strong></td><td class="num"><strong>$4B+</strong></td><td>110M+ 社交互动；68,000+ 首次买币（$25M，经 Apple Pay）</td></tr>
+      <tr><td>2026-08</td><td class="num">625,000+</td><td class="num">—</td><td>日新增 <strong>3,000+</strong></td></tr>
+    </tbody>
+    <caption>⚠️ 全部为公司 / 投资人自述，未经审计。"user"很可能指注册数而非入金或活跃账户。唯一能干净算出的漏斗比率是 29% trader/user，且为单点观测而非留存队列。对外引用时统一注明"官方口径"。</caption>
+  </table>
+  </div>
+
+  <h3>收入曲线（关键）<span class="tag t1">一手</span><span class="tag t2">公开</span></h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>口径</th><th class="num">数值</th><th>来源</th></tr></thead>
+    <tbody>
+      <tr><td>Q1 2026 日均</td><td class="num">~$103k / 日</td><td>DefiLlama</td></tr>
+      <tr><td>Q2 2026 日均</td><td class="num">~$79k / 日</td><td>DefiLlama</td></tr>
+      <tr><td><strong>2026-07-13 实测</strong></td><td class="num"><strong>$96,789 / 24h</strong><br>约 128,000 笔 / 日</td><td><strong>GMGN 链上 + HAR 实测</strong></td></tr>
+      <tr><td>Q3 前 27 天</td><td class="num">$6.03M<br>日均 ~$223k / 日</td><td>DefiLlama</td></tr>
+      <tr><td>周收入 ATH ①</td><td class="num">$1.39M</td><td>约 7 月中，Solana 协议收入第 3</td></tr>
+      <tr><td>周收入 ATH ②</td><td class="num">$1.57M</td><td>截至 7/27</td></tr>
+      <tr><td>周收入 ATH ③</td><td class="num"><strong>$2.64M</strong></td><td>截至 8/08 · 比 ATH② 高 68% · 超 Phantom（+86%）与 Jupiter（≈3×）</td></tr>
+      <tr><td>收入构成（8/08 周）</td><td class="num">Solana $2.6M<br>Hyperliquid perps $38.8K</td><td><strong>98.5% 来自 Solana 现货</strong></td></tr>
+      <tr><td>年化口径分歧</td><td class="num">$22.68M（DefiLlama）<br>$72M run-rate（第三方 ARR）</td><td>差异大，见下</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gain">
+    <h4>交叉验证与解读</h4>
+    <p>我们 07-13 实测 <strong>$96.8k/日 ≈ 周 $67.8 万</strong>，而外部报道 7/27 周 $157 万、8/08 周 $264 万 —— <strong>7 月中到 8 月初收入翻了约 3.9 倍</strong>。不是线性增长，是<strong>爆发段</strong>。<span class="tag t1">一手 × 公开交叉</span></p>
+    <p><strong>年化分歧的解释</strong>：DefiLlama 的 $22.68M 更像滚动 / 加权年化（含低基数月份），$72M 是按近期峰值外推。按 8/08 周外推年化约 $137M。真实当期运行率大概在 <strong>$80M~$137M</strong> 区间。<span class="tag t3">推断</span></p>
+    <p><strong>单笔经济学（重要）</strong>：$96,789 ÷ 128,000 笔 ≈ <strong>$0.76/笔</strong>，而 ≤200U 档是固定 0.95 USDC/笔 —— 绝大多数交易落在最低档，<strong>客单价极小</strong>。结论：FOMO 是<strong>笔数生意</strong>，用户是小额高频散户。与"巨鲸跑去 FOMO 交易高市值币"不矛盾：巨鲸带来心智与内容，散户带来笔数与收入。<span class="tag t3">推断</span></p>
+  </div>
+
+  <h3>市场份额格局 <span class="tag t2">公开</span></h3>
+  <ul>
+    <li><strong>FOMO 已超过 Axiom 的 Solana 日交易量</strong>（2026-06 六天内交易量增长 57% 后完成超越）。Axiom 曾在 2025-04 峰值占 Solana meme 交易量 72%、2026-07 终端份额峰值 74%。</li>
+    <li><strong>Photon</strong> 份额从 2026-01 的 30.7% 跌到 7 月不足 10%。</li>
+    <li><strong>Pump.fun 正面应战</strong>：8/07 上线社交交易功能（直接对标 copy-trading）；<strong>8/09 开出挖角条件——给 FOMO 用户 $20,000 签约金 + $30,000/月</strong>，条件包括公开转移资金、永久删除 FOMO 账号。</li>
+  </ul>
+  <div class="note alert">
+    <p>Pump.fun 的挖角报价，是市场对 FOMO 威胁级别的<strong>第三方定价</strong>。同行愿意付这个价挖人，说明 FOMO 的用户粘性与钱包质量被认为是真实的。</p>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+  <p class="snum">04 — 产品全貌</p>
+  <h2>把"链"这个概念对用户彻底隐藏</h2>
+
+  <h3>链与资产覆盖</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>类别</th><th>覆盖</th><th>来源</th></tr></thead>
+    <tbody>
+      <tr><td>现货链</td><td><strong>Solana、Base、BNB Chain、Monad</strong>（公开口径 4 条）；创始人 07-05 原话 "5 diff chains"</td><td><span class="tag t2">公开</span><span class="tag t1">一手</span></td></tr>
+      <tr><td><strong>Robinhood Chain（4663）</strong></td><td><strong>已支持</strong> —— 我们 07-13 抓到完整跨链买入 / 卖出 / 归集交易</td><td><span class="tag t1">一手，外部尚无报道</span></td></tr>
+      <tr><td>统一余额</td><td>单一 USD/USDC 余额跨全部链使用，<strong>用户感知不到跨链</strong>，交易在各链原生结算层执行</td><td><span class="tag t2">公开</span><span class="tag t1">一手</span></td></tr>
+      <tr><td>Perps</td><td>2026-06-11 对<strong>非美用户</strong>上线，由 <strong>Hyperliquid + Trade[XYZ]</strong> 提供；可交易 pre-IPO、股票、加密、指数、商品 perps</td><td><span class="tag t2">公开</span></td></tr>
+      <tr><td>内盘 / 未毕业代币</td><td><strong>不支持</strong>（跨链只询价 Uniswap V3）</td><td><span class="tag t1">一手</span></td></tr>
+      <tr><td>语言</td><td><strong>仅英文</strong>，无阿拉伯语等 RTL</td><td><span class="tag t1">一手，08-11 实查</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>功能矩阵</h3>
+  <h4>交易</h4>
+  <ul>
+    <li>USDC 一键买全网（含跨链，用户无感）</li>
+    <li>Apple Pay / 卡直接入金买币（Crossmint Token Checkout）</li>
+    <li><strong>Gas 全代付</strong>，用户无需持有任何原生代币</li>
+    <li>提现：链上提现 + 法币出金经 <strong>Spritz Finance</strong>（<code>app.spritz.finance</code>）</li>
+    <li>限价单 / TP / SL：<strong>在做，先只做 SOL</strong></li>
+    <li><strong>无滑点自定义、无加速档位</strong></li>
+  </ul>
+  <h4>社交（核心差异化）</h4>
+  <ul>
+    <li><strong>Feed</strong> 交易实时进流，可看可抄 · <strong>Copy trading</strong> · <strong>Leaderboard</strong> · <strong>Friends</strong></li>
+    <li><strong>Thesis</strong> —— 直接在 K 线图上发表对某代币的观点</li>
+    <li><strong>Profiles</strong> —— 个人交易主页（含 avg entry/exit lines，Web 版缺）</li>
+    <li><strong>CLANS（2026-08-10 上线）</strong> —— 组队交易、组建 family、共同积累受众；上线即 50+ clans。内部研判：与 GMGN 的社交跟投 / 跟单场景<strong>直接重叠</strong></li>
+    <li>Perps 与 feed / leaderboard / thesis / profile <strong>完全打通</strong></li>
+  </ul>
+  <h4>发现与信号</h4>
+  <ul>
+    <li>Trending / 已验证代币 / 持仓分布；代币关联 X 账号帮用户判真伪</li>
+    <li><strong>MC alerts / 热门代币推送（callout）</strong> —— 按活跃交易者人数档位（20/40/80 traders）推送。实测 07-23 对 GME <strong>一天推 11 次</strong>，单日最高 23 条</li>
+  </ul>
+  <div class="note">
+    <p><strong>Web 落后 App</strong>：Web 版缺 perps、缺 avg entry/exit lines —— FOMO 是移动端优先，Web 只是补充。<span class="tag t1">一手</span></p>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+  <p class="snum">05 — 技术架构拆解</p>
+  <h2>核心技术全外包，自己只做体验和分发</h2>
+  <p>来源：Confluence《Fomo 交易方案调研》（2026-07-14），基于 7 笔样本交易 + fomo.family HAR 抓包。<strong>这是本次调研最有价值的一手资产。</strong></p>
+
+  <h3>五句话看懂架构</h3>
+  <ol>
+    <li><strong>Solana 是资金主链</strong> —— 用户资产最终全部归集到 Solana 钱包，其他链（含 Robinhood）只是交易执行层。</li>
+    <li><strong>Intent-based 跨链，非 lock-mint</strong> —— 用户在源链存入 → Relay 的 solver 在目标链以较少金额执行（差价即桥费）→ 异步结算，约 <strong>3 秒</strong>。</li>
+    <li><strong>EIP-7702 + ERC-4337 做统一地址</strong> —— EVM 侧用 EOA，首次操作时由 Bundler 携带预签的 7702 授权一并上链，无需预部署合约钱包；gas 由 Bundler / Relayer 代付。</li>
+    <li><strong>Privy 密钥分片托管</strong> —— 私钥拆成多份 share（Privy 服务端一份 + 设备一份），签名时前端 iframe 拉 share、本地重组、签名、销毁；换设备用 OAuth 恢复。</li>
+    <li><strong>无自研路由</strong> —— 同链走 DFlow / Jupiter（动态选路），跨链路由由 Relay 的 solver 决定。FOMO 只做前端 + 收费。</li>
+  </ol>
+
+  <div class="note alert">
+    <h4>"自托管"叙事的最大水分</h4>
+    <p>名义上 Privy 单方无法签名，但它<strong>持有 recovery share ≈ 实际具备全权控制能力</strong>。这是可验证的技术事实，可用于对比传播。<span class="tag t1">一手</span></p>
+  </div>
+
+  <h3>交易链路（HAR 实测时序）</h3>
+  <div class="flow"><b>T+0.000s</b>  POST /swaps/v2  { inTokenId, outTokenId, amount, retry }
+          → 后端构建 Solana 交易，用 feePayer 私钥签 sig[0]
+            返回半签名 tx + relaySwapId + 费用明细
+<b>T+0.696s</b>  Privy iframe 拉 key share → iframe 内重组私钥 → 签 sig[1] → 销毁
+<b>T+0.697s</b>  POST /swaps/v2/fast-fill      （目标链预执行；当前未启用，返回 400）
+<b>T+1.254s</b>  前端直连 Jito sendTransactionWeb（单笔提交，带 MEV 保护，非 bundle）
+<b>T+2.106s</b>  每 500ms 轮询 /swaps/v2/status?relaySwapId=
+<b>T+4.5s</b>    刷新 balances / swaps 确认到账</div>
+
+  <p><strong>关键观察</strong>：前端不构建交易（只传币对和金额），后端不参与提交（签好的 tx 从不回传后端）。Solana 交易带 <code>jitodontfront1111111111111111111TradeonFomo</code> 的 ComputeBudget hint —— 防抢跑标记 + 品牌植入。</p>
+
+  <h3>四种场景的资金与费用流</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>维度</th><th>同链 Swap</th><th>跨链买入 Sol→RH</th><th>跨链卖出 RH→Sol</th><th>纯 USDC 归集</th></tr></thead>
+    <tbody>
+      <tr><td>执行路径</td><td>DFlow / Jupiter</td><td>USDC→WETH→Target</td><td>Target→WETH→USDC→桥</td><td>直接转账，无 swap</td></tr>
+      <tr><td><strong>平台费</strong></td><td><strong>阶梯</strong></td><td><strong>0.5%</strong></td><td><strong>0.5%</strong></td><td><strong>无</strong></td></tr>
+      <tr><td>桥费</td><td>无</td><td>Relay 隐含价差</td><td>Relay 隐含价差</td><td>Relay 隐含价差</td></tr>
+      <tr><td>收费方式</td><td>顶层独立 <code>transferChecked</code></td><td>Relay 报价内含 <code>usdFees.app</code></td><td>同左</td><td>仅桥价差</td></tr>
+      <tr><td>确认时间</td><td>即时</td><td>~3s</td><td>~3s</td><td>~3s</td></tr>
+      <tr><td>技术栈</td><td>Solana Program</td><td>Solana Program + Relay</td><td>7702 + 4337 + Relay</td><td>同左</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>供应商依赖地图</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>环节</th><th>供应商</th></tr></thead>
+    <tbody>
+      <tr><td>同链路由</td><td>DFlow / Jupiter</td></tr>
+      <tr><td>跨链</td><td><strong>Relay</strong>（solver、报价、代扣平台费、桥费）</td></tr>
+      <tr><td>上链提交</td><td>Jito（<code>sendTransactionWeb</code>，MEV 保护）</td></tr>
+      <tr><td>密钥与钱包</td><td><strong>Privy</strong>（分片托管 + OAuth 恢复）</td></tr>
+      <tr><td>法币入金</td><td><strong>Crossmint</strong>（Apple Pay Token Checkout）</td></tr>
+      <tr><td>法币出金</td><td><strong>Spritz Finance</strong></td></tr>
+      <tr><td>Perps</td><td><strong>Hyperliquid + Trade[XYZ]</strong>（FOMO 收 builder-code 费）</td></tr>
+      <tr><td>EVM 智能账户</td><td>EntryPoint v0.7 + Simple7702Account</td></tr>
+      <tr><td>数据追踪 / RPC</td><td>PostHog · QuickNode（Robinhood mainnet）</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note">
+    <p>速度优势来自全外包，但代价是：① 无法做内盘；② 无法给用户交易参数控制权；③ 单点故障集中在 <strong>Relay 和 Privy</strong>；④ 一旦要做真限价单 / 更深执行优化，会撞上外包天花板——<em>创始人自己承认了这一点</em>。<span class="tag t3">推断</span></p>
+  </div>
+
+  <h3>已确认的硬伤 <span class="tag t1">一手</span></h3>
+  <ol>
+    <li>跨链 ~3s 延迟，vs 同链即时。</li>
+    <li><strong>7702 委托地址一个区块只能一笔交易</strong> —— Robinhood 出块 0.1s 无感，但扩展到 ETH（12s）连续操作必须等块。</li>
+    <li>跨链仅支持外盘 —— Relay 只询价 Uniswap V3。</li>
+    <li><strong>feePayer 代付 gas 无保护</strong> —— 用户余额不足导致 deposit 失败时，FOMO 后端白亏链上 gas，无前置校验或惩罚机制（已抓到失败样本）。</li>
+    <li>跨链持仓导致 PnL 口径复杂。</li>
+    <li>交易成功率与退款机制存在不确定性。</li>
+  </ol>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+  <p class="snum">06 — 商业模式与费率</p>
+  <h2>小额用户被极度惩罚：买 $2 收 47.5%</h2>
+
+  <h3>同链 Swap — 三档阶梯 <span class="tag t1">一手，链上多笔验证</span></h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>交易额</th><th>费率</th><th>实测样本</th></tr></thead>
+    <tbody>
+      <tr><td class="num">≤ 200 USDC</td><td><strong>固定 0.95 USDC / 笔</strong></td><td>2.00U 交易收 0.95 → <strong class="win-them">实际 47.5%</strong>；184.64U 收 0.95 → 0.51%</td></tr>
+      <tr><td class="num">200 ~ 10,000 USDC</td><td><strong>0.5%</strong></td><td>226.67U 收 1.133362 → 0.50%</td></tr>
+      <tr><td class="num">≥ 10,000 USDC</td><td><strong>0.05%</strong></td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note gain">
+    <p><strong>最重要的一条</strong>：买 $2 收 $0.95 = 47.5%。这解释了 App Store 上"只有你有 1 万美元以上才好用""费用太高不推荐"的负评来源，也是<strong>我们最直接的攻击点</strong>——对小额用户，GMGN 的比例费率完胜。</p>
+  </div>
+
+  <ul>
+    <li><strong>跨链 Swap</strong>：统一 0.5% 平台费（Relay 报价代扣，HAR 确认 <code>feeTierBps: 50</code>）+ Relay 桥费（隐含价差）。</li>
+    <li><strong>纯 USDC 归集</strong>：不收平台费。</li>
+    <li><strong>邀请码折扣</strong>：未填 0.5%，填了 <strong>0.45%</strong>（10% 折扣）。</li>
+  </ul>
+
+  <h3>分润机制 <span class="tag t1">一手</span></h3>
+  <p>卖出交易中 0.95 USDC 被拆成两笔：<strong>75%（0.7125 USDC）→ FOMO 平台</strong>，<strong>25%（0.2375 USDC）→ 推荐人 / 前端</strong>。买入交易未观察到分成——分成是否发生取决于用户是否绑定推荐人。<span class="tag t3">推断</span></p>
+
+  <div class="note alert">
+    <h4>推荐码泛滥现象 <span class="tag t2">公开</span></h4>
+    <p>搜索"fomo referral code"会出现大量第三方站点，宣称折扣从 10%、20% 一路虚标到 <strong>90%、95%</strong>（<code>SAVE90</code>、<code>OFF95</code>）。官方口径实际只有 10% 终身折扣。</p>
+    <p>含义：FOMO 增长有很大一部分被<strong>联盟 / SEO 套利者</strong>驱动 —— 带来量，也带来质量噪音和虚假宣传的品牌风险。既是舆情素材，也提醒我们自己的 affiliate 体系要控预期。<span class="tag t3">推断</span></p>
+  </div>
+
+  <div class="note gain">
+    <h4>可立即落地的监控点</h4>
+    <p>Solana 收费钱包 owner <code>R4rNJHaffSUotNmqSKNEfDcJE8A7zJUkaoM5Jkd7cYX</code> / USDC ATA <code>HrTf9CzXR1dRH4Sof5QrpmGWwpwAf3qZzwCsEjQpXcSq</code> —— <strong>监控其净流入即可作为 FOMO 收入的实时代理指标</strong>，比等第三方报道快一周。</p>
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+  <p class="snum">07 — 增长与市场策略</p>
+  <h2>争夺 Coinbase / Robinhood 溢出的美国零售用户</h2>
+
+  <h3>KOL 矩阵 <span class="tag t1">一手，25+ 账号分析</span></h3>
+  <ol>
+    <li><strong>月初用链官方号造势</strong> —— @BNBCHAIN（3.9M）、@base（1M）先起量。</li>
+    <li><strong>随后每天有 KOL 发声</strong>，主力粉丝量 10k~400k。</li>
+    <li><strong>KOL 画像</strong>：大部分给 <strong>Coinbase</strong> 做过宣传，少部分给币安 / Bybit。覆盖 @farokh(454.8K)、@frankdegods(430k)、@brave(353.1k)、@Bankless(328.4k)、@econoar(191.9k)、@SpiderCrypto0x(117.3k)、@TaikiMaeda2(102k)、@js_horne(zora 联创)、@j0hnwang(Kalshi 加密主管)、@KaitoAI、@privy_io。</li>
+    <li>少量 2k~10k 小号专职做增长（含创始人本人账号 @PaulErlanger）。</li>
+  </ol>
+  <div class="note">
+    <p>这是一套<strong>"西方主流加密 + 消费科技"</strong>的 KOL 组合，不是华语 / 亚洲交易员圈。它争夺的是 Coinbase / Robinhood 溢出的美国零售用户，与 GMGN 核心用户池<strong>部分错位</strong> —— 既是我们的缓冲，也是我们的盲区。<span class="tag t3">推断</span></p>
+  </div>
+
+  <h3>争议：KOL favoritism <span class="tag t1">一手</span></h3>
+  <p>X 上唯一带<strong>情绪对立</strong>的议题（4 条 + 引用扩散）：用户指责 FOMO 优先 KOL listing、忽视 bagworkers / meme 社区 / 零售用户。创始人<strong>没有正面否认</strong>，而是选择"增加 sponsored creators 透明度"侧面回应 —— <strong>说明确有其事</strong>。FOMO 的排行榜与推送公信力存在被质疑的空间。</p>
+
+  <h3>推送作为增长武器：07-23 影子测试对照 <span class="tag t1">一手</span></h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>指标</th><th>我们（规则口径）</th><th>FOMO</th></tr></thead>
+    <tbody>
+      <tr><td>覆盖币数</td><td class="win-us">14 / 14（FOMO 推的 8 个全覆盖）</td><td>8 / 14</td></tr>
+      <tr><td>20t 首触更早</td><td class="win-us">6 币（AI 早 26min / TREX 早 6min / BUCK 早 35min / GME 早 12min / AMC 早 8min / DIH 同分钟）</td><td>1 币（Hoodog 早 24min）</td></tr>
+      <tr><td>独有推送</td><td class="win-us">6 币 + GME 飙升晋级③</td><td>GME 回落重推 3 条</td></tr>
+      <tr><td>质量闸</td><td class="win-us">能拦下 BSC 鲸鱼对倒盘、代币化股票伪触发</td><td>无</td></tr>
+      <tr><td>上线时间</td><td class="win-them">晚</td><td class="win-them">已上线，心智正在建立</td></tr>
+    </tbody>
+    <caption>典型的"技术领先、心智落后"局面：在信号质量与时效上我们实测胜出，唯一劣势是时间。</caption>
+  </table>
+  </div>
+
+  <h3>其他增长杠杆</h3>
+  <ul>
+    <li><strong>Apple Pay 入金（Crossmint）</strong>：68,000+ 首次买币用户，$25M —— <strong>最难被复制的一环</strong>，涉及支付合规。</li>
+    <li><strong>Affiliate 计划</strong>：实时结算、无上限。</li>
+    <li><strong>Pump.fun 挖角战</strong>（8/09）：$20k 签约 + $30k/月抢 FOMO 用户。</li>
+  </ul>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="s8">
+  <p class="snum">08 — 用户口碑与真实问题</p>
+  <h2>用"简单"吸引小白，而小白遇到的第一个真问题恰是"简单"掩盖掉的复杂性</h2>
+
+  <div class="metrics">
+    <div class="metric"><span class="v">4.6★</span><span class="k">App Store 评分 · 698+ 评价（2026-07）</span></div>
+    <div class="metric"><span class="v">2 / 2</span><span class="k">Trustpilot 评价数 / 1 星数</span></div>
+    <div class="metric"><span class="v">18 : 25</span><span class="k">X 上泛支持 : 具体抱怨（07-05~06）</span><span class="d">仍处蜜月期，但抱怨已具体化</span></div>
+  </div>
+
+  <h3>用户最认可的点 <span class="tag t1">一手</span></h3>
+  <ol>
+    <li><strong>Apple Pay 买 meme 币</strong> —— 被反复称为 "game changer"</li>
+    <li><strong>UI 直观、对新手极友好</strong> —— "这才是现代加密货币交易应有的方式"</li>
+    <li><strong>社交 / 跟单</strong> —— "X 上太多账号要关注，很多 KOL 偷偷抛售；这是最透明的方式看谁在赚钱"</li>
+    <li><strong>费用低</strong> —— 多人明确对比 Moonshot："Moonshot 对 $250 以下交易收 2.5%，比 FOMO 高 5 倍"</li>
+    <li><strong>上市前接触代币</strong> —— "像在 crypto 语境下打开了私募市场"</li>
+    <li>执行快、发版频繁</li>
+  </ol>
+
+  <h3>用户最不满的点</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>问题</th><th>严重度</th><th>细节</th><th>官方态度</th></tr></thead>
+    <tbody>
+      <tr><td><strong>提现困难 / 出金复杂</strong></td><td><span class="pill p-hi">高</span></td><td>"卖了币点提现 5 天没到账"、"没有直接提到银行的功能"、客服只回自动消息</td><td>开发者回复：出金要去 <code>app.spritz.finance</code> —— <strong>出金被外包且不在 App 内闭环</strong></td></tr>
+      <tr><td><strong>BNB 链性能</strong></td><td><span class="pill p-hi">高</span></td><td>约 7 条：交易慢、高波动时延迟填充 / 不填充</td><td>承认在修，"have a few things in mind"，<strong>方案未定</strong></td></tr>
+      <tr><td>入金扣款未到账 / 资金冻结</td><td><span class="pill p-hi">高</span></td><td>"存 100 被扣款但没到账"；失败交易资金冻结 1-3 工作日</td><td>未系统回应</td></tr>
+      <tr><td>成交价偏差</td><td><span class="pill p-mid">中</span></td><td>买入价高于设定、卖出价低于设定</td><td>未单独回复</td></tr>
+      <tr><td>价格更新滞后</td><td><span class="pill p-mid">中</span></td><td>"价格严重滞后，也无法快速下单"</td><td>未回应</td></tr>
+      <tr><td>缺止损 / 限价 / 买入限制</td><td><span class="pill p-mid">中</span></td><td>6 条</td><td>承认技术难，<strong>先做 SOL</strong></td></tr>
+      <tr><td><strong>成为退出流动性</strong></td><td><span class="pill p-mid">中</span></td><td>"那些交易者会利用你提供退出流动性"、"故意在即将下跌时推送买入警报"</td><td>未回应</td></tr>
+      <tr><td>合作方信任风险</td><td><span class="pill p-mid">中</span></td><td>用户警告选 Rasmr 需谨慎，类比 Axiom 出过的问题</td><td>未回应</td></tr>
+      <tr><td>无私信 / 无自定义货币 / 无卖出 bot / Web 功能缺失</td><td><span class="pill p-lo">低</span></td><td>单点请求</td><td><strong>一律不回</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>创始人回复策略画像 <span class="tag t1">一手</span></h3>
+  <ul>
+    <li><strong>只正面接技术 / 性能类反馈</strong>（BNB、限价单）</li>
+    <li><strong>单点功能请求一律不回</strong></li>
+    <li>情绪类用幽默化解（"how about just manifesting a great july"）</li>
+    <li>回复集中在 <strong>7/5 晚 22:16–22:41 一个时间窗</strong> —— 典型 founder 集中扫 mentions 模式</li>
+    <li>对新链请求给 👀（有兴趣不承诺）—— <strong>但 8 天后就上线了 Robinhood Chain</strong></li>
+  </ul>
+  <div class="note alert">
+    <p><strong>结论</strong>：FOMO 的产品决策高度创始人驱动、高度机会主义。公开表态保守，实际执行激进。<strong>不要用它的公开表态预测它的路线图。</strong><span class="tag t3">推断</span></p>
+  </div>
+
+  <div class="note">
+    <h4>关键结构性矛盾</h4>
+    <p>目前靠人工客服个案补偿在扛（有用户因客服"破例赔付"而把 1 星改成好评）。这套打法在 62.5 万用户量级还能撑，<strong>到几百万量级会成为它的定时炸弹</strong>。<span class="tag t3">推断</span></p>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="s9">
+  <p class="snum">09 — 我们 vs FOMO</p>
+  <h2>能力对照</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>维度</th><th>GMGN</th><th>FOMO</th><th>判断</th></tr></thead>
+    <tbody>
+      <tr><td><strong>入金门槛</strong></td><td>需自备链上资产 / 原生代币</td><td>Apple Pay 直接买 + USDC 全链通用 + gas 全代付</td><td class="win-them">FOMO 明显领先</td></tr>
+      <tr><td>跨链体验</td><td>有跨链概念，用户需感知</td><td>用户完全无感，单一余额</td><td class="win-them">FOMO 领先</td></tr>
+      <tr><td><strong>内盘 / 首发</strong></td><td>支持</td><td>不支持</td><td class="win-us">我们领先</td></tr>
+      <tr><td>交易参数控制</td><td>滑点 / 优先费 / 加速可调</td><td>全无</td><td class="win-us">我们领先</td></tr>
+      <tr><td>执行速度（同链）</td><td>自研，可加速</td><td>即时但无加速选项</td><td class="win-us">我们领先</td></tr>
+      <tr><td>执行速度（跨链）</td><td>—</td><td>~3s 异步</td><td class="win-tie">各有取舍</td></tr>
+      <tr><td><strong>数据与分析深度</strong></td><td>自研链上数据（Smart Money、鲸鱼、税率、DYOR、钱包画像）</td><td>浅（外部路由 + 简单看板）</td><td class="win-us">我们大幅领先</td></tr>
+      <tr><td>信号 / 推送质量</td><td>14/14 覆盖，6 币首触更早，有质量闸</td><td>8/14 覆盖，无质量闸</td><td class="win-us">我们领先（但上线晚）</td></tr>
+      <tr><td><strong>社交</strong></td><td>跟单 / 跟投在做</td><td>Feed + Leaderboard + Thesis + Friends + CLANS，与 perps 全打通</td><td class="win-them">FOMO 明显领先</td></tr>
+      <tr><td>Perps</td><td>—</td><td>已上线（非美用户），可交易 pre-IPO / 股票 / 指数 / 商品</td><td class="win-them">FOMO 领先</td></tr>
+      <tr><td>限价单 / TP / SL</td><td>有</td><td>在做，只 SOL</td><td class="win-us">我们领先</td></tr>
+      <tr><td><strong>费率（小额）</strong></td><td>比例费率</td><td>≤200U 固定 0.95U（$2 交易收 47.5%）</td><td class="win-us">我们大幅领先</td></tr>
+      <tr><td>费率（大额）</td><td>—</td><td>≥10,000U 仅 0.05%</td><td class="win-them">FOMO 更狠</td></tr>
+      <tr><td>自托管真实性</td><td>用户自持</td><td>Privy 分片，Privy 持 recovery share</td><td class="win-us">我们更真</td></tr>
+      <tr><td>移动端体验</td><td>专业但重</td><td>极简、消费级</td><td class="win-them">FOMO 领先</td></tr>
+      <tr><td><strong>本地化</strong></td><td>多语言（阿拉伯语在做）</td><td>仅英文</td><td class="win-us">我们领先</td></tr>
+      <tr><td>出金</td><td>链上</td><td>需跳出 App 到 Spritz，投诉集中区</td><td class="win-us">我们领先</td></tr>
+      <tr><td>可被追踪性</td><td>我们的交易可被解析</td><td>FOMO 的 Relay 代发交易在我们 Tracker 里追踪不到</td><td class="win-them">这是我们的 bug，不是它的优势</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>特别说明：Relay 交易解析缺口（我们的当前故障）<span class="tag t1">一手</span></h3>
+  <div class="note alert">
+    <p><strong>现象</strong>：同一钱包在第三方工具（Ray Quartz、Debot、basedbot）能看到 FOMO 交易，在 GMGN Wallet Tracker / K 线买卖点里<strong>看不到</strong>。已有 KOL（Gabbens）正式提诉求。</p>
+    <p><strong>根因（已定位）</strong>：FOMO 买单走 Relay 代发 —— relayer 先在 DEX 把币买下，再由 Relay 路由合约 <code>0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f</code> 把币转给用户钱包。<strong>用户钱包既不是发起方也不是接收合约，只出现在最后一跳转账里</strong>。我们把这笔"买入"记在了 relayer 名下，用户钱包名下只剩一条金额为 0 的转入记录 → K 线买卖点、关注 / 追踪列表（都按钱包维度取数）全部看不到。</p>
+    <p><strong>坐实样本</strong>：BSC 2026-07-25 11:23:57，tx <code>0xed986e6a...cd4f8</code>，$584.28 买入被归属到 relayer <code>0xa67d7eb4...93fbb</code>。同钱包近 10 天在 BSC 有 11 笔、Base 有 2 笔同类交易全部未归属。对照：该钱包的<strong>卖出</strong>走 ERC-4337 通道，归属正确 → 用户看到"有卖出、没买入"。</p>
+    <p><strong>修复方向</strong>：把 Relay 路由合约识别为中转，按「路由合约收币后转给谁」定买卖归属，而非按交易发起方。</p>
+  </div>
+
+  <p><strong>已立项</strong>：<code>GMGN-8687</code> BSC 支持 FOMO relay 解析（父任务）· <code>GMGN-8688</code> 解析异常：合约地址一直转出无转入 · <code>GMGN-8689</code> BSC 经 relay 跨链兑换仍被解析为卖出 · <code>GMGN-8665</code> 代币页 Trades 新增转入 / 转出类型 + fomo 子 tab · <code>GMGN-8409</code> 持仓信号文案直接采用 Fomo 风格（涨幅 + 买入时长，无 emoji，大写 X）。</p>
+
+  <div class="note">
+    <h4>风险提示 <span class="tag t1">一手</span></h4>
+    <p>为免责，我们目前把 relay 交易解析为「转入 / 转出」而非「买 / 卖」—— 因为<strong>无法识别投毒</strong>。历史上相关地址的投毒币种主要是链上直接发出、安全检测不合规的小额代币；<strong>在我们做过一次攻防对抗后，对方已把金额提高到 50~100U</strong>。技术结论：链上没有准确数据可区分真实发起人与伪造；Relay 接口虽能拿到实际发起人地址但爬虫调用不稳定（延迟 + 限频）；跨链场景下发起人地址无法在 EVM 上归属。"技术上完全规避投毒并且还能识别"目前不现实 —— 需要产品侧用标注 / 提示兜住。</p>
+  </div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+  <p class="snum">10 — 威胁评估与行动</p>
+  <h2>威胁分级</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>威胁</th><th>等级</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td><strong>抢占新增用户入口</strong></td><td><span class="pill p-hi">最高</span></td><td>Apple Pay + USDC 全链 + gas 代付，68k 首次买币用户，日增 3k+。这些用户从未见过 GMGN，心智一旦形成极难夺回</td></tr>
+      <tr><td><strong>社交护城河成型</strong></td><td><span class="pill p-hi">高</span></td><td>Feed + Leaderboard + Thesis + CLANS 已形成网络效应；Pump.fun 都在抄。社交是越晚做越贵的能力</td></tr>
+      <tr><td>推送心智抢跑</td><td><span class="pill p-mid">中高</span></td><td>我们信号质量更好但上线更晚；FOMO 已在建立"FOMO 会告诉我哪个币要涨"的心智</td></tr>
+      <tr><td>追踪缺口导致用户流失</td><td><span class="pill p-mid">中高</span></td><td>看不到 FOMO 交易 → Smart Money / 跟单数据系统性盲区 → KOL 已在投诉，且第三方能做我们做不到，直接伤专业用户信任</td></tr>
+      <tr><td>巨鲸 / 高市值币交易迁移</td><td><span class="pill p-mid">中</span></td><td>2025-11 KOL 反馈已有迁移迹象，需量化监控</td></tr>
+      <tr><td>perps 打通社交</td><td><span class="pill p-mid">中</span></td><td>目前只占收入 1.5%，但一旦跑通就是第二增长曲线</td></tr>
+      <tr><td>费率战</td><td><span class="pill p-lo">低</span></td><td>它小额费率比我们贵，大额才便宜，不构成全面价格威胁</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>建议行动</h3>
+  <div class="actions">
+    <div class="act"><span class="prio prio-0">P0 本周</span><h3>修完 Relay 交易解析归属（GMGN-8687/8688/8689）</h3><p>这是<strong>正在流失专业用户信任</strong>的活口子。第三方（Debot / basedbot）能做，我们做不到，说明这不是不可解的技术问题。</p></div>
+    <div class="act"><span class="prio prio-0">P0 本周</span><h3>给 FOMO 交易打专属标签，代币页 Trades 加 fomo 子 tab</h3><p>把"看不到"转成"看得比别人清楚"，反手变成差异化：<strong>我们是唯一能标出"这是 FOMO 用户在买"的终端</strong>。</p></div>
+    <div class="act"><span class="prio prio-0">P0 本周</span><h3>上线 FOMO 收费钱包监控日报</h3><p>监控 <code>HrTf9CzXR1dRH4Sof5QrpmGWwpwAf3qZzwCsEjQpXcSq</code> 净流入作为 FOMO 收入的实时代理指标，比等第三方报道快一周。</p></div>
+    <div class="act"><span class="prio prio-1">P1 本季度</span><h3>热门代币推送尽快全量上线</h3><p>PRD v1.2 已定稿。我们的规则在时效与覆盖上实测胜出，<strong>唯一劣势是时间</strong>。同档重推规则已按 FOMO 口径（够条件就推）调整——方向对。</p></div>
+    <div class="act"><span class="prio prio-1">P1 本季度</span><h3>「用 U 买一切」专项，建议拆两步走</h3><p><strong>第一步：统一 USDC 余额 + gas 代付</strong> —— 用户体验的 80% 来自这里，不必先解决跨链。</p><p><strong>第二步：跨链无感。</strong>07-14 会议结论是自建桥不现实，Relay 是目前唯一可行方案，需与 Relay 建立深度商务合作以保障服务质量。<strong>建议尽快启动 Relay BD</strong> —— 它是 FOMO 的单点依赖，也应该是我们的谈判杠杆。</p></div>
+    <div class="act"><span class="prio prio-1">P1 本季度</span><h3>小额费率对比做成传播物料</h3><p>FOMO $2 交易收 47.5% 是硬事实，可验证、可传播。</p></div>
+    <div class="act"><span class="prio prio-2">P2 下季度</span><h3>社交 / 组队应对</h3><p>CLANS 与我们的跟投场景直接重叠。不一定是抄 CLANS —— 可以是"用真实链上数据背书的组队"：FOMO 的排行榜有 KOL 偏袒争议，我们有数据公信力。</p></div>
+    <div class="act"><span class="prio prio-2">P2 下季度</span><h3>本地化打差异</h3><p>FOMO 仅英文。阿拉伯语等 RTL 语种是它短期不会碰的市场（我们阿语适配周期约 2 周）。低成本、高确定性的增量。</p></div>
+    <div class="act"><span class="prio prio-2">P2 下季度</span><h3>攻它的"自托管"叙事</h3><p>Privy 持有 recovery share ≈ 实际具备全权控制。这是可验证的技术事实，不是攻击性言论。</p></div>
+    <div class="act"><span class="prio prio-3">P3 持续</span><h3>FOMO 周报机制</h3><p>收费钱包净流入、DefiLlama 收入、App Store 排名 / 评分、X 舆情、新功能上线（CLANS 之后是什么）、链覆盖变化。竞品社群自动监控页已在跑，建议把 FOMO 单独拉出成一页。</p></div>
+  </div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="s11">
+  <p class="snum">11 — 情报缺口</p>
+  <h2>待验证清单</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th class="num">#</th><th>待查</th><th>为什么重要</th><th>建议方法</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td><strong>真实 DAU / 留存曲线</strong></td><td>625k 是注册数，29% trader/user 是单点观测。没有留存就无法判断增长质量</td><td>第三方 App 数据（Sensor Tower / data.ai）；链上活跃钱包估算</td></tr>
+      <tr><td class="num">2</td><td>各链交易量拆分</td><td>98.5% 收入来自 Solana → Base/BNB/Monad/RH 是不是"叙事链"？</td><td>各链收费地址链上统计</td></tr>
+      <tr><td class="num">3</td><td>Robinhood Chain 上的实际体量</td><td>已知技术支持，不知用量。RH 链 7 月上线即 $305M TVL、1M 周活地址，且 memecoin 而非股票主导</td><td>RH 链上 FOMO 相关合约统计</td></tr>
+      <tr><td class="num">4</td><td>Privy recovery 的实际治理条件</td><td>"≈全权控制"目前是技术推断，对外使用需坐实</td><td>Privy 公开文档 / 安全审计报告</td></tr>
+      <tr><td class="num">5</td><td>KOL / sponsored creator 商务条件</td><td>决定我们抢 KOL 的报价</td><td>BD 侧打听</td></tr>
+      <tr><td class="num">6</td><td>限价单 SOL 版何时上线</td><td>上线即抹平我们一个优势</td><td>监控 App 更新日志 + X</td></tr>
+      <tr><td class="num">7</td><td>Pump.fun 挖角战果</td><td>检验 FOMO 用户粘性的天然实验</td><td>监控双方交易量变化</td></tr>
+      <tr><td class="num">8</td><td>是否会发币 / 上积分</td><td>会大幅改变增长曲线和用户质量</td><td>监控官方渠道</td></tr>
+      <tr><td class="num">9</td><td>团队规模与组织</td><td>判断它的迭代上限</td><td>LinkedIn / 招聘信息</td></tr>
+      <tr><td class="num">10</td><td>出金（Spritz）失败率</td><td>它最大的软肋，量化后可作为攻击点</td><td>舆情抓取 + 实测</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section id="s12">
+  <p class="snum">12 — 附录</p>
+  <h2>地址 / 接口索引与资料来源</h2>
+
+  <details>
+    <summary>FOMO 关键地址索引 · Solana</summary>
+    <div class="dbody"><div class="scroll">
+    <table>
+      <thead><tr><th>名称</th><th>地址</th></tr></thead>
+      <tbody>
+        <tr><td>收费钱包 owner</td><td class="mono">R4rNJHaffSUotNmqSKNEfDcJE8A7zJUkaoM5Jkd7cYX</td></tr>
+        <tr><td>收费 ATA (USDC)</td><td class="mono">HrTf9CzXR1dRH4Sof5QrpmGWwpwAf3qZzwCsEjQpXcSq</td></tr>
+        <tr><td>推荐人分润样本钱包</td><td class="mono">Hy9JKVSEjgZgui13cgzfXvEtHL22ZUfm9V31Lj9uC2p9</td></tr>
+        <tr><td>跨链桥程序</td><td class="mono">99vQwtBwYtrqqD9YSXbdum3KBdxPAVxYTaQ3cfnJSrN2</td></tr>
+        <tr><td>feePayer（后端持有）</td><td class="mono">AgmLJBMDCqWynYnQiPCuj9ewsNNsBJXyzoUhD9LJzN51</td></tr>
+        <tr><td>Solana Relayer (RH→Sol)</td><td class="mono">F7p3dFrjRTbtRp8FRF6qHLomXbKRBzpvBLjtQcfcgmNe</td></tr>
+        <tr><td>DFlow 路由</td><td class="mono">DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH</td></tr>
+        <tr><td>Jupiter 路由</td><td class="mono">JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4</td></tr>
+        <tr><td>ComputeBudget hint</td><td class="mono">jitodontfront1111111111111111111TradeonFomo</td></tr>
+      </tbody>
+    </table>
+    </div></div>
+  </details>
+
+  <details>
+    <summary>FOMO 关键地址索引 · Robinhood Chain（4663）</summary>
+    <div class="dbody"><div class="scroll">
+    <table>
+      <thead><tr><th>名称</th><th>地址</th></tr></thead>
+      <tbody>
+        <tr><td>RelayApprovalProxyV3（跨链入口）</td><td class="mono">0xccc88a9d1b4ed6b0eaba998850414b24f1c315be</td></tr>
+        <tr><td>Relayer (Sol→RH)</td><td class="mono">0xa67d7eb4dc68fa6ce8e34ef8cadaf075b9893fbb</td></tr>
+        <tr><td>Filler</td><td class="mono">0xf70da97812cb96acdf810712aa562db8dfa3dbef</td></tr>
+        <tr><td><strong>RelayRouterV3（解析归属关键）</strong></td><td class="mono">0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f</td></tr>
+        <tr><td>RobinHoodSettler（V3 路由）</td><td class="mono">0xe72688f7d25d7318b9a81f21edda640ca948c83b</td></tr>
+        <tr><td>桥合约 (RH→Sol)</td><td class="mono">0x4cd00e387622c35bddb9b4c962c136462338bc31</td></tr>
+        <tr><td>EntryPoint v0.7</td><td class="mono">0x4337084d9e255ff0702461cf8895ce9e3b5ff108</td></tr>
+        <tr><td>Smart Account 实现 (EIP-7702)</td><td class="mono">0xe6cae83bde06e4c305530e199d7217f42808555b</td></tr>
+        <tr><td>Bundler（归集 / 卖出）</td><td class="mono">0x433702873e33d4846d399a75aaf96eacf181d0b2<br>0x4337001fff419768e088ce247456c1b892888084</td></tr>
+      </tbody>
+    </table>
+    </div></div>
+  </details>
+
+  <details>
+    <summary>接口与 Network ID</summary>
+    <div class="dbody"><div class="scroll">
+    <table>
+      <thead><tr><th>用途</th><th>端点</th></tr></thead>
+      <tbody>
+        <tr><td>后端 API</td><td class="mono">prod-api.fomo.family</td></tr>
+        <tr><td>建交易</td><td class="mono">POST /swaps/v2</td></tr>
+        <tr><td>预执行（未启用）</td><td class="mono">POST /swaps/v2/fast-fill</td></tr>
+        <tr><td>状态轮询</td><td class="mono">GET /swaps/v2/status?relaySwapId=</td></tr>
+        <tr><td>WebSocket</td><td class="mono">wss://prod-api.fomo.family/ws</td></tr>
+        <tr><td>EVM RPC 代理</td><td class="mono">evm-data.prod-edge.fomo.family/robinhood-mainnet/v2</td></tr>
+        <tr><td>上链提交</td><td class="mono">mainnet.hudson.jito.wtf/api/v1/sendTransactionWeb</td></tr>
+        <tr><td>分析</td><td class="mono">PostHog (app-actions.fomo.family)</td></tr>
+        <tr><td>Network ID 映射</td><td class="mono">792703809 = Solana（Relay 内部）· 1399811149 = Solana（FOMO tokenId）· 4663 = Robinhood Chain</td></tr>
+      </tbody>
+    </table>
+    </div></div>
+  </details>
+
+  <details>
+    <summary>内部资料索引</summary>
+    <div class="dbody"><div class="scroll">
+    <table>
+      <thead><tr><th>文档</th><th>位置</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fomo 交易方案调研</strong>（技术一手，最有价值）</td><td><a href="https://pionex.atlassian.net/wiki/spaces/nfttrack/pages/2306736154/Fomo">nfttrack / 2306736154</a></td></tr>
+        <tr><td>Fomo App 用户反馈盘点（X 平台）07-05~06</td><td><a href="https://pionex.atlassian.net/wiki/spaces/GMGNA/pages/2294843000/Fomo+App+X+2026-07-05~06">GMGNA / 2294843000</a></td></tr>
+        <tr><td>fomo 体验（产品结构 + App Store 评论全量）</td><td><a href="https://pionex.atlassian.net/wiki/spaces/GMGNA/pages/1545994241/fomo">GMGNA / 1545994241</a></td></tr>
+        <tr><td>fomo 在 twitter 合作 KOL 背景分析</td><td><a href="https://pionex.atlassian.net/wiki/spaces/GMGNA/pages/1576534179/fomo+twitter+KOL">GMGNA / 1576534179</a></td></tr>
+        <tr><td>07-23 推送实盘复盘 · 我们 vs FOMO 对照总表</td><td><a href="https://pionex.atlassian.net/wiki/spaces/GMGNA/pages/2318106804/07-23+vs+FOMO">GMGNA / 2318106804</a></td></tr>
+        <tr><td>热门代币推送 PRD v1.2</td><td><a href="https://pionex.atlassian.net/wiki/spaces/GMGNA/pages/2315976817/v1.2">GMGNA / 2315976817</a></td></tr>
+        <tr><td>竞品社群更新 &amp; 讨论汇总（自动更新）</td><td><a href="https://pionex.atlassian.net/wiki/spaces/~712020158205a1add2439fae73253b196308bc/pages/2307850289">个人空间 / 2307850289</a></td></tr>
+        <tr><td>Jira</td><td class="mono">GMGN-8687 / 8688 / 8689 / 8665 / 8409</td></tr>
+      </tbody>
+    </table>
+    </div></div>
+  </details>
+
+  <h3>外部资料来源</h3>
+  <div class="src">
+    <h4>融资与公司</h4>
+    <p><a href="https://fortune.com/2026/06/22/fomo-series-b-fundraise-index-ventures-union-square-ventures/">Fortune — Index Ventures, USV back Fomo at $550M valuation</a></p>
+    <p><a href="https://www.theblock.co/post/405563/crypto-trading-app-fomo-raises-75-million-at-550-million-valuation-in-index-ventures-led-series-b-report">The Block — Fomo raises $75M at $550M valuation</a></p>
+    <p><a href="https://insights4vc.substack.com/p/fomo-behind-the-75m-series-b-from">insights4vc — Behind the $75M Series B（含单位经济学质疑）</a></p>
+    <p><a href="https://finance.yahoo.com/news/why-benchmark-made-rare-crypto-140000489.html">Yahoo Finance — Why Benchmark made a rare crypto bet, $17M Series A</a></p>
+    <p><a href="https://www.fintechfutures.com/venture-capital-funding/fomo-lands-75m-series-b">FinTech Futures — New York start-up Fomo raises $75m Series B</a></p>
+    <p><a href="https://www.techtimes.com/articles/318895/20260623/social-crypto-trading-app-fomo-raises-75m-sec-clears-non-custodial-wallets-operate.htm">TechTimes — Fomo raises $75M as SEC clears non-custodial wallets</a></p>
+
+    <h4>数据与市场份额</h4>
+    <p><a href="https://solanacompass.com/news/fomo-posts-264m-weekly-revenue-all-time-high-on-solana-outpacing-phantom-and-jupiter">Solana Compass — $2.64M weekly revenue ATH, outpacing Phantom &amp; Jupiter</a></p>
+    <p><a href="https://solanacompass.com/news/fomo-social-trading-app-hits-157m-weekly-revenue-all-time-high-on-solana">Solana Compass — Weekly revenue ATH at $1.57M</a></p>
+    <p><a href="https://solanacompass.com/news/fomo-overtakes-axiom-as-solanas-top-daily-trading-terminal-by-volume">Solana Compass — Fomo surpasses Axiom as top daily terminal</a></p>
+    <p><a href="https://cryptobriefing.com/fomo-surpasses-axiom-solana-trading-volume/">CryptoBriefing — Fomo surpasses Axiom for top daily Solana volume</a></p>
+    <p><a href="https://cryptobriefing.com/fomo-pumpfun-solana-memecoin-competition/">CryptoBriefing — Fomo and Pump.fun battle for trader flow</a></p>
+    <p><a href="https://cryptobriefing.com/fomo-overtakes-hyperliquid-24-hour-revenue/">CryptoBriefing — Fomo overtakes Hyperliquid in 24-hour revenue</a></p>
+    <p><a href="https://defillama.com/protocol/fomo">DefiLlama — fomo Fees, Revenue &amp; Volume</a></p>
+
+    <h4>产品与生态</h4>
+    <p><a href="https://fomo.family/">fomo.family</a> · <a href="https://fomo.family/clans">Clans</a> · <a href="https://fomo.family/affiliates">Affiliates</a> · <a href="https://fomo.family/blog/fomo-series-b">Series B 公告</a></p>
+    <p><a href="https://docs.onfomo.com/rewards-system/referral-rewards">docs.onfomo.com — Referral Rewards</a></p>
+    <p><a href="https://www.crossmint.com/announcement/fomo-crossmint-token-checkout">Crossmint — How fomo scaled to $2.5B volume</a></p>
+    <p><a href="https://www.quicknode.com/builders-guide/tools/fomo-by-fomo-labs">QuickNode Builders Guide — fomo by FOMO Labs</a></p>
+    <p><a href="https://www.bankless.com/read/fomo-is-leading-the-charge-for-social-tradings-next-wave">Bankless — Leading the Charge for Social Trading's Next Wave</a></p>
+    <p><a href="https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427">App Store</a> · <a href="https://play.google.com/store/apps/details?id=family.fomo.app">Google Play</a></p>
+    <p><a href="https://coinlaunch.space/projects/fomo-family/">CoinLaunch — 项目分析（含发币可能性推测）</a></p>
+
+    <h4>行业背景</h4>
+    <p><a href="https://www.coindesk.com/tech/2026/07/13/robinhood-built-a-blockchain-for-tokenized-stocks-memecoins-took-over">CoinDesk — Robinhood built a blockchain for tokenized stocks, memecoins took over</a></p>
+    <p><a href="https://www.fool.com/investing/2026/07/31/robinhoods-new-blockchain-has-tripled-in-size-sinc/">Motley Fool — Robinhood's blockchain tripled in size since mid-July</a></p>
+
+    <h4>用户口碑（第三方评测，质量参差，仅作情绪参考）</h4>
+    <p><a href="https://brokerlistings.com/scams/fomo">BrokerListings — Fomo App Review: Legit Or A Scam?</a></p>
+    <p><a href="https://coinspot.io/en/reviews/fomo-crypto-app/">CoinSpot — Fomo Crypto App Review 2026</a></p>
+  </div>
+</section>
+
+<footer>
+  基于 GMGN 内部一手调研（链上实测 · HAR 抓包 · 影子测试 · 社群监控）与公开信息交叉整理。<br>
+  所有未审计的第三方数字均已标注口径。竞品情报，内部使用。
+</footer>
+
+</div>
