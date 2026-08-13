@@ -52,7 +52,6 @@ def body(F, V, A, FIG):
       <tr><td><strong>Callout 全方位铺开</strong></td><td><span class="pill p-mid">推进中</span></td><td>对标 FOMO thesis。K 线页 / 单人单币页 / 持仓页，监控默认推全局</td></tr>
       <tr><td><strong>热门列表混链整合</strong></td><td><span class="pill p-mid">推进中</span></td><td>1. 弱化链概念<br>2. 更稳健的代币，给<strong>打二段用户</strong>与<strong>链上新用户</strong>，风险低</td></tr>
       <tr><td><strong>新用户第一屏＝热门列表</strong></td><td><span class="pill p-mid">本季度</span></td><td>第一笔交易</td></tr>
-      <tr><td><strong>我们自己的推送延迟</strong>：{V["push_delay"]}<br><span class="tag">v8 最高优先级，但未给测量来源</span></td><td><span class="pill p-hi">待核</span></td><td>对比 Dexscreener 近实时（不是对比 FOMO）。若属实，「第一时间」这条主线站不住；<strong>先测出真实数字再决定要不要立项</strong></td></tr>
     </tbody>
   </table>
   </div>
