@@ -11,7 +11,6 @@
 def body(F, V, A, FIG):
     return f'''
 <header>
-  <p class="kicker">竞品情报 · FOMO 系列 · 产品侧 · 内部使用 · {F.AS_OF} 起算</p>
   <h1>GMGN App 产品侧打法</h1>
   <p class="dek">专业交易能力与专业交易员是主导区，不动。App 侧重<strong>发现层</strong>——第一时间发现热门币，放大其中 KOL 与大户的真实持仓，降低门槛，把圈外小白与链上新用户拉进来。</p>
 </header>
