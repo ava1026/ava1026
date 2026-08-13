@@ -12,7 +12,7 @@ def body(F, V, A, FIG):
     return f'''
 <header>
   <h1>产品为增长玩法服务</h1>
-  <p class="dek">在现有 App 基础上改，包袱中，兼容两个群体，拧巴。<br><strong>启动 fomo 栏目，为增长打法服务，丢包袱。</strong></p>
+  <p class="dek">在现有 App 基础上改，包袱重，兼容两个群体，拧巴。<br><strong>启动 fomo 栏目，为增长打法服务，丢包袱。</strong></p>
 </header>
 
 <section id="s1">
