@@ -389,6 +389,42 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
        font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.7}
 @media (max-width:640px){.wrap{padding:0 16px 56px}figure{padding:14px 12px 12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── 打印 / PDF ─────────────────────────────────────────
+   强制浅色（深色主题打印会吃掉整页墨），解除 SVG 最小宽度让图能缩到纸宽，
+   并把图、表、提示块设为不可跨页断开。 */
+@media print{
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#FFFFFF; --surface:#FFFFFF; --surface-2:#F7F8FA;
+    --line:#C8D0D8; --line-soft:#E2E7EC;
+    --ink:#101720; --ink-2:#38434F; --muted:#5E6A76;
+    --accent:#A8500B; --accent-soft:#F7EDE2; --accent-line:#D8A46B;
+    --hot:#A8291F; --hot-soft:#FAEAE7;
+    --ours:#0B6E6C; --ours-soft:#E4F1F0;
+  }
+  @page{ size:A4 portrait; margin:14mm 12mm 16mm; }
+  body{ background:#fff; font-size:9.6pt; line-height:1.5; }
+  .wrap{ max-width:none; padding:0; }
+  header{ padding-top:0; }
+  h1{ font-size:22pt; }
+  h2{ font-size:14pt; }
+  .dek{ font-size:11pt; }
+  p,li{ font-size:9.6pt; }
+
+  /* 图能缩到纸宽，不再横向溢出 */
+  svg.dg{ min-width:0 !important; width:100%; }
+  figure{ padding:10px 8px 8px; box-shadow:none; }
+  .scroll{ overflow-x:visible; }
+  table{ font-size:8.4pt; }
+  th,td{ padding:5px 7px; }
+
+  /* 分页控制 */
+  section{ break-before:page; }
+  section:first-of-type{ break-before:auto; }
+  figure, table, .note, .act{ break-inside:avoid; }
+  h2, h3, .snum{ break-after:avoid; }
+  figcaption{ break-before:avoid; }
+}
 </style>
 </head>
 <body>
