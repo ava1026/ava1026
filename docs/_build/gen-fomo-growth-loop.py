@@ -504,25 +504,28 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 </section>
 
 <section>
-  <p class="snum">05 — 对我们的含义</p>
+  <p class="snum">05 — 诊断：我们在每个环节的位置</p>
   <h2>不要照抄飞轮，要挑环节下手</h2>
-  <p>完整复制这个闭环既不现实也没必要。更有效的做法是按"我们能不能做、做了打不打得中"两个维度，对每个环节单独定策。</p>
+  <div class="note">
+    <p><strong>📐 本页只做诊断，不开药方。</strong>下表回答「每个环节我们站在哪、能不能打」；<strong>具体行动与优先级统一在</strong><a href="fomo-product-research-2026-08.html">《FOMO 全面产品调研》§10</a>，避免两处优先级打架。需要一页纸转发的版本见<a href="fomo-brief.html">《FOMO 决策简报》</a>。</p>
+  </div>
+  <p>完整复制这个闭环既不现实也没必要。按"我们能不能做、做了打不打得中"两个维度，逐环节看现状。</p>
   <div class="scroll">
   <table>
-    <thead><tr><th>闭环环节</th><th>FOMO 的做法</th><th>我们的位置</th><th>建议</th></tr></thead>
+    <thead><tr><th>闭环环节</th><th>FOMO 的做法</th><th>我们的位置</th><th>诊断</th></tr></thead>
     <tbody>
-      <tr><td>① 零门槛进人</td><td>Apple Pay + USDC 统一余额 + gas 代付</td><td class="p-hi">明显落后</td><td><strong>先做统一 USDC 余额 + gas 代付</strong>（体验的 80% 在这里，且不依赖外部方），跨链无感放第二步</td></tr>
-      <tr><td>② 首笔交易达成</td><td>一键、跨链无感，但小额收 47.5%、BNB 会不填充</td><td class="p-us">我们更强</td><td>把<strong>小额费率对比</strong>做成传播物料；内盘 / 滑点 / 加速是它结构上做不到的</td></tr>
-      <tr><td>③ 交易即内容</td><td>交易自动进 Feed，零成本 UGC</td><td class="p-hi">缺失</td><td>这是闭环铰链，<strong>越晚做越贵</strong>。但不必抄 Feed 形态——我们的优势是数据可信度</td></tr>
-      <tr><td>④ 赚钱效应被看见</td><td>Leaderboard 造星，但有 KOL 偏袒争议</td><td class="p-us">可以打</td><td>做<strong>用真实链上数据背书的排行榜 / 组队</strong>，直接对冲它的公信力弱点</td></tr>
-      <tr><td>⑤ 跟单 + 推送放大</td><td>已上线，激进推送建立心智</td><td class="p-us">质量更好但上线晚</td><td>推送尽快全量；我们 07-23 实测覆盖 14/14、6 币首触更早，且有质量闸拦假热度</td></tr>
-      <tr><td>③b 原生红人孵化<br><span class="pill p-hi">X 数据新增</span></td><td>把 X 素人造成站内 8k–23k 粉的红人，影响力迁不走</td><td class="p-hi">缺失且最难补</td><td>不必造星。反制点是<strong>用链上数据审计跟单质量</strong>（关联地址、前置建仓、跟单者盈亏分布）——它没有自研数据，做不到</td></tr>
-      <tr><td>⑥ 笔数 × 费率</td><td>小额高频，$0.76/笔</td><td class="p-us">费率结构更优</td><td>盯住它的收费钱包净流入做日报，实时掌握对手转速</td></tr>
+      <tr><td>① 零门槛进人</td><td>Apple Pay + USDC 统一余额 + gas 代付</td><td class="p-hi">明显落后</td><td>差距集中在<strong>入金与 gas 两处摩擦</strong>；其中统一余额 + gas 代付不依赖任何外部方，跨链无感才依赖 Relay</td></tr>
+      <tr><td>② 首笔交易达成</td><td>一键、跨链无感，但小额收 47.5%、BNB 会不填充</td><td class="p-us">我们更强</td><td>它对小额用户<strong>实收 47.5%</strong>；内盘 / 滑点 / 加速是它<strong>结构上做不到</strong>的（跨链只询价 Uniswap V3）</td></tr>
+      <tr><td>③ 交易即内容</td><td>交易自动进 Feed，零成本 UGC</td><td class="p-hi">缺失</td><td>闭环铰链所在，<strong>网络效应越晚介入越贵</strong>；但我们的差异资产是数据可信度，而非 Feed 形态本身</td></tr>
+      <tr><td>④ 赚钱效应被看见</td><td>Leaderboard 造星，但有 KOL 偏袒争议</td><td class="p-us">可以打</td><td>它的排行榜有<strong>公信力缺口</strong>（KOL 偏袒争议，官方选择透明化而非否认）——这是可对冲的软肋</td></tr>
+      <tr><td>⑤ 跟单 + 推送放大</td><td>已上线，激进推送建立心智</td><td class="p-us">质量更好但上线晚</td><td>07-23 实测我们覆盖 <strong>14/14</strong>、<strong>6 币首触更早</strong>，且质量闸能拦假热度；<strong>唯一劣势是上线时间</strong></td></tr>
+      <tr><td>③b 原生红人孵化<br><span class="pill p-hi">X 数据新增</span></td><td>把 X 素人造成站内 8k–23k 粉的红人，影响力迁不走</td><td class="p-hi">缺失且最难补</td><td>影响力<strong>迁不走</strong>，费率补贴挖不动这批人；但它<strong>没有自研数据</strong>，无法审计自家跟单质量——这是结构性缺口</td></tr>
+      <tr><td>⑥ 笔数 × 费率</td><td>小额高频，$0.76/笔</td><td class="p-us">费率结构更优</td><td>收入由笔数驱动；其 Solana 收费钱包净流入<strong>链上可观测</strong>，等于对手转速的实时读数</td></tr>
     </tbody>
   </table>
   </div>
   <div class="note leak">
-    <h3>四个漏损点 = 四个切入口</h3>
+    <h3>四个漏损点：用户实际在哪掉队</h3>
     <ul>
       <li><strong>出金跳去 Spritz</strong> —— 提现是它投诉最集中的区域，且不在 App 内闭环。这是信任崩塌点，量化后可作为最硬的攻击素材。</li>
       <li><strong>小额被罚 47.5%</strong> —— 买 $2 收 $0.95。用户只要算过一次账就会走，而这恰恰是它主力人群（$0.76/笔说明客单极小）。</li>
@@ -532,9 +535,16 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
   </div>
 </section>
 
+<div class="note">
+  <h3>📐 这份文档在哪一层</h3>
+  <p><strong>Tier 0</strong> <a href="fomo-brief.html">FOMO 决策简报</a> —— 结论 · 威胁分级 · P0/P1，一屏读完，可直接转发。<br>
+  <strong>Tier 1</strong> <strong>本页</strong> —— 回答「病在哪」：飞轮机制、铰链、漏损点、获客导图。<br>
+  <strong>Tier 2</strong> <a href="fomo-product-research-2026-08.html">FOMO 全面产品调研</a> —— 回答「怎么治」+ 全部证据：资本、数据、技术拆解、费率、口碑、行动清单、附录。</p>
+</div>
+
 <footer>
   数据来源：GMGN 内部一手调研（链上实测 · HAR 抓包 · 07-23 影子测试 · 社群监控）与公开报道交叉整理，截至 2026-08-11。<br>
-  完整论证、口径说明与资料出处见《FOMO 全面产品调研》主报告。竞品情报，内部使用。
+  跨文档复用的数字收敛在 docs/_build/fomo_facts.py。竞品情报，内部使用。
 </footer>
 
 </div>

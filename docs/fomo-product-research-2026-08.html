@@ -331,6 +331,23 @@ footer{
   </div>
 </header>
 
+<section id="s0" style="margin-top:48px">
+  <p class="snum">00 — 文档分层</p>
+  <h2>这份文档在哪一层</h2>
+  <p>FOMO 情报分三层，各司其职，<strong>同一个事实只在一处定义</strong>。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>层</th><th>文档</th><th>回答什么</th><th>什么时候看</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tier 0</strong></td><td><a href="fomo-brief.html">FOMO 决策简报</a></td><td>结论 · 威胁分级 · P0/P1</td><td>转发给决策层，一屏读完</td></tr>
+      <tr><td><strong>Tier 1</strong></td><td><a href="fomo-growth-loop.html">FOMO 增长闭环</a></td><td><strong>病在哪</strong> —— 飞轮机制、铰链、漏损点、获客导图</td><td>想理解它为什么转得快</td></tr>
+      <tr><td><strong>Tier 2</strong></td><td><strong>本文档</strong></td><td><strong>怎么治 + 全部证据</strong> —— 资本、数据、技术拆解、费率、口碑、行动清单、附录</td><td>查具体数字、地址、出处</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>所有跨文档复用的数字收敛在 <code>docs/_build/fomo_facts.py</code>；改数字只改那里，然后跑 <code>python3 docs/_build/check-facts.py</code> 校验本文档是否漂移。</p>
+</section>
+
 <!-- ============ 1 ============ -->
 <section id="s1">
   <p class="snum">01 — 一页结论</p>
@@ -674,6 +691,9 @@ footer{
 <!-- ============ 7 ============ -->
 <section id="s7">
   <p class="snum">07 — 增长与市场策略</p>
+  <div class="note">
+    <p><strong>📐 分层说明</strong>：增长机制的<strong>论证</strong>（飞轮如何闭合、铰链在哪、四条加速支路、影响力发生器）已移入 <a href="fomo-growth-loop.html">《FOMO 增长闭环》</a> —— 那份文档回答「病在哪」。本节只保留<strong>原始名单、实测数据与画像判断</strong>；行动建议统一在 <a href="#s10">§10</a>。</p>
+  </div>
   <h2>争夺 Coinbase / Robinhood 溢出的美国零售用户</h2>
 
   <h3>KOL 矩阵 <span class="tag t1">一手，25+ 账号分析</span></h3>
@@ -707,10 +727,70 @@ footer{
 
   <h3>其他增长杠杆</h3>
   <ul>
-    <li><strong>Apple Pay 入金（Crossmint）</strong>：68,000+ 首次买币用户，$25M —— <strong>最难被复制的一环</strong>，涉及支付合规。</li>
+    <li><strong>Apple Pay 入金（Crossmint）</strong>：68,000+ 首次买币用户，$25M。涉及支付合规，追平成本高。</li>
     <li><strong>Affiliate 计划</strong>：实时结算、无上限。</li>
-    <li><strong>Pump.fun 挖角战</strong>（8/09）：$20k 签约 + $30k/月抢 FOMO 用户。</li>
+    <li><strong>X Affiliation Badge</strong>：X Verified Organization 的关联认证，显示在 KOL <strong>自己的主页</strong>上（黑色方形图标 + 蓝 V）。官方未大规模统一发放，部分活跃用户持有。</li>
+    <li><strong>Pump.fun 挖角战</strong>（8/09）：$20k 签约金 + $30k/月，条件含<strong>公开转移资金、永久删除 FOMO 账号、签排他协议</strong>。</li>
   </ul>
+
+  <h3>7.5 X 生态账号名单 <span class="tag t3">X 抓取</span></h3>
+  <div class="note alert">
+    <p>本节数据来自 X 公开抓取的二手整理，<strong>非我们一手观测</strong>，粉丝数为抓取时点值。源数据自身标注了句柄匹配的不确定性（@btc_goose 系 @thebtcgoose 的最佳匹配），<strong>账号级准确性未经核验</strong> —— 见 <a href="#s11">§11 第 14 项</a>。</p>
+  </div>
+
+  <h4>A. 原生红人（官方点名，含站内放大倍数）</h4>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>账号</th><th class="num">X 粉丝</th><th class="num">倍数</th><th class="num">FOMO 粉丝</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">@wwayfboss</td><td class="num">752</td><td class="num"><strong>27×</strong></td><td class="num">≈20,304（推算）</td><td>倍数最高</td></tr>
+      <tr><td class="mono">@octoseaa</td><td class="num">2,636</td><td class="num">5.1×</td><td class="num">≈13,444（推算）</td><td></td></tr>
+      <tr><td class="mono">@hdegrootvan</td><td class="num">7,943</td><td class="num">2.1→2.9×</td><td class="num"><strong>23,000+（自报）</strong></td><td>社交情绪型代表</td></tr>
+      <tr><td class="mono">@f4vel</td><td class="num">3,055</td><td class="num">2.7×</td><td class="num">≈8,248（推算）</td><td></td></tr>
+      <tr><td class="mono">@thokani</td><td class="num">8,073</td><td class="num">2.0×</td><td class="num">≈16,146（推算）</td><td>曾自报 12k（时点更早）</td></tr>
+      <tr><td class="mono">@icemandot</td><td class="num">8,091</td><td class="num">—</td><td class="num">—</td><td>钱包余额顶级，资金实力型</td></tr>
+    </tbody>
+    <caption>FOMO 粉丝除 @hdegrootvan 为本人自报外，均由「X 粉丝 × 官方公布倍数」推算。X 粉丝跨度 <strong>10.7×</strong>，FOMO 粉丝跨度仅 <strong>2.8×</strong>。⚠️ 官方只会点名倍数高的样本，n=5，不代表平台平均水平。机制解读见<a href="fomo-growth-loop.html">增长闭环 §04</a>。</caption>
+  </table>
+  </div>
+
+  <h4>B. 官方重点点名庆祝（涨粉 / Leaderboard 里程碑）</h4>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>账号</th><th class="num">X 粉丝</th><th>时间</th><th>官方互动</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">@ResellCalendar</td><td class="num">104,213</td><td>2026.6</td><td>从零冲到 all-time top 5</td></tr>
+      <tr><td class="mono">@PoorGoat_</td><td class="num">70,516</td><td>2026.7–8</td><td>多次庆祝涨粉超 10 万</td></tr>
+      <tr><td class="mono">@remusofmars</td><td class="num">35,973</td><td>2026.3</td><td>超 10 万粉丝</td></tr>
+      <tr><td class="mono">@0xAvast</td><td class="num">16,737</td><td>2026.8</td><td>超 10 万粉丝 on fomo</td></tr>
+      <tr><td class="mono">@jotagezin</td><td class="num">12,792</td><td>2026.5</td><td>同时登顶所有 Leaderboard</td></tr>
+      <tr><td class="mono">@pingucharts</td><td class="num">8,605</td><td>2026.6</td><td>#1 + Discord 合作教育者</td></tr>
+      <tr><td class="mono">@Binkieeefomo</td><td class="num">5,807</td><td>2026.7</td><td>达到 10 万粉丝</td></tr>
+      <tr><td class="mono">@XVentures_Fund</td><td class="num">2,710</td><td>2026.6</td><td>上周 Leaderboard #1</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>C. 外部 KOL 加入（2026.7–8「投奔期」）</h4>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>账号</th><th class="num">X 粉丝</th><th>时间</th><th>类型</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">@theunipcs</td><td class="num">231,973</td><td>2026.5.22</td><td>官方欢迎</td></tr>
+      <tr><td class="mono">@ashrobin</td><td class="num">98,648</td><td>2026.5.30</td><td>正式合作（content creator）</td></tr>
+      <tr><td class="mono">@andyyy</td><td class="num">76,439</td><td>2026.8.10</td><td>宣布加入</td></tr>
+      <tr><td class="mono">@mattkalish</td><td class="num">44,853</td><td>2026.8 上旬</td><td>加入被曝光（DraftKings 相关）</td></tr>
+      <tr><td class="mono">@0xyoshitaka</td><td class="num">17,088</td><td>2026.7 中下旬</td><td>宣布加入</td></tr>
+      <tr><td class="mono">@C1phervoyager</td><td class="num">6,574</td><td>2025.8–9</td><td>早期加入</td></tr>
+      <tr><td class="mono">@MakroMiloz</td><td class="num">1,139</td><td>2026.8.10</td><td>宣布加入</td></tr>
+      <tr><td class="mono">@0xDakshKumar</td><td class="num">829</td><td>2026.8.9</td><td>宣布加入</td></tr>
+    </tbody>
+    <caption>其他高互动影响力账号：@orangie（377,423）· @EricCryptoman（267,103）· @real_dr_pump（11,089）· @loganlim_x（3,353）。</caption>
+  </table>
+  </div>
+
+  <h4>D. 跟单机制</h4>
+  <p>以<strong>社交跟单</strong>为主 —— Follow 后接收通知，<strong>用户手动跟单买入</strong>（系统不自动镜像执行）。源报告称后期增加「更接近自动 Copy」的功能，措辞是<em>更接近</em>，<strong>未说明已实现全自动</strong>；且承认「细粒度复制成交量属于 App 内部数据，外部无法完整获取」 —— <strong>跟单真实执行率外部不可见</strong>。</p>
 </section>
 
 <!-- ============ 8 ============ -->
@@ -836,6 +916,9 @@ footer{
   </div>
 
   <h3>建议行动</h3>
+  <div class="note">
+    <p><strong>📐 这是唯一的行动清单。</strong><a href="fomo-growth-loop.html">《FOMO 增长闭环》</a>只做诊断（按闭环环节看我们的位置），不重复列行动 —— 避免两处优先级打架。需要一页纸转发给决策层的版本见 <a href="fomo-brief.html">《FOMO 决策简报》</a>。</p>
+  </div>
   <div class="actions">
     <div class="act"><span class="prio prio-0">P0 本周</span><h3>修完 Relay 交易解析归属（GMGN-8687/8688/8689）</h3><p>这是<strong>正在流失专业用户信任</strong>的活口子。第三方（Debot / basedbot）能做，我们做不到，说明这不是不可解的技术问题。</p></div>
     <div class="act"><span class="prio prio-0">P0 本周</span><h3>给 FOMO 交易打专属标签，代币页 Trades 加 fomo 子 tab</h3><p>把"看不到"转成"看得比别人清楚"，反手变成差异化：<strong>我们是唯一能标出"这是 FOMO 用户在买"的终端</strong>。</p></div>
@@ -853,23 +936,35 @@ footer{
 <!-- ============ 11 ============ -->
 <section id="s11">
   <p class="snum">11 — 情报缺口</p>
-  <h2>待验证清单</h2>
+  <h2>待验证队列</h2>
+  <div class="note">
+    <p>本节合并了原先散在三处的待验证项：情报缺口清单、<a href="#s3">§3 口径陷阱</a>的方法 A–D、<a href="#s7">§7.5</a> X 抓取数据的四条 caveat。</p>
+    <p><strong>「建议归属」是职能，不是指派。</strong>「认领人」一列请自行填写 —— <strong>没有认领人的缺口不会有人去查。</strong></p>
+  </div>
   <div class="scroll">
   <table>
-    <thead><tr><th class="num">#</th><th>待查</th><th>为什么重要</th><th>建议方法</th></tr></thead>
+    <thead><tr><th class="num">#</th><th>待验证</th><th>为什么重要</th><th>建议方法</th><th>优先级</th><th>建议归属</th><th>认领人</th></tr></thead>
     <tbody>
-      <tr><td class="num">1</td><td><strong>真实 DAU / 留存曲线</strong></td><td>625k 是注册数，29% trader/user 是单点观测。没有留存就无法判断增长质量</td><td>第三方 App 数据（Sensor Tower / data.ai）；链上活跃钱包估算</td></tr>
-      <tr><td class="num">2</td><td><strong>各链收入拆分</strong><br><span class="pill p-hi">升级为 P0</span></td><td>"98.5% 来自 Solana"是 DefiLlama 的测量口径产物；跨链平台费链上无独立转账，<strong>Robinhood / Base / BNB / Monad 的真实贡献完全未知</strong>。这直接影响我们对"要不要跟进 RH 链"的判断</td><td>见 §3 口径陷阱的方法 A/B/C/D —— 方法 A（跨链桥程序 USDC 存入量 × 0.5%）一天可出结果</td></tr>
-      <tr><td class="num">3</td><td>Robinhood Chain 上的实际体量</td><td>已知技术支持，不知用量。RH 链 7 月上线即 $305M TVL、1M 周活地址，且 memecoin 而非股票主导</td><td>RH 链上 FOMO 相关合约统计</td></tr>
-      <tr><td class="num">4</td><td>Privy recovery 的实际治理条件</td><td>"≈全权控制"目前是技术推断，对外使用需坐实</td><td>Privy 公开文档 / 安全审计报告</td></tr>
-      <tr><td class="num">5</td><td>KOL / sponsored creator 商务条件</td><td>决定我们抢 KOL 的报价</td><td>BD 侧打听</td></tr>
-      <tr><td class="num">6</td><td>限价单 SOL 版何时上线</td><td>上线即抹平我们一个优势</td><td>监控 App 更新日志 + X</td></tr>
-      <tr><td class="num">7</td><td>Pump.fun 挖角战果</td><td>检验 FOMO 用户粘性的天然实验</td><td>监控双方交易量变化</td></tr>
-      <tr><td class="num">8</td><td>是否会发币 / 上积分</td><td>会大幅改变增长曲线和用户质量</td><td>监控官方渠道</td></tr>
-      <tr><td class="num">9</td><td>团队规模与组织</td><td>判断它的迭代上限</td><td>LinkedIn / 招聘信息</td></tr>
-      <tr><td class="num">10</td><td>出金（Spritz）失败率</td><td>它最大的软肋，量化后可作为攻击点</td><td>舆情抓取 + 实测</td></tr>
+      <tr><td class="num">1</td><td><strong>各链收入拆分：跨链费是否含 Robinhood</strong></td><td>「98.5% 来自 Solana」是 DefiLlama 测量口径产物；跨链平台费链上无独立转账，RH / Base / BNB / Monad 真实贡献<strong>完全未知</strong>。直接决定要不要跟进 RH 链</td><td>方法 A：统计跨链桥程序 <code>99vQwtBw…SrN2</code> 的 USDC 存入量 × 0.5%。<strong>一人一天可出结果，不依赖第三方</strong></td><td><span class="pill p-hi">P0</span></td><td>数据侧</td><td></td></tr>
+      <tr><td class="num">2</td><td><strong>「离散度塌缩」无偏采样</strong></td><td>若在全量用户上成立，FOMO 的护城河比我们估计的深得多；目前 n=5 且是官方挑选的高倍数样本</td><td>Sensor Tower / data.ai + 站内随机采样，直接观测 FOMO 粉丝数而非推算</td><td><span class="pill p-hi">P0</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">3</td><td>真实 DAU / 留存曲线</td><td>625k 是注册数；唯一能算干净的是 2025-11 的 29% trader/user 单点值。<strong>没有留存就无法判断增长质量</strong></td><td>第三方 App 数据；链上活跃钱包数估算</td><td><span class="pill p-mid">P1</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">4</td><td>Robinhood 链上 FOMO 实际体量</td><td>已知技术支持，不知用量。RH 链 7 月上线即 $305M TVL、1M 周活地址，且 memecoin 主导</td><td>方法 C：对 RH（4663）上 <code>RelayRouterV3</code> 的成交按链统计</td><td><span class="pill p-mid">P1</span></td><td>数据侧</td><td></td></tr>
+      <tr><td class="num">5</td><td>跨链卖出侧平台费</td><td>补齐方法 A 的另一半，得到完整跨链收入</td><td>方法 B：统计 Solana Relayer <code>F7p3dFrj…gmNe</code> 转给用户的 USDC × 0.5%，<strong>剔除纯 USDC 归集</strong>（该场景不收费）</td><td><span class="pill p-mid">P1</span></td><td>数据侧</td><td></td></tr>
+      <tr><td class="num">6</td><td>Relay 的 app fee 结算口径</td><td>权威答案。我们本来就要启动 Relay BD，账单口径可在商务谈判中直接问到</td><td>方法 D：BD 直接问</td><td><span class="pill p-mid">P1</span></td><td>BD</td><td></td></tr>
+      <tr><td class="num">7</td><td>限价单 SOL 版上线时点</td><td>上线即抹平我们一个优势</td><td>监控 App 更新日志 + @seyong 的 X</td><td><span class="pill p-mid">P1</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">8</td><td>自动跟单是否已真正实现</td><td>源报告只说「更接近自动 Copy」。若已实现，说明它绕过了 Privy 签名限制，技术判断要改</td><td>产品实测：设置跟单后离线，看是否仍成交</td><td><span class="pill p-lo">P2</span></td><td>产品 + 情报侧</td><td></td></tr>
+      <tr><td class="num">9</td><td>Privy recovery 的实际治理条件</td><td>「≈全权控制」目前是技术推断；对外使用前需坐实</td><td>Privy 公开文档 / 安全审计报告</td><td><span class="pill p-lo">P2</span></td><td>安全 / 技术</td><td></td></tr>
+      <tr><td class="num">10</td><td>出金（Spritz）失败率</td><td>它最大的软肋，量化后是最硬的攻击素材</td><td>舆情抓取 + 小额实测走通全流程</td><td><span class="pill p-lo">P2</span></td><td>情报侧 + 实测</td><td></td></tr>
+      <tr><td class="num">11</td><td>FOMO 的 KOL / sponsored creator 商务条件</td><td>决定我们抢 KOL 的报价</td><td>BD 侧打听</td><td><span class="pill p-lo">P2</span></td><td>BD</td><td></td></tr>
+      <tr><td class="num">12</td><td>Pump.fun 挖角战果</td><td>检验 FOMO 用户粘性的天然实验</td><td>监控双方交易量与红人账号动向</td><td><span class="pill p-lo">P2</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">13</td><td>是否会发币 / 上积分</td><td>会大幅改变增长曲线与用户质量</td><td>监控官方渠道</td><td><span class="pill p-lo">P2</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">14</td><td><strong>X 抓取名单的句柄核验</strong></td><td>§7.5 全部数据的地基。源数据自身标注了匹配不确定性（@btc_goose vs @thebtcgoose）</td><td>逐个核对 X 句柄与粉丝数，标注抓取时点</td><td><span class="pill p-lo">P2</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">15</td><td>团队规模与组织</td><td>判断它的迭代上限</td><td>LinkedIn / 招聘信息</td><td><span class="pill p-lo">P3</span></td><td>情报侧</td><td></td></tr>
     </tbody>
   </table>
+  </div>
+  <div class="note gain">
+    <p><strong>两条 P0 的共同点</strong>：都不依赖第三方数据源，都能用我们已有的地址和工具做出来，且都直接影响一个正在等答案的决策。<strong>建议本周内先出这两条。</strong></p>
   </div>
 </section>
 

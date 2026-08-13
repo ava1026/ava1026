@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>FOMO 决策简报</title>
+<style>
+:root{
+  --ground:#EDF0F3; --surface:#FFFFFF; --surface-2:#F5F7F9;
+  --line:#D3DAE1; --line-soft:#E3E8ED;
+  --ink:#121820; --ink-2:#3A4551; --muted:#66727F;
+  --accent:#A8500B; --accent-soft:#F3E3D2; --accent-line:#D8A46B;
+  --hot:#A8291F; --hot-soft:#F6DEDA;
+  --ours:#0B6E6C; --ours-soft:#D9EDEC;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Songti SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0E1319; --surface:#151C24; --surface-2:#1B242E;
+  --line:#2C3945; --line-soft:#222C37;
+  --ink:#E6EBF0; --ink-2:#BCC7D2; --muted:#8695A3;
+  --accent:#E9A44C; --accent-soft:#33261A; --accent-line:#7A5828;
+  --hot:#EE8378; --hot-soft:#3A1F1C;
+  --ours:#54C9C4; --ours-soft:#123331;
+}}
+:root[data-theme="dark"]{
+  --ground:#0E1319; --surface:#151C24; --surface-2:#1B242E;
+  --line:#2C3945; --line-soft:#222C37;
+  --ink:#E6EBF0; --ink-2:#BCC7D2; --muted:#8695A3;
+  --accent:#E9A44C; --accent-soft:#33261A; --accent-line:#7A5828;
+  --hot:#EE8378; --hot-soft:#3A1F1C;
+  --ours:#54C9C4; --ours-soft:#123331;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+     font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px 56px}
+header{padding:38px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:22px}
+.kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;
+        color:var(--accent);margin:0 0 10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.5rem);line-height:1.12;
+   letter-spacing:-.015em;margin:0 0 10px}
+.verdict{font-family:var(--serif);font-size:clamp(1.02rem,2vw,1.16rem);line-height:1.55;
+        color:var(--ink-2);margin:0;max-width:64ch}
+.verdict b{color:var(--ink);font-weight:600}
+
+.metrics{display:grid;gap:1px;background:var(--line);
+        grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+        border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:0 0 24px}
+.metric{background:var(--surface);padding:13px 15px}
+.metric .v{font-family:var(--mono);font-size:1.3rem;font-weight:600;font-variant-numeric:tabular-nums;
+          letter-spacing:-.02em;display:block;line-height:1.2}
+.metric .k{display:block;font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.35}
+
+h2{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+   color:var(--accent);margin:30px 0 12px;display:flex;align-items:center;gap:11px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+p{margin:0 0 13px;max-width:72ch}
+strong{font-weight:650;color:var(--ink)}
+ul{margin:0 0 14px;padding-left:20px;max-width:72ch}
+li{margin:0 0 7px}
+li::marker{color:var(--accent)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-line)}
+a:hover{background:var(--accent-soft)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-2);
+     border:1px solid var(--line-soft);border-radius:2px;padding:1px 5px;word-break:break-all}
+
+figure{margin:0 0 22px;background:var(--surface);border:1px solid var(--line);
+       border-radius:3px;padding:16px 18px 12px;overflow-x:auto}
+figcaption{margin-top:11px;font-size:12.5px;color:var(--muted);line-height:1.5}
+svg.fw{display:block;width:100%;height:auto;min-width:620px;font-family:var(--sans)}
+.fw-box{fill:var(--surface-2);stroke:var(--line);stroke-width:1}
+.fw-box-hot{fill:var(--accent-soft);stroke:var(--accent-line);stroke-width:1.5}
+.fw-t{fill:var(--ink);font-size:12.5px;font-weight:600}
+.fw-edge{stroke:var(--muted);stroke-width:1.4;fill:none}
+.fw-edge-hot{stroke:var(--accent);stroke-width:2.4}
+.fw-lab{fill:var(--accent);font-size:11px;font-weight:600}
+
+.scroll{overflow-x:auto;margin:0 0 20px;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.5}
+th,td{padding:9px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+thead th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+        color:var(--muted);font-weight:600;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;
+     border-radius:2px;white-space:nowrap;border:1px solid transparent}
+.p-hi{background:var(--hot-soft);color:var(--hot);border-color:var(--hot)}
+.p-mid{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.p-us{background:var(--ours-soft);color:var(--ours);border-color:var(--ours)}
+
+.note{background:var(--surface-2);border:1px solid var(--line-soft);border-left:3px solid var(--accent);
+     border-radius:3px;padding:14px 18px;margin:0 0 20px;font-size:14.5px}
+.note.warn{border-left-color:var(--hot);background:var(--hot-soft)}
+.note p:last-child{margin-bottom:0}
+
+.docs{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:0 0 8px}
+.doc{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:14px 16px}
+.doc .tier{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--accent);
+          text-transform:uppercase;display:block;margin-bottom:5px}
+.doc .nm{font-weight:650;display:block;margin-bottom:4px}
+.doc .ds{font-size:12.5px;color:var(--muted);line-height:1.45}
+footer{margin:44px 0 0;padding:18px 0 0;border-top:1px solid var(--line);
+       font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7}
+@media (max-width:620px){.wrap{padding:0 15px 40px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker"><span>竞品情报 · 决策简报 · 内部使用</span><span>数据截止 2026-08-11</span></p>
+  <h1>FOMO：这是入口战，不是功能战</h1>
+  <p class="verdict">它不在跟我们抢"更好的终端"，而在抢<b>整个市场的新增用户入口</b>。专业性上它短期赢不了我们；但它每天新增 3,000+ 用户，其中大量是<b>从没见过 GMGN 的人</b>。</p>
+</header>
+
+<div class="metrics">
+  <div class="metric"><span class="v">$2.64M</span><span class="k">单周收入 ATH（2026-08-08）<br>较前值 $1.57M +68%</span></div>
+  <div class="metric"><span class="v">625,000+</span><span class="k">用户（官方口径，未审计）<br>日增 3,000+</span></div>
+  <div class="metric"><span class="v">$550M</span><span class="k">B 轮估值 · 累计融资 $94M<br>Index / USV / Benchmark</span></div>
+  <div class="metric"><span class="v">$0.76</span><span class="k">每笔平均平台费<br>笔数生意，非客单价</span></div>
+</div>
+
+<h2>为什么必须现在处理</h2>
+<ul>
+  <li><strong>增长在爆发段，不是线性。</strong>我们 2026-07-13 实测日收 $96,789（≈周 68 万），而外部报道 2026-08-08 已达 $2.64M —— <strong>不到一个月翻约 3.9 倍</strong>。</li>
+  <li><strong>它已在 Solana 上超过 Axiom 的日交易量</strong>，单周收入超过 Phantom、Jupiter。Pump.fun 开出 $20k 签约 + $30k/月挖它的用户 —— 这是同行对其威胁级别的定价。</li>
+  <li><strong>它拿的是我们不占的用户层。</strong>68,000 人通过 Apple Pay 首次买币（$25M）。</li>
+  <li><strong>我们有一个正在流血的口子：</strong>FOMO 的交易在我们的 Wallet Tracker 里<strong>追踪不到</strong>，KOL 已在投诉，而第三方工具能做到。</li>
+</ul>
+
+<h2>它转得快的原因：一笔交易同时是三样东西</h2>
+<figure>
+<svg class="fw" role="img" viewBox="0 0 880 300" aria-label="FOMO 增长飞轮缩略图：零门槛进人 → 首笔交易 → 交易即内容进 Feed → 赚钱效应被看见 → 跟单与推送放大 → 笔数产生收入 → 现金回投获客">
+<defs><marker id="ba" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker><marker id="bb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs>
+<rect x="20" y="62" width="232" height="56" rx="3" class="fw-box"/>
+<text x="136.0" y="95.0" text-anchor="middle" class="fw-t">① 零门槛进人</text>
+<rect x="324" y="62" width="232" height="56" rx="3" class="fw-box"/>
+<text x="440.0" y="95.0" text-anchor="middle" class="fw-t">② 首笔交易达成</text>
+<rect x="628" y="62" width="232" height="56" rx="3" class="fw-box-hot"/>
+<text x="744.0" y="95.0" text-anchor="middle" class="fw-t">③ 交易即内容</text>
+<rect x="628" y="196" width="232" height="56" rx="3" class="fw-box"/>
+<text x="744.0" y="229.0" text-anchor="middle" class="fw-t">④ 赚钱效应被看见</text>
+<rect x="324" y="196" width="232" height="56" rx="3" class="fw-box"/>
+<text x="440.0" y="229.0" text-anchor="middle" class="fw-t">⑤ 跟单 + 推送放大</text>
+<rect x="20" y="196" width="232" height="56" rx="3" class="fw-box"/>
+<text x="136.0" y="229.0" text-anchor="middle" class="fw-t">⑥ 笔数 = 收入</text>
+<line x1="252" y1="90.0" x2="318" y2="90.0" class="fw-edge" marker-end="url(#ba)"/>
+<line x1="556" y1="90.0" x2="622" y2="90.0" class="fw-edge fw-edge-hot" marker-end="url(#bb)"/>
+<text x="592.0" y="78.0" text-anchor="middle" class="fw-lab">零成本 UGC</text>
+<line x1="628" y1="224.0" x2="562" y2="224.0" class="fw-edge" marker-end="url(#ba)"/>
+<line x1="324" y1="224.0" x2="258" y2="224.0" class="fw-edge" marker-end="url(#ba)"/>
+<line x1="744.0" y1="118" x2="744.0" y2="190" class="fw-edge" marker-end="url(#ba)"/>
+<line x1="136.0" y1="196" x2="136.0" y2="124" class="fw-edge" marker-end="url(#ba)"/>
+<text x="146.0" y="161.0" text-anchor="start" class="fw-lab">现金回投获客</text>
+</svg>
+<figcaption>橙色那条边是铰链：用户下单的那一刻，内容就产生了 —— 内容供给量等于交易笔数（128,000 笔/日）。<strong>获客成本随规模下降，而不是上升。</strong></figcaption>
+</figure>
+
+<h2>威胁分级</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>威胁</th><th>等级</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr><td>抢占新增用户入口</td><td><span class="pill p-hi">最高</span></td><td>Apple Pay + USDC 全链 + gas 代付；心智一旦形成极难夺回</td></tr>
+    <tr><td>社交护城河成型</td><td><span class="pill p-hi">高</span></td><td>能把 X 上 752 粉的素人造成站内两万粉红人，且影响力<strong>迁不走</strong></td></tr>
+    <tr><td>追踪缺口伤专业用户</td><td><span class="pill p-mid">中高</span></td><td>Smart Money / 跟单数据出现系统性盲区，第三方能做我们不能</td></tr>
+    <tr><td>推送心智抢跑</td><td><span class="pill p-mid">中高</span></td><td>它先上线；我们信号质量更好（14 / 14 vs 8 / 14）但晚了</td></tr>
+    <tr><td>费率战</td><td><span class="pill p-us">低</span></td><td>它小额比我们贵（≤200U 实收 47.5%），不构成全面价格威胁</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>要做的三件事（P0，本周）</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>动作</th><th>为什么现在</th></tr></thead>
+  <tbody>
+    <tr><td><strong>修完 Relay 交易解析归属</strong><br><code>GMGN-8687 / 8688 / 8689</code></td><td>正在流失专业用户信任。Debot / basedbot 能解析，我们不能 —— 说明这不是不可解的技术问题</td></tr>
+    <tr><td><strong>给 FOMO 交易打专属标签</strong><br><code>GMGN-8665</code></td><td>把"看不到"反手变成差异化：<strong>我们是唯一能标出「这是 FOMO 用户在买」的终端</strong></td></tr>
+    <tr><td><strong>上线收费钱包监控日报</strong><br><code>HrTf9CzXR1dRH4Sof5QrpmGWwpwAf3qZzwCsEjQpXcSq</code></td><td>净流入即 FOMO 收入的实时代理指标，比等第三方报道<strong>快一周</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>P1（本季度）</h2>
+<ul>
+  <li><strong>「用 U 买一切」拆两步走</strong> —— 先做<strong>统一 USDC 余额 + gas 代付</strong>（体验的 80% 在这里，且不依赖任何外部方），跨链无感放第二步。同时<strong>启动 Relay BD</strong>：它是 FOMO 的单点依赖，也该是我们的谈判杠杆。</li>
+  <li><strong>热门代币推送全量上线</strong> —— 规则已定稿，实测覆盖与时效均胜出，唯一劣势是时间。</li>
+  <li><strong>小额费率对比做成传播物料</strong> —— FOMO 对 $2 交易实收 47.5%，是可验证的硬事实。</li>
+</ul>
+
+<div class="note warn">
+  <p><strong>两个数字别当成定论。</strong>其一，"98.5% 收入来自 Solana"是 DefiLlama 的测量口径产物 —— 跨链平台费在链上没有独立转账，<strong>Robinhood 等链的真实贡献未知</strong>。其二，影响力放大倍数来自二手 X 抓取，样本 n=5 且存在选择偏差。两者都已列入待验证队列。</p>
+</div>
+
+<h2>要深入看什么</h2>
+<div class="docs">
+  <div class="doc"><span class="tier">Tier 1 · 诊断</span><span class="nm"><a href="fomo-growth-loop.html">增长闭环（诊断层）</a></span><span class="ds">飞轮机制 · 铰链 · 漏损点 · 获客导图。回答「病在哪」。</span></div>
+  <div class="doc"><span class="tier">Tier 2 · 参考</span><span class="nm"><a href="fomo-product-research-2026-08.html">全面产品调研（参考层）</a></span><span class="ds">资本 · 数据 · 技术拆解 · 费率 · 口碑 · 行动清单 · 附录。回答「怎么治」，附全部证据与出处。</span></div>
+</div>
+
+<footer>
+  基于 GMGN 内部一手调研（链上实测 · HAR 抓包 · 影子测试 · 社群监控）与公开信息交叉整理。<br>
+  所有数字取自单一事实源 <code>docs/_build/fomo_facts.py</code>；未审计的第三方口径已在各处标注。
+</footer>
+
+</div>
+</body>
+</html>
