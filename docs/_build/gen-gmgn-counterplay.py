@@ -502,7 +502,7 @@ HTML = ('<!doctype html>\n<html lang="zh-CN" data-build="' + _build + '">\n<head
         '<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<meta name="color-scheme" content="light dark">\n'
-        '<title>GMGN App 产品侧打法</title>\n'
+        '<title>产品为增长玩法服务</title>\n'
         '<style>' + CSS + '</style>\n</head>\n<body>\n'
         + EDIT_HTML
         + '<div class="wrap">\n'
