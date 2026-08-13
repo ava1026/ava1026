@@ -105,6 +105,34 @@ ARTHUR = {
     "pf_ugc":        "$0.25/推荐 · $0.10/转发 · $0.05/评论",
 }
 
+# ── Arthur v8 新增：产品侧一手事实 ────────────────────────
+#   来源为 v8 deck（2026-08-13）中标注为一手 / 产品侧核实的条目。
+#   ⚠️ 凡标〔待核〕的，引用前必须先落实，见 counterplay 文档「待核」节。
+V8 = {
+    # 资金进出（v8 认定的产品债重心：债在进出，不在速度）
+    "sell_floor":     "约 $2",          # SOL gas 从 $0.1 涨到 $0.95 后的最低卖出门槛
+    "gas_bump":       "$0.1 → $0.95",
+    "withdraw_only":  "仅 SOL / USDC 可提现，其他资产须导出私钥",
+    "onramp_fail":    "Apple Pay / Cash App / 非美银行卡持续失败；德国用户看不到任何入金选项",
+    "card_min":       "约 $10",         # 借记卡最低充值
+    # 托管信任
+    "tos_date":       "2026-08-02",
+    "tos_risk":       "ToS 允许第三方以未加密方式传输私钥、可无通知封号",
+    "scam_dates":     "2026-08-03 / 08-07",   # 假客服骗局，已有实际盗资事件
+    # 速度机制〔产品侧 08-13 核实，非推断；婉云向产品与 Tylor 核实〕
+    "relay_path":     "USDC 先到 relay，再分发到各链",
+    "our_path":       "单链对单链",
+    # 它改得动 vs 改不动
+    "they_fix":       "已公开回应费率、给出 $0.10 floor 口径并预告 Solana 升级后继续降；同期上线 Clans 与 social perps",
+    "they_cant":      "USDC 统一跨链＝速度天花板，改不动",
+    # 我们自己的债（宣传前置）
+    "push_delay":     "6–20 min",       # 对比 Dexscreener 近实时
+    # 渠道对照
+    "pf_poach":       "约 $20K 签约 + 约 $30K/月，要求永久删除 FOMO 账号并签排他",
+    # 榜单机制原话（Telegram，交易员自述）
+    "leaderboard_q":  "The 24h anyone can jump to it — that's the secret sauce",
+}
+
 # ── 推送 / 信号 ─────────────────────────────────────────
 PUSH = {
     "tiers":            "20 / 40 / 80",

@@ -1,0 +1,676 @@
+# -*- coding: utf-8 -*-
+"""
+生成《GMGN 产品侧应对计划：抄 / 打 / 建》 -> docs/gmgn-counterplay.html
+
+这份文档的身份：
+  Arthur v8 deck 第 15 页「本稿已知的缺口」第一条写着——
+    「产品视角尚未纳入主线：Ava 08-13『我也弄了一份，在优化，一起比对』，
+      她的正式产品视角未到，本稿第 12.5 页只是她 08-11 的排期清单。到齐后并入 v8。」
+  本文就是那一份。所以：
+    · 结构对齐 v8 的「抄 / 打 / 建」，方便直接并稿
+    · 只写产品侧能交付的东西（增长线 / 渠道线归 v8，本文不重复排优先级）
+    · 对 v8 与我方排期的冲突（USDC relay）给出边界，而不是回避
+
+三层文档矩阵里的位置：
+  Tier 0  fomo-brief            一页纸决策简报
+  Tier 1  fomo-growth-loop      FOMO 增长闭环（诊断：它为什么转得动）
+  Tier 1  gmgn-counterplay      本文（产品侧应对）                 ← 新增
+  Tier 2  fomo-product-research 全面产品调研（参考层 + 防守清单 §10.2）
+
+数字一律从 fomo_facts 注入。改数字改那里，然后跑 check-facts.py。
+"""
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+import fomo_facts as F
+
+V = F.V8
+A = F.ARTHUR
+
+
+# ── SVG 基元 ────────────────────────────────────────────
+def esc(s):
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+def box(x, y, w, h, cls="dg-box", rx=3):
+    return f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" class="{cls}"/>'
+
+def txt(x, y, s, cls="dg-t", anchor="middle"):
+    return f'<text x="{x}" y="{y}" text-anchor="{anchor}" class="{cls}">{esc(s)}</text>'
+
+
+# ── 图 1：【打】四个咬合点 ──────────────────────────────
+def fig_bite():
+    W, H = 960, 428
+    LX, LW = 8, 224
+    MX, MW = 336, 288
+    RX, RW = 728, 224
+    RH, GAP, Y0 = 64, 14, 40
+
+    ROWS = [
+        (["自研链上数据", "持仓来源 · 关联地址 · 资金关系"],
+         "① 可验真的战绩",
+         "榜分来源 ＋ 跟单质量审计",
+         ["榜单 PnL 不区分来源", "没有自研数据，审计不了自己"], True),
+
+        (["内盘 / 首发支持", "毕业前就能交易"],
+         "② 进场点位分布",
+         "谁在接谁的盘，画出来",
+         ["只能毕业后进场", "Relay 仅询价标准 AMM"], True),
+
+        (["服务端可用的签名路径", "真限价单 · 止盈止损已上线"],
+         "③ 三件事，同一道墙",
+         "从功能差升级为架构差",
+         ["Privy 分片需设备在场", "自动跟单 · 真限价 · 止盈止损"], False),
+
+        (["单链对单链 · 链上出入金", "执行可靠"],
+         "④ 接住它的资金进出债",
+         "一键接管持仓",
+         ["卖不出（约 $2 门槛）", "入不进 · 拿不走"], True),
+    ]
+
+    p = [f'<svg class="dg" viewBox="0 0 {W} {H}" role="img" '
+         f'aria-label="GMGN 长板与 FOMO 结构性短板的四个咬合点">']
+    p.append('<defs><marker id="cp-ar" viewBox="0 0 10 10" refX="9" refY="5" '
+             'markerWidth="6" markerHeight="6" orient="auto">'
+             '<path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>')
+
+    p.append(txt(LX + LW / 2, 22, "我们的长板", "dg-h"))
+    p.append(txt(MX + MW / 2, 22, "咬合点", "dg-h"))
+    p.append(txt(RX + RW / 2, 22, "它的结构性短板", "dg-h"))
+
+    for i, (lt, mt, ms, rt, anchored) in enumerate(ROWS):
+        y = Y0 + i * (RH + GAP)
+        cy = y + RH / 2
+
+        p.append(box(LX, y, LW, RH, "dg-box-us"))
+        p.append(txt(LX + LW / 2, y + 26, lt[0], "dg-t2"))
+        p.append(txt(LX + LW / 2, y + 45, lt[1], "dg-s"))
+
+        p.append(box(MX, y, MW, RH, "dg-box-bite"))
+        p.append(txt(MX + MW / 2, y + 27, mt, "dg-t"))
+        p.append(txt(MX + MW / 2, y + 47, ms, "dg-s"))
+        if anchored:
+            p.append(txt(MX + 12, y + 55, "⚓", "dg-n", anchor="start"))
+
+        p.append(box(RX, y, RW, RH, "dg-box-them"))
+        p.append(txt(RX + RW / 2, y + 26, rt[0], "dg-t2"))
+        p.append(txt(RX + RW / 2, y + 45, rt[1], "dg-s"))
+
+        p.append(f'<path d="M{LX + LW + 4} {cy} H{MX - 6}" class="dg-edge" '
+                 f'marker-end="url(#cp-ar)"/>')
+        p.append(f'<path d="M{MX + MW + 4} {cy} H{RX - 6}" class="dg-edge" '
+                 f'marker-end="url(#cp-ar)"/>')
+
+    fy = Y0 + 4 * (RH + GAP) + 8
+    p.append(box(LX, fy, W - 16, 52, "dg-box-base"))
+    p.append(txt(W / 2, fy + 22, "地基：Relay 交易解析（GMGN-8687 / 8688 / 8689 / 8665）", "dg-t"))
+    p.append(txt(W / 2, fy + 41,
+                 "⚓ 标记的三条战役都站在这块地基上——它不是止血，是进攻的前置条件", "dg-s"))
+    p.append('</svg>')
+    return "".join(p)
+
+
+FIG_CAP = (
+    "<b>图 1 · 【打】四个咬合点。</b>只收结构性短板——改它要动供应商架构或账户体系，"
+    "不是排期问题。窗口期短板（费率、本地化、出金体验）不在图上：v8 已证实"
+    "「它改得动」，它 08 月已公开回应费率并给出 $0.10 floor 口径。"
+    "带 ⚓ 的三条共用同一块地基，那块地基的排期决定这三条的启动时间。"
+)
+
+
+CSS = '''
+:root{
+  --ground:#EDF0F3; --surface:#FFFFFF; --surface-2:#F5F7F9;
+  --line:#D3DAE1; --line-soft:#E3E8ED;
+  --ink:#121820; --ink-2:#3A4551; --muted:#66727F;
+  --accent:#A8500B; --accent-soft:#F3E3D2; --accent-line:#D8A46B;
+  --hot:#A8291F; --hot-soft:#F6DEDA;
+  --ours:#0B6E6C; --ours-soft:#D9EDEC;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Songti SC","Source Han Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0E1319; --surface:#151C24; --surface-2:#1B242E;
+  --line:#2C3945; --line-soft:#222C37;
+  --ink:#E6EBF0; --ink-2:#BCC7D2; --muted:#8695A3;
+  --accent:#E9A44C; --accent-soft:#33261A; --accent-line:#7A5828;
+  --hot:#EE8378; --hot-soft:#3A1F1C;
+  --ours:#54C9C4; --ours-soft:#123331;
+}}
+:root[data-theme="dark"]{
+  --ground:#0E1319; --surface:#151C24; --surface-2:#1B242E;
+  --line:#2C3945; --line-soft:#222C37;
+  --ink:#E6EBF0; --ink-2:#BCC7D2; --muted:#8695A3;
+  --accent:#E9A44C; --accent-soft:#33261A; --accent-line:#7A5828;
+  --hot:#EE8378; --hot-soft:#3A1F1C;
+  --ours:#54C9C4; --ours-soft:#123331;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+     font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px 88px}
+header{border-bottom:1px solid var(--line);padding:52px 0 26px;margin-bottom:16px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+        color:var(--accent);margin:0 0 16px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2rem,4.6vw,2.9rem);line-height:1.14;
+   letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance}
+.dek{font-family:var(--serif);font-size:clamp(1.04rem,2.1vw,1.24rem);line-height:1.6;
+     color:var(--ink-2);margin:0;max-width:64ch;text-wrap:pretty}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.4rem,3vw,1.85rem);line-height:1.2;
+   margin:0 0 10px;text-wrap:balance}
+h3{font-family:var(--sans);font-weight:650;font-size:1.02rem;margin:26px 0 8px}
+h4{font-family:var(--sans);font-weight:650;font-size:.95rem;margin:20px 0 6px;color:var(--ink-2)}
+.snum{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent);
+      text-transform:uppercase;margin:0 0 10px;display:flex;align-items:center;gap:12px}
+.snum::after{content:"";flex:1;height:1px;background:var(--line)}
+section{margin:64px 0 0}
+p{margin:0 0 16px;max-width:70ch;text-wrap:pretty}
+strong{font-weight:650;color:var(--ink)}
+em{font-style:normal;color:var(--accent);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);
+     border:1px solid var(--line-soft);border-radius:2px;padding:1px 5px}
+a{color:var(--ours);text-underline-offset:2px}
+ul,ol{margin:0 0 18px;padding-left:22px;max-width:72ch}
+li{margin:0 0 9px}
+li::marker{color:var(--accent)}
+blockquote{margin:0 0 16px;padding:2px 0 2px 16px;border-left:2px solid var(--accent-line);
+           color:var(--ink-2);font-style:italic;max-width:68ch}
+
+figure{margin:22px 0 12px;background:var(--surface);border:1px solid var(--line);
+       border-radius:3px;padding:22px 20px 16px;overflow-x:auto}
+figcaption{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft);
+           font-size:13.5px;line-height:1.6;color:var(--muted);max-width:80ch}
+figcaption b{color:var(--ink-2);font-weight:600}
+svg.dg{display:block;width:100%;height:auto;min-width:700px;font-family:var(--sans);color:var(--muted)}
+.dg-box-us{fill:var(--ours-soft);stroke:var(--ours);stroke-width:1.2}
+.dg-box-bite{fill:var(--surface);stroke:var(--accent-line);stroke-width:1.4}
+.dg-box-them{fill:var(--hot-soft);stroke:var(--hot);stroke-width:1.2}
+.dg-box-base{fill:var(--accent-soft);stroke:var(--accent-line);stroke-width:1.4}
+.dg-t{fill:var(--ink);font-size:13.5px;font-weight:650}
+.dg-t2{fill:var(--ink);font-size:12.8px;font-weight:600}
+.dg-s{fill:var(--muted);font-size:11px}
+.dg-h{fill:var(--accent);font-size:11.5px;font-weight:700;letter-spacing:.1em}
+.dg-n{fill:var(--ours);font-size:12px}
+.dg-edge{stroke:var(--muted);stroke-width:1.5;fill:none;color:var(--muted)}
+
+.note{background:var(--surface-2);border:1px solid var(--line-soft);border-left:3px solid var(--muted);
+      border-radius:3px;padding:16px 20px;margin:0 0 22px;font-size:15px}
+.note.key{border-left-color:var(--accent);background:var(--accent-soft)}
+.note.warn{border-left-color:var(--hot);background:var(--hot-soft)}
+.note.gain{border-left-color:var(--ours);background:var(--ours-soft)}
+.note p:last-child{margin-bottom:0}
+.note h3{margin:0 0 8px;font-size:1rem;font-weight:650}
+.note ul,.note ol{margin-bottom:0}
+
+.scroll{overflow-x:auto;margin:0 0 22px;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.55}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+         color:var(--muted);font-weight:600;background:var(--surface-2);border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+.pill{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;padding:2px 7px;
+      border-radius:2px;white-space:nowrap;border:1px solid transparent}
+.p-hi{background:var(--hot-soft);color:var(--hot);border-color:var(--hot)}
+.p-us{background:var(--ours-soft);color:var(--ours);border-color:var(--ours)}
+.p-mid{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.tag{font-family:var(--mono);font-size:10px;padding:1px 5px;border-radius:2px;
+     border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
+       font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.7}
+@media (max-width:640px){.wrap{padding:0 16px 56px}figure{padding:14px 12px 12px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media print{
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#FFFFFF; --surface:#FFFFFF; --surface-2:#F7F8FA;
+    --line:#C8D0D8; --line-soft:#E2E7EC;
+    --ink:#101720; --ink-2:#38434F; --muted:#5E6A76;
+    --accent:#A8500B; --accent-soft:#F7EDE2; --accent-line:#D8A46B;
+    --hot:#A8291F; --hot-soft:#FAEAE7;
+    --ours:#0B6E6C; --ours-soft:#E4F1F0;
+  }
+  @page{ size:A4 portrait; margin:14mm 12mm 16mm; }
+  body{ background:#fff; font-size:9.6pt; line-height:1.5; }
+  .wrap{ max-width:none; padding:0; }
+  header{ padding-top:0; }
+  h1{ font-size:22pt; } h2{ font-size:14pt; } .dek{ font-size:11pt; }
+  p,li{ font-size:9.6pt; }
+  svg.dg{ min-width:0 !important; width:100%; }
+  figure{ padding:10px 8px 8px; }
+  .scroll{ overflow-x:visible; }
+  table{ font-size:8.4pt; } th,td{ padding:5px 7px; }
+  section{ break-before:page; } section:first-of-type{ break-before:auto; }
+  figure, table, .note{ break-inside:avoid; }
+  h2, h3, .snum{ break-after:avoid; } figcaption{ break-before:avoid; }
+}
+'''
+
+BODY = f'''
+<header>
+  <p class="kicker">竞品情报 · FOMO 系列 · 产品侧 · 内部使用 · {F.AS_OF} 起算</p>
+  <h1>抄 · 打 · 建</h1>
+  <p class="dek">这份是补进 Arthur v8 主线的<strong>产品侧那一份</strong>（v8 第 15 页把它列为第一条缺口）。结构照 v8 的「抄 / 打 / 建」，方便直接并稿。<br><strong>核心判断：它的债在资金进出，不在速度；而它改得动费率和体验，改不动架构。所以只有架构那几条配当支点。</strong></p>
+</header>
+
+<section id="s0">
+  <p class="snum">00 — 提取</p>
+  <h2>v8 里属于产品侧的，是这七条</h2>
+  <p>把 v8 的十五页过一遍，能落到产品排期上的是下面这些。右列是它<strong>改变了什么</strong>——不是复述，是对我们做法的影响。</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>v8 的产品侧内容</th><th>性质</th><th>对我们的产品做法意味着什么</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>三个功能卡在同一道墙上</strong>——止盈止损、真限价单、自动跟单，都要求平台能代用户签名，而 Privy 分片密钥必须由前端拉 share、本地重组</td>
+        <td><span class="pill p-us">口径升级</span></td>
+        <td>从「我们多一个功能」升级为<strong>「这类功能它的架构给不了」</strong>。素材保质期变长，不怕它下周补上。见 §03 战役 ③</td>
+      </tr>
+      <tr>
+        <td><strong>产品债集中在资金进出，不在速度</strong>——卖不出（gas {V["gas_bump"]} 后最低卖出门槛{V["sell_floor"]}）、入不进（{V["onramp_fail"]}）、拿不走（{V["withdraw_only"]}）</td>
+        <td><span class="pill p-hi">新事实</span></td>
+        <td>我原来的承接方案只盯「出金复杂」。真正结构性的是<strong>小仓位卖不出去</strong>——这是死锁，不是体验差。见 §03 战役 ④</td>
+      </tr>
+      <tr>
+        <td><strong>它的速度机制被产品侧核实</strong>：{V["relay_path"]}；我们是{V["our_path"]}，所以更快<span class="tag">08-13 核实，非推断</span></td>
+        <td><span class="pill p-us">硬证据</span></td>
+        <td>「执行可靠性」这条主线终于有了机制层解释，不只是跑分。同时它直接决定 USDC relay 的边界——见 §01</td>
+      </tr>
+      <tr>
+        <td><strong>它在主动补短板</strong>：{V["they_fix"]}；但 {V["they_cant"]}</td>
+        <td><span class="pill p-mid">判别标准</span></td>
+        <td>这条给了「窗口期 vs 结构性」一个来自对手行为的验证。<strong>费率 / 本地化 / 出金体验都别当护城河讲。</strong></td>
+      </tr>
+      <tr>
+        <td><strong>用链上数据审计跟单质量</strong>——关联地址识别 · 前置建仓检测 · 跟单者盈亏分布</td>
+        <td><span class="pill p-us">同向印证</span></td>
+        <td>与我这边独立得出的战役 ①② 收敛到同一处。v8 的话说得更准：<strong>我们的社交层卖的是可信度，不是 feed 形态</strong></td>
+      </tr>
+      <tr>
+        <td><strong>托管信任危机</strong>：{V["tos_date"]} {V["tos_risk"]}；{V["scam_dates"]} 假客服骗局，已有实际盗资事件</td>
+        <td><span class="pill p-hi">新事实</span></td>
+        <td>「攻它的自托管叙事」从技术论证（Privy 持恢复分片）升级为<strong>它自己写进 ToS 的条款</strong>。但用法要克制，见 §06</td>
+      </tr>
+      <tr>
+        <td><strong>它的官方响应模式「清缓存 / 切节点」，已被用户与我们的「检查 ms / fps / 切代理」并列批评</strong></td>
+        <td><span class="pill p-hi">连带伤害</span></td>
+        <td>这是<strong>我们自己的债</strong>，不是它的短板。打「执行可靠」之前得先把客服口径改掉，否则素材反噬。见 §05</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>没有提取的部分：</strong>增长线（抄 B 不碰 A、UGC 定价、素材主轴）、渠道线（跨 BD 动员存量关系、盯合约到期窗口）、以及成本之争与观察哨——那些归 v8 主线，本文不重复排优先级。<strong>唯一交叉的是造星机制</strong>，因为它需要产品侧交付东西才能跑，见 §04。</p>
+  </div>
+</section>
+
+<section id="s1">
+  <p class="snum">01 — 今天要定的</p>
+  <h2>USDC relay 的边界</h2>
+
+  <div class="note warn">
+    <h3>这是我自己排的第 ④ 条，v8 把它标成了冲突项</h3>
+    <p>我 08-11 排的四条里，第 ④ 条是「USDC 采用与 FOMO / PF 相同的 relay 跨链方案」。v8 把「USDC 统一跨链」列为<strong>对方的速度天花板与观察哨之一</strong>——意思是它一旦放弃，说明它要来抢专业交易员。</p>
+    <p>两件事同时成立就变成：<strong>我们正在把对手的结构性缺陷，排进自己的路线。</strong></p>
+  </div>
+
+  <p>我当时的两难原话是「因为自动跨链，实际就把自己拉下去了；但是不能自研」。现在有了 08-13 产品侧核实的机制事实，这个两难可以拆开了：</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th></th><th>路径</th><th>后果</th></tr></thead>
+    <tbody>
+      <tr><td>FOMO</td><td>{V["relay_path"]}</td><td>多一跳，天花板锁死在 relay 的分发延迟上</td></tr>
+      <tr><td>我们</td><td>{V["our_path"]}</td><td>更快，且这是我们唯一说得清机制的速度优势</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note key">
+    <h3>建议的边界（要在内部过稿前定下来）</h3>
+    <p><strong>USDC relay 只作为入金层与新用户便利层，不进入老用户的主交易路径。</strong></p>
+    <ul>
+      <li>这与我自己在第 ④ 条里写的「交互与判断层区分新老用户策略」是一致的——<strong>不是推翻，是把「区分」写成一条不可逾越的线</strong>。</li>
+      <li>产品上的具体落法：<strong>relay 路径与直连路径在交易确认页显式分叉</strong>，默认值按用户分层给，但<strong>老用户的默认永远是直连</strong>，relay 只能由用户主动选。</li>
+      <li>验收口径：<strong>老用户主交易路径上 relay 占比 = 0</strong>。这条要能被监控查出来，不能只写在文档里。</li>
+    </ul>
+    <p>不定这条边界，我们会主动交出唯一的结构性优势，而「打执行可靠性」这条主线同时失效——<strong>两个损失是一起发生的</strong>。</p>
+  </div>
+
+  <div class="note">
+    <p><strong>顺带解掉一个对称性问题。</strong>v8 的观察哨 ③ 是「FOMO 是否放弃 USDC 统一跨链」。如果我们自己也在用同一套方案而不设边界，这个观察哨会变成自打。<strong>边界一定，观察哨就重新成立</strong>——因为我们用它做入金，它用它做主交易路径，这是两回事。</p>
+  </div>
+</section>
+
+<section id="s2">
+  <p class="snum">02 — 判别标准</p>
+  <h2>先扔掉一半的「优势」</h2>
+
+  <p>能力对照表里我们领先 9 项。但领先不等于可以押注。区别只有一个：<em>它是没做，还是做不到。</em></p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>类型</th><th>判据</th><th>属于这一类</th><th>怎么用</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>窗口期差距</strong></td>
+        <td>它有钱、有速度，技术外包反而让它上得更快。<strong>v8 已给出行为证据：{V["they_fix"]}</strong></td>
+        <td>费率 · 本地化 · 出金体验 · 新链覆盖 · 风控误杀</td>
+        <td><span class="pill p-mid">当窗口</span> 抢时间差，<strong>不进产品叙事</strong></td>
+      </tr>
+      <tr>
+        <td><strong>结构性差距</strong></td>
+        <td>改它要动供应商架构或账户体系，代价是重做产品。<strong>{V["they_cant"]}</strong></td>
+        <td>内盘 · 自研链上数据 · 服务端签名能力 · 单链对单链的执行路径</td>
+        <td><span class="pill p-us">当支点</span> 可以围绕它做长期叙事</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note key">
+    <h3>为什么必须先过这道筛子</h3>
+    <p>Robinhood Chain <strong>2026-07-01</strong> 主网上线，创始人 <strong>07-05</strong> 对「支持 RH 链」只回了一个 👀，我们 <strong>07-13</strong> 就在链上抓到了它的完整跨链交易——<strong>从表态到落地 ≤ 8 天</strong>。</p>
+    <p>推论：任何「FOMO 还没有 X」型的机会，<strong>默认寿命按一个季度估，不按一年</strong>。费率这条它 08 月已经动手了，就是现成的例子。</p>
+  </div>
+</section>
+
+<section id="s3">
+  <p class="snum">03 — 【打】</p>
+  <h2>四个咬合点</h2>
+  <figure>{{FIG_BITE}}<figcaption>{FIG_CAP}</figcaption></figure>
+
+  <h3>战役 ① 可验真的战绩</h3>
+  <p>这是唯一一条<strong>用我们的长板直接打它的长板</strong>的路。FOMO 最强的能力是社交，而社交的燃料是榜上那些亮眼 PnL。</p>
+
+  <div class="note warn">
+    <h4>问题不在「它造假」，在「它的口径不可验真」</h4>
+    <p>机制事实：<strong>{A["leaderboard"]}</strong>。一个把已有盈利仓位转进来的人，和一个在站内从零买出这个收益的人，在榜上长得一模一样。</p>
+    <p>一手样本：<strong>claymore（@claymorepx）</strong>确认自己是 {A["claymore_rank"]}、PnL {A["claymore_pnl"]}，而{A["claymore_fact"]}。<strong>v8 要求保留的客观补充：claymore 自述动机是移动端体验好、社交曝光强，不完全是被动配合平台策略——引用时这句不能省。</strong></p>
+    <p><strong>表述边界：</strong>单个当事人自述只能证明<em>口径存在歧义</em>，不能推广成「FOMO 榜普遍造假」。我们做的是提供一个可验真的版本，不是指控它。</p>
+  </div>
+
+  <h4>产品动作</h4>
+  <ol>
+    <li><strong>榜单每一行标本金来源。</strong>按链上把仓位拆成「站内买入 / 外部转入 / 关联钱包内转 / 空投」，PnL <strong>默认只按站内买入部分计</strong>，转入部分单列注明。这不是加个字段，是<strong>换一种榜的定义</strong>。</li>
+    <li><strong>跟单质量审计（v8 第 6 条，产品化）。</strong>三件事做成代币页与个人页上的常驻模块：<strong>关联地址识别 · 前置建仓检测 · 跟单者盈亏分布</strong>。最后一项是关键——它把「跟这个人的人赚没赚到钱」变成可查的数，而不是看他自己的 PnL。</li>
+    <li><strong>跟单前体检。</strong>点进任何一个可跟的人，先看三个链上事实：本金来源、是否与该币项目方钱包有资金往来、历史卖出后代币的承接情况。</li>
+    <li><strong>把体检覆盖到 FOMO 的账号。</strong>解析 relay 交易之后（见地基），我们会是<strong>唯一能对 FOMO 榜上账号做这套体检的终端</strong>。</li>
+  </ol>
+  <p><strong>它为什么跟不了：</strong>要区分 transferred / bought 并追资金关系，需要一整条自研链上数据管线。它路由、跨链、密钥、入金、出金全部外包——<strong>数据是它整个技术栈里最没有的那一块，它审计不了自己</strong>。</p>
+
+  <h3>战役 ② 进场点位分布</h3>
+  <p>FOMO 的跨链只询价 Uniswap V3 标准 AMM，未毕业代币无法交易。这是 Relay 报价源的边界，不是「暂时没接」。结果是它的用户<strong>结构性地只能在毕业之后进场</strong>。</p>
+  <p>而它口碑里最扎心的抱怨恰恰是「所有那些交易者都会利用你提供退出流动性」「故意在即将下跌时推送买入警报」——官方至今未回应。</p>
+
+  <div class="note gain">
+    <h4>这两件事是同一件事，用户还没把它们连起来</h4>
+    <p>「我总是在接盘」不是运气，是<strong>产品能力决定的进场位次</strong>。我们的工作是把这个因果<strong>画出来，而不是说出来</strong>。</p>
+  </div>
+
+  <ol>
+    <li><strong>代币页加「进场点位分布」。</strong>一条价格轴叠三层：内盘成本区、毕业价、各终端用户的平均进场价。不写一个字结论。</li>
+    <li><strong>「毕业前后无缝」做成一条动线</strong>，不是两个功能：同一个代币页，毕业前后不换界面、不换入口，用户不需要知道「内盘」这个词。<strong>这与我排的第 ③ 条（首页热门列表改造、解决小白接盘）是同一件事的两端</strong>——那条解决「找得到」，这条解决「进得早」。</li>
+  </ol>
+
+  <div class="note warn">
+    <h4>诚实标注</h4>
+    <p>「各终端平均进场价」需要 relay 解析先跑通，当前 <strong>BSC / Base 仍有盲区</strong>。补齐前只上「内盘成本区 + 毕业价」两层，第三层留空并注明「统计中」。<strong>不要用不完整的数据画一条会被打脸的线。</strong></p>
+  </div>
+
+  <h3>战役 ③ 三件事，同一道墙</h3>
+  <p>这是 v8 给产品侧最有价值的一条。它把三个我们本来分开讲的功能差，收敛成一个架构差。</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>能力</th><th>它能做到的上限</th><th>我们</th><th>同一个根因</th></tr></thead>
+    <tbody>
+      <tr><td>跟单</td><td>Follow → 他成交 → 你收到推送 → <strong>你自己点进去下单</strong>；你不在线什么都不会发生</td><td><span class="pill p-us">自动执行</span></td>
+          <td rowspan="3">真自动要求平台<strong>代用户签名</strong>。而 Privy 分片密钥必须由前端拉 share、本地重组私钥完成 → <strong>用户不在场就签不了</strong>。要做真自动只有两条路：托管私钥（自托管叙事破功）或会话密钥 / 预授权——<strong>都不是一个季度的事</strong></td></tr>
+      <tr><td>真限价单</td><td>非链上真单；创始人公开承认非托管跨 5 链做真限价单「extremely technical」，只能先做 SOL</td><td><span class="pill p-us">真单</span></td></tr>
+      <tr><td>止盈止损</td><td>用户投诉集中项，未交付</td><td><span class="pill p-us">已上线</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note warn">
+    <h4>v8 要求保留的两处不确定——引用前必读</h4>
+    <ul>
+      <li>源材料称它「后期增加了<strong>更接近</strong>自动 Copy 的功能」，用词是「更接近」，<strong>未说明已实现全自动</strong>。</li>
+      <li>跟单的<strong>真实执行率外部看不到</strong>（细粒度复制成交量属 App 内部数据）。</li>
+    </ul>
+    <p>所以对外<strong>只说「它的跟单需要用户手动确认」，不要说「它没有跟单」</strong>。这条要写进素材审核清单。</p>
+  </div>
+
+  <h4>产品动作</h4>
+  <ol>
+    <li><strong>把「替你执行」提到叙事第一句</strong>，而不是功能列表第八条。一句话：<em>它只能通知你，我们能替你执行。</em>这是可验证的技术事实，不是营销修辞。</li>
+    <li><strong>做「跟单风控」，不只是「跟单」。</strong>单笔上限、滑点上限、跟卖同步、<strong>黑名单（与项目方钱包有资金往来的地址不跟）</strong>。最后一项需要战役 ① 的数据能力——<strong>两条战役在这里合流，这是我们能做出「安全的自动跟单」而它两头都缺的原因</strong>。</li>
+    <li><strong>止盈止损做成可当场演示的截图素材。</strong>v8 的素材主轴三点里，前两点（执行可靠性、资产安全）靠感受与叙事，<strong>这一点靠截图就能证</strong>——产品侧要保证它在演示路径上一次不挂。</li>
+  </ol>
+
+  <h3>战役 ④ 接住它的资金进出债</h3>
+  <p>v8 把它的产品债定位在<strong>资金进出，不在速度</strong>。这条修正了我原来的方向——我之前只盯「出金复杂」，那是体验问题；真正结构性的是<strong>钱锁在里面出不来</strong>。</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>它的债</th><th>细节</th><th>官方态度</th><th>我们的对位</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-hi">死锁</span> 买进去卖不出来</td><td>SOL gas {V["gas_bump"]}，最低卖出门槛{V["sell_floor"]} → <strong>小仓位结构性无法卖出</strong></td><td>建议导出私钥去 Phantom 操作</td><td>无此门槛</td></tr>
+      <tr><td><span class="pill p-hi">高</span> 入金全面失效</td><td>{V["onramp_fail"]}；借记卡最低{V["card_min"]}、安卓难小额充、PC 端不能用卡</td><td>官方与志愿者引导改走加密直充 / P2P / 好友代充</td><td>不经手法币，无此链路</td></tr>
+      <tr><td><span class="pill p-hi">高</span> 出金极度受限</td><td>{V["withdraw_only"]}</td><td>外包给 Spritz，不在 App 内闭环</td><td>链上出金，闭环内</td></tr>
+      <tr><td><span class="pill p-hi">高</span> 托管信任危机</td><td>{V["tos_date"]} {V["tos_risk"]}；{V["scam_dates"]} 假客服骗局，已有实际盗资事件</td><td>—</td><td>用户自持</td></tr>
+      <tr><td><span class="pill p-mid">中</span> 风控误杀</td><td>新 launchpad 池代币被判 honeypot → 买按钮禁用、无法 DCA</td><td>称自动化风控不可自助覆盖，只能开工单等复核</td><td>可覆盖</td></tr>
+      <tr><td><span class="pill p-mid">中</span> 稳定性</td><td>Privy 依赖导致崩溃 + 随机退出；ETH / BNB 自动 wrap 致用户无 Gas</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gain">
+    <h4>出口已经开了，而且是它自己开的</h4>
+    <p>它在两处高优主题里<strong>官方建议用户「导出私钥到 Phantom 等外部钱包操作」</strong>——一次是为了卖掉小仓位，一次是为了提非 SOL / USDC 资产。<strong>它把用户往外推，我们只需要在门口接住。</strong></p>
+  </div>
+
+  <h4>产品动作：迁移引导路径</h4>
+  <ol>
+    <li><strong>一键导入私钥 / 一键接管持仓 / 迁移落地页</strong>，把迁移摩擦降到最低。触发时机就对着它那两个场景：<em>卖不掉的小仓位</em>和<em>提不走的非 SOL 资产</em>。</li>
+    <li><strong>「导入地址即补全 FOMO 历史」</strong>——用户填一个地址，我们把他在 FOMO 上被 relay 打散的买卖重新归属好、连成完整的持仓与盈亏曲线。<strong>他在 FOMO 自己都看不到这么清楚。</strong></li>
+    <li><strong>代币页 Trades 的 fomo 子 tab</strong>（GMGN-8665 已立项）——把「看不到」反手做成「看得比别人清楚」。</li>
+  </ol>
+
+  <div class="note warn">
+    <h4>两条红线</h4>
+    <ul>
+      <li><strong>合规：</strong>目前我们把 relay 交易解析为「转入 / 转出」而非「买 / 卖」，是为了免责——<strong>因为无法识别投毒</strong>，攻防对抗后对方已把投毒金额提高到 50~100U。所以上面三条动作<strong>必须带标注与可信度提示兜底</strong>，不能直接当用户的真实战绩展示。<strong>产品侧要出这套标注规范，是前置交付物，不是可选项。</strong></li>
+      <li><strong>叙事克制：</strong>「导入私钥」这个动作本身敏感。文案只讲<strong>用户要解决的问题</strong>（把卖不掉的仓位拿回来），<strong>不要去讲它的 ToS 或盗资事件</strong>——那是 KOL 号可以讲的，官方产品文案讲了就变成 hit piece，反噬我们自己的资产安全叙事。</li>
+    </ul>
+  </div>
+
+  <h3>地基：这不是止血，是三条战役的前置条件</h3>
+  <div class="note key">
+    <p>主报告 §10.2 把 <strong>Relay 交易解析修复（GMGN-8687 / 8688 / 8689 / 8665）</strong>列为「P0 止血」。按本文的拆解，这个定性低估了它：<strong>战役 ①（对 FOMO 账号做体检）、②（各终端平均进场价）、④（导入地址补全历史）三条都站在它上面。</strong>地基的排期 = 三条战役的启动时间。</p>
+    <p>根因：FOMO 买单走 Relay 代发，relayer 先在 DEX 买下，再由路由合约 <code>{F.ADDRESSES["relay_router"]}</code> 转给用户钱包。用户钱包既不是发起方也不是接收合约，只出现在最后一跳转账里。修复方向是按「路由合约收币后转给谁」定归属。第三方（Debot / basedbot）已经能解析，<strong>说明这不是不可解的技术问题</strong>。</p>
+  </div>
+</section>
+
+<section id="s4">
+  <p class="snum">04 — 【抄】</p>
+  <h2>造星机制里，产品侧要交付的那部分</h2>
+
+  <p>v8 把造星机制归在增长线，但它跑不起来的原因在产品侧：<strong>没有素材生产工具，UGC 就没有原料。</strong>这一节只写产品要交付什么，不重复排增长的优先级。</p>
+
+  <div class="note gain">
+    <h3>要抄的是动力源，不是形态</h3>
+    <p>机制只有两个零件：<strong>24h 刷新榜</strong>（榜单终身制会被大户永久霸占，24 小时刷新制造「人人都有机会」）＋ <strong>官方转发</strong>（给社交货币，不给现金）。交易员原话：「{V["leaderboard_q"]}」。</p>
+    <p><strong>不需要复制 feed，只需要复制「让普通人有机会被看见」这个动力源。</strong>现金成本≈零。</p>
+  </div>
+
+  <h4>产品侧最小交付集</h4>
+  <ol>
+    <li><strong>Profile / 战绩页 / 可分享 PnL 卡</strong>——把素材生产工具化。没有这个，UGC 活动是空转：人拉进来了没东西可发。</li>
+    <li><strong>24h 榜</strong>，且<strong>区分 bought / transferred</strong>。这一条同时是产品诚实和天然的对比叙事——<strong>与战役 ① 是同一个数据能力的两个出口</strong>，做一次，两处用。</li>
+    <li><strong>榜要能展示「亏损但仍在场」，不只 PnL 排名。</strong>PF 的 feed 已经在生产这类内容（−$104 配 "im cooked" 仍有赞）。信仰稀缺性正在被别人先占——而这类内容<strong>只有真实数据撑得住</strong>，造出来的盘做不出「亏着还在」。</li>
+  </ol>
+
+  <div class="note">
+    <h4>验收判据（省掉一轮「要不要加预算」的争论）</h4>
+    <p>v8 给的三阶段曲线提供了一个可验收的判据：<strong>不必等交易量指标才知道成不成——判据是外部成名 KOL 是否开始主动找上来。</strong>在那之前都还在孵化期，该做的是持续点名 + 官方转发，把个案做成模板，<strong>不是加大付费</strong>。</p>
+  </div>
+
+  <div class="note warn">
+    <h4>只抄榜单与曝光这一层，不抄造盘</h4>
+    <p>它飞轮的燃料是拉盘——渠道拿到的是账面数字与曝光，卖不掉（Dani 亲历 {A["dani_run"]}，{A["dani_outcome"]}）；有真实承接盘的币则直接被大户 rug。<strong>踩这个坑不是钱的问题，是品牌与 KOL 合作关系的问题。</strong></p>
+    <p>反过来看：Dani 这类高声誉交易员正因为这一点主动留在我们这边（「{A["dani_quote"]}」）——<strong>这是目前最实的一张牌，也是我们的榜必须真实的商业理由，不只是道德理由。</strong></p>
+  </div>
+
+  <div class="note key">
+    <h4>一条来自渠道线、但必须由产品接的推论</h4>
+    <p>PF 挖角开的是 <strong>{V["pf_poach"]}</strong>——之所以要求删号，是因为<strong>站内影响力迁不走，账号本身就是资产</strong>（X 粉丝跨度 {F.INFLUENCE["x_spread"]} 进了 FOMO 塌缩成 {F.INFLUENCE["fomo_spread"]}）。</p>
+    <p>所以盯合约到期窗口只解决<strong>时机</strong>，不解决<strong>筹码</strong>。能挖动这批人的只有一件事：<em>换到你这儿，我的观众还在不在。</em><strong>渠道线与社交层改版不能分开排期——窗口来了而我们没有承接观众的产品，人也接不住。</strong>这是上面那三条最小交付集要尽快落的真正原因。</p>
+  </div>
+</section>
+
+<section id="s5">
+  <p class="snum">05 — 【建】</p>
+  <h2>先让宣传站得住</h2>
+
+  <div class="note warn">
+    <h3>打「执行可靠」之前，我们自己有两笔债要清</h3>
+    <ol>
+      <li><strong>推送延迟 {V["push_delay"]}</strong>（对比 Dexscreener 近实时）。不修，「快」的宣传会自我反噬——素材主轴第一点直接无从落地。</li>
+      <li><strong>客服口径。</strong>v8 记了一条连带伤害：它的官方响应模式「清缓存 / 切节点」<strong>已被用户与我们的「检查 ms / fps / 切代理」并列批评</strong>，认为两家都在逃避责任。<strong>我们在同一句吐槽里被点名。</strong>打可靠性之前必须先把这套应答模式改掉。</li>
+    </ol>
+    <p>这两条不是「顺便修一下」——<strong>它们是所有对外叙事的前置条件</strong>。宣传比修复先落地，等于自己给对手递素材。</p>
+  </div>
+
+  <h3>把优势从「感受」变成「可验证的数」</h3>
+  <p>我们说执行快、成功率高，目前靠的是用户感受。而 08-12 社群监控刚好给了一个窗口：DeBot 24 小时内两轮机房故障 + K 线严重延迟、卖出成交价严重偏离（11k 市值仅卖到 2.7k）；Axiom 集中爆发无法买入、成交迟迟不填。社群里已出现有机口碑——用户主动说「Ave 与 GMGN 很少出现类似宕机」。</p>
+
+  <ol>
+    <li><strong>执行可靠性可视化：成功率 / 滑点 / 耗时对外可查。</strong>这是把第三方背书窗口转成长期资产的唯一方式——<strong>窗口不会持续，数会留下。</strong></li>
+    <li><strong>机制层解释一起给出</strong>：{V["our_path"]} vs {V["relay_path"]}。有了这条，「快」就不只是跑分，而是<strong>结构决定的</strong>。</li>
+    <li><strong>修 K 线全站卡死（08-04~05）、Stonk 类 token 池匹配缺失。</strong>同属「可靠性叙事的前置」。</li>
+  </ol>
+
+  <div class="note">
+    <h4>口径护栏（沿用 v8 已成文的那条）</h4>
+    <p>让 KOL 讲<strong>自己的真实体验，不做 hit piece</strong>——对账号更安全，转化也更好。官方号只做产品对比不点名；KOL 号可攻击，<strong>但不由我方供稿</strong>。</p>
+  </div>
+</section>
+
+<section id="s6">
+  <p class="snum">06 — 不做什么</p>
+  <h2>四件明确不追的事</h2>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>不追</th><th>为什么</th><th>改为</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>不抄社交产品形态（feed / Clans / Thesis）</strong></td>
+        <td>抄形态抄不出网络效应，而且它的网络效应地基是<strong>不可验真的榜</strong>。抄形态等于把它的地基一起抄过来。</td>
+        <td>抄动力源（§04）、打地基（§03 战役 ①）。<strong>我们的社交层卖的是可信度，不是 feed 形态。</strong></td>
+      </tr>
+      <tr>
+        <td><strong>不主动挑起费率战</strong></td>
+        <td>我们是 {F.GMGN_FEES["flat"]} 固定比例；它是分段固定费（≤200U 每笔 {F.FEES["tier_small"]} USDC、200–10,000U {F.FEES["tier_mid"]}、≥10,000U {F.FEES["tier_large"]}）。<strong>盈亏平衡点在 {F.GMGN_FEES["breakeven"]}</strong>——之上我们全线更贵。而且它已经在降。</td>
+        <td>被问到再按分段如实回应。大额段是否跟进属于定价决策，需单独立项。</td>
+      </tr>
+      <tr>
+        <td><strong>不把 ToS / 盗资事件写进官方产品文案</strong></td>
+        <td>{V["tos_date"]} 的 ToS 条款和假客服盗资是硬事实，但由官方号讲就是 hit piece，会反噬我们自己的资产安全叙事。</td>
+        <td>只用<strong>可验证的技术事实</strong>（Privy 持恢复分片、分片密钥需设备在场）。ToS 那条留给 KOL 号，且不由我方供稿。</td>
+      </tr>
+      <tr>
+        <td><strong>不追「跨链无感」的第二步</strong></td>
+        <td>07-14 会议结论：自建跨链桥复杂度极高、不现实，Relay 是唯一可行方案。那是 <strong>BD 问题，不是产品问题</strong>。</td>
+        <td>产品侧只做第一步——<strong>统一 USDC 余额 + gas 代付</strong>，体验的 80% 在这里。且严守 §01 的边界：<strong>不进老用户主交易路径</strong>。</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s7">
+  <p class="snum">07 — 排期</p>
+  <h2>按依赖关系排，不按重要性排</h2>
+
+  <p>下表把我 08-11 已排的四条与本文新增的合并去重。<strong>「已排」列标出哪些是在推进的，避免看起来像推倒重来。</strong></p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>#</th><th>动作</th><th>已排？</th><th>依赖</th><th>窗口</th></tr></thead>
+    <tbody>
+      <tr><td>0a</td><td><strong>定 USDC relay 边界</strong>（入金层，不进老用户主路径）</td><td>—</td><td>—</td><td><span class="pill p-hi">过稿前</span></td></tr>
+      <tr><td>0b</td><td><strong>修推送延迟 {V["push_delay"]}</strong>——所有「快」的叙事的前置</td><td>—</td><td>—</td><td><span class="pill p-hi">立刻</span></td></tr>
+      <tr><td>0c</td><td><strong>Relay 解析归属修复</strong>（地基，GMGN-8687/8688/8689）</td><td>✓ 已立项</td><td>—</td><td><span class="pill p-hi">立刻</span></td></tr>
+      <tr><td>0d</td><td><strong>relay 数据的标注与可信度提示规范</strong>（合规前置）</td><td>—</td><td>—</td><td><span class="pill p-hi">与 0c 并行</span></td></tr>
+      <tr><td>0e</td><td><strong>客服口径整改</strong>——脱离「检查 ms / fps / 切代理」</td><td>—</td><td>—</td><td><span class="pill p-hi">立刻</span></td></tr>
+      <tr><td>1</td><td>callout 全方位铺开（K 线页 / 单人单币页 / 持仓页）</td><td>✓ 我的 ①</td><td>—</td><td><span class="pill p-mid">在推进</span></td></tr>
+      <tr><td>2</td><td>热门精选代币推送（第二阶段：比 FOMO 早）</td><td>✓ 我的 ②</td><td>0b</td><td><span class="pill p-mid">本周</span></td></tr>
+      <tr><td>3</td><td>首页热门列表改造：混链、金狗可见、与热搜差异互补</td><td>✓ 我的 ③</td><td>—</td><td><span class="pill p-mid">本季度</span></td></tr>
+      <tr><td>4</td><td><strong>社交最小集</strong>：Profile / 战绩页 / 可分享 PnL 卡</td><td>新增</td><td>—</td><td><span class="pill p-mid">本季度</span></td></tr>
+      <tr><td>5</td><td><strong>24h 榜</strong>，区分 bought / transferred，含「亏损但仍在场」</td><td>新增</td><td>—</td><td><span class="pill p-mid">本季度</span></td></tr>
+      <tr><td>6</td><td>跟单风控（上限 / 滑点 / 跟卖同步）</td><td>新增</td><td>—</td><td><span class="pill p-mid">本季度</span></td></tr>
+      <tr><td>7</td><td>执行可靠性可视化（成功率 / 滑点 / 耗时）</td><td>新增</td><td>0b</td><td><span class="pill p-mid">本季度</span></td></tr>
+      <tr><td>8</td><td>代币页「进场点位分布」（先上两层）</td><td>新增</td><td>第三层等 0c</td><td><span class="pill p-mid">本季度</span></td></tr>
+      <tr><td>9</td><td><strong>迁移引导路径</strong>：一键导入私钥 / 一键接管持仓 / 落地页</td><td>新增</td><td>0c + 0d</td><td><span class="pill p-us">下季度</span></td></tr>
+      <tr><td>10</td><td>跟单质量审计：关联地址 / 前置建仓 / 跟单者盈亏分布</td><td>新增</td><td>0c</td><td><span class="pill p-us">下季度</span></td></tr>
+      <tr><td>11</td><td>榜单本金来源拆分 + 跟单前体检</td><td>新增</td><td>0c + 5</td><td><span class="pill p-us">下季度</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gain">
+    <p><strong>读法：</strong>0a–0e 是五条前置，全部不依赖任何东西，且<strong>其中三条（0b / 0d / 0e）在拦着对外叙事</strong>。1–3 是我已在推进的，没变。4–11 是本文新增，其中 <strong>4 和 5 不依赖地基，可以立刻启动</strong>——这很重要，因为它们是渠道线接人的筹码（§04 末）。</p>
+  </div>
+</section>
+
+<section id="s8">
+  <p class="snum">08 — 待核</p>
+  <h2>会改结论的四条</h2>
+
+  <div class="note warn">
+    <h3>① Apple Pay 是否已被移除　<span class="tag">最高优先级</span></h3>
+    <p><strong>两个口径直接冲突。</strong>外部整理仍把 Apple Pay 入金列为它最强的护城河（约 {F.SCALE["first_time_buyers"]} 首次买币用户 / 约 {F.SCALE["first_time_value"]}），理由是这是它唯一「一次性建设、永久生效」的获客通道；而我方 08-13 的产品债清单说它<strong>疑似已被移除</strong>，入金全面失效、官方引导用户找朋友代充。</p>
+    <p><strong>对产品侧的影响是直接的：</strong>主报告 §9 能力对照表现在写的是「Apple Pay 直接买 → FOMO 明显领先」。<strong>如果移除属实，那一行要改，而且它「零门槛进人」这一环出现结构性倒退——那是整条飞轮的入水口。</strong>今天就该核。</p>
+  </div>
+
+  <ul>
+    <li><strong>② 我们的持仓来源解析在多链上的准确率是多少？</strong>战役 ① 和 24h 榜的「区分 bought / transferred」全都建立在这上面。<strong>这条没量化之前，不要对外承诺「可验真」。</strong></li>
+    <li><strong>③ relay 解析修复后，BSC / Base 的归属准确率能到多少？</strong>决定战役 ②④ 的第三层数据能不能上。</li>
+    <li><strong>④ FOMO 的排行榜口径是否会变？</strong>它持仓页<strong>已经区分 transferred / bought</strong>，说明<strong>数据结构里有这个字段，只是榜没用</strong>。改榜口径的成本可能远低于我们的假设——它一改，战役 ① 的锋利度会下降（但跟单质量审计与资金关系追踪它仍然做不了，因为那需要自研数据）。<strong>建议加进 v8 的观察哨。</strong></li>
+  </ul>
+
+  <div class="note key">
+    <h3>与 v8 观察哨的衔接</h3>
+    <p>v8 的观察哨 ④「钱包架构是否从 Privy 分片改为托管或会话密钥」是观察哨 ②「是否上线限价单 / 止盈止损 / 真自动跟单」的<strong>前置信号</strong>——三个功能卡在同一道墙上，<strong>架构一动，② 会成批出现</strong>。产品侧的对应准备是：<strong>战役 ③ 的叙事一旦失效，重心要立刻移到战役 ①（数据可信度），因为那条不受它钱包架构影响。</strong></p>
+  </div>
+</section>
+
+<footer>
+  文档矩阵 ·
+  <a href="{F.DOCS["brief"][1]}">{F.DOCS["brief"][0]}</a> ·
+  <a href="{F.DOCS["loop"][1]}">{F.DOCS["loop"][0]}</a> ·
+  <a href="{F.DOCS["full"][1]}">{F.DOCS["full"][0]}</a> · 本文（产品侧应对）<br>
+  数据截至 {F.AS_OF}　·　并入 Arthur v8（2026-08-13）的产品侧内容，见 §00<br>
+  数字统一取自 fomo_facts.py，改数字请改那里并跑 check-facts.py<br>
+  分工：v8 主线管增长与渠道，本文管产品；主报告 §10.2 管防守，本文管进攻。三处不重复排优先级。
+</footer>
+'''
+
+HTML = ('<!doctype html>\n<html lang="zh-CN">\n<head>\n'
+        '<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        '<meta name="color-scheme" content="light dark">\n'
+        '<title>抄 · 打 · 建</title>\n'
+        '<style>' + CSS + '</style>\n</head>\n<body>\n<div class="wrap">\n'
+        + BODY.replace("{FIG_BITE}", fig_bite())
+        + '\n</div>\n</body>\n</html>\n')
+
+out = pathlib.Path(__file__).resolve().parents[1] / "gmgn-counterplay.html"
+out.write_text(HTML, encoding="utf-8")
+print(f"写入 {out}　{len(HTML):,} 字节")
