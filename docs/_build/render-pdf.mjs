@@ -1,3 +1,6 @@
+// 需要 playwright。仓库里没装 —— 在装有 playwright 的目录下运行，例如：
+//   cd <装了 playwright 的目录> && node /home/user/ava1026/docs/_build/render-pdf.mjs
+// 或先在本目录 npm i playwright。Chromium 用系统预装的 /opt/pw-browsers/chromium。
 import { chromium } from 'playwright';
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const p = await b.newPage({ colorScheme: 'light' });
