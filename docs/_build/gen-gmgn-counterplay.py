@@ -248,6 +248,69 @@ def fig_map():
     return "".join(p)
 
 
+# ── 图 0b：五个模块怎么转起来 ────────────────────────────
+#   导图是静态树，看不出模块之间的喂养关系。这张补箭头：
+#   前四个模块首尾相接成环，第五个（地基）在下面托着整圈。
+def fig_loop():
+    W, H = 960, 250
+    NW, NH, NY = 200, 72, 62
+    XS = [8, 256, 504, 752]
+
+    NODES = [
+        ("① 发现", "热门币第一时间抓到并推出", "§03"),
+        ("② 放大", "KOL 与大户的真实持仓", "§04"),
+        ("③ 拉新承接", "法币入金 · USDC · 迁移引导", "§05"),
+        ("④ 交易", "专业执行 · 参数可控", "—"),
+    ]
+
+    p = [f'<svg class="dg" viewBox="0 0 {W} {H}" role="img" '
+         f'aria-label="五个模块的流转闭环：发现→放大→拉新承接→交易，数据回流，地基托底">']
+    p.append('<defs><marker id="lp-ar" viewBox="0 0 10 10" refX="9" refY="5" '
+             'markerWidth="6" markerHeight="6" orient="auto">'
+             '<path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>')
+
+    for i, (t, sub, ref) in enumerate(NODES):
+        x = XS[i]
+        cx = x + NW / 2
+        p.append(box(x, NY, NW, NH, "dg-box-us"))
+        p.append(txt(cx, NY + 28, t, "dg-t"))
+        p.append(txt(cx, NY + 48, sub, "dg-s"))
+        if ref != "—":
+            p.append(txt(x + NW - 10, NY + 16, ref, "dg-n", anchor="end"))
+        if i < len(NODES) - 1:
+            p.append(f'<path d="M{x + NW + 5} {NY + NH / 2} H{XS[i + 1] - 7}" '
+                     f'class="dg-edge" marker-end="url(#lp-ar)"/>')
+
+    # 回流弧（走上方，避开地基）
+    x4c = XS[3] + NW / 2
+    x1c = XS[0] + NW / 2
+    p.append(f'<path d="M{x4c} {NY - 2} V42 Q{x4c} 32 {x4c - 10} 32 '
+             f'H{x1c + 10} Q{x1c} 32 {x1c} 42 V{NY - 4}" '
+             f'class="dg-edge-loop" marker-end="url(#lp-ar)"/>')
+    p.append(txt(W / 2, 20, "数据回流：谁在买 · 谁在赚 · 什么在热", "dg-lab-loop"))
+
+    # 地基
+    fy = NY + NH + 34
+    p.append(box(8, fy, W - 16, 56, "dg-m5"))
+    p.append(txt(W / 2, fy + 24, "⑤ 地基：Relay 交易解析 · 标注与可信度规范 · 推送延迟〔待核〕· 客服口径", "dg-t"))
+    p.append(txt(W / 2, fy + 43, "四条都托在上面这一圈底下——不清掉，环转不起来", "dg-s"))
+    for x in XS:
+        cx = x + NW / 2
+        p.append(f'<path d="M{cx} {fy - 3} V{NY + NH + 7}" '
+                 f'class="dg-edge-thin" marker-end="url(#lp-ar)" '
+                 f'style="color:var(--hot);stroke:var(--hot)"/>')
+
+    p.append('</svg>')
+    return "".join(p)
+
+
+FIG_LOOP_CAP = (
+    "<b>图 0b · 五个模块怎么转起来。</b>前四个首尾相接：交易产生的链上数据回流到发现层，"
+    "让下一轮「什么在热、谁在赚」更准。<b>地基那条不产生用户价值，但托着整圈</b>——"
+    "Relay 解析没修，②③ 就拿不到 FOMO 那侧的数据。"
+)
+
+
 FIG_MAP_CAP = (
     "<b>图 0 · 五个模块。</b>前四个是产品要交付的，第五个是拦着前四个的地基。"
     "✓＝已上线，◐＝推进中，其余为本季度新增。"
@@ -337,7 +400,7 @@ svg.dg{display:block;width:100%;height:auto;min-width:700px;font-family:var(--sa
 .dg-h{fill:var(--accent);font-size:11.5px;font-weight:700;letter-spacing:.1em}
 .dg-n{fill:var(--ours);font-size:12px}
 .dg-edge{stroke:var(--muted);stroke-width:1.5;fill:none;color:var(--muted)}
-.dg-edge-thin{stroke:var(--line);stroke-width:1.3;fill:none}
+.dg-edge-thin{stroke:var(--line);stroke-width:1.3;fill:none;color:var(--line)}\n.dg-edge-loop{stroke:var(--ours);stroke-width:1.6;stroke-dasharray:6 4;fill:none;color:var(--ours)}\n.dg-lab-loop{fill:var(--ours);font-size:11.5px;font-weight:600;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .dg-split{stroke:var(--line);stroke-width:1.2;stroke-dasharray:5 5;fill:none}
 .dg-box-root{fill:var(--ours);stroke:var(--ours);stroke-width:1.5}
 .dg-box-leaf{fill:var(--surface-2);stroke:var(--line-soft);stroke-width:1}
@@ -404,6 +467,7 @@ import cp_body
 
 FIGS = {
     "map":       fig_map(),   "map_cap":   FIG_MAP_CAP,
+    "loop":      fig_loop(),  "loop_cap":  FIG_LOOP_CAP,
     "lanes":     fig_lanes(), "lanes_cap": FIG_LANES_CAP,
     "bite":      fig_bite(),  "bite_cap":  FIG_CAP,
 }

@@ -20,6 +20,7 @@ def body(F, V, A, FIG):
   <p class="snum">01 — 全局</p>
   <h2>五个模块</h2>
   <figure>{FIG["map"]}<figcaption>{FIG["map_cap"]}</figcaption></figure>
+  <figure>{FIG["loop"]}<figcaption>{FIG["loop_cap"]}</figcaption></figure>
 </section>
 
 <section id="s2">
