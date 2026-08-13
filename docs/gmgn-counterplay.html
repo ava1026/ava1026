@@ -122,6 +122,28 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 @media (max-width:640px){.wrap{padding:0 16px 56px}figure{padding:14px 12px 12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+/* ── 在线编辑层 ───────────────────────────────────────── */
+#editbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:9px 24px;background:var(--surface);border-bottom:1px solid var(--line);
+  font-family:var(--sans);font-size:13px;color:var(--ink-2)}
+#editbar button{font:inherit;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:3px;
+  border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer}
+#editbar button:hover{border-color:var(--muted)}
+#editbar button.on{background:var(--ours);border-color:var(--ours);color:#fff}
+#editbar .sp{flex:1}
+#eb-state{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+#eb-state.dirty{color:var(--accent)}
+#eb-state.saved{color:var(--ours)}
+#eb-note{font-size:11.5px;color:var(--muted)}
+#eb-local{display:none;font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+#eb-local.on{display:inline-block}
+.wrap[contenteditable="true"]{outline:none}
+.wrap[contenteditable="true"] section:hover{background:var(--surface-2);
+  box-shadow:0 0 0 6px var(--surface-2);border-radius:3px}
+.wrap[contenteditable="true"] figure{opacity:.55}
+@media print{#editbar{display:none}}
+
 @media print{
   :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
     --ground:#FFFFFF; --surface:#FFFFFF; --surface-2:#F7F8FA;
@@ -148,6 +170,15 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 </style>
 </head>
 <body>
+<div id="editbar">
+  <button id="eb-edit" type="button">✎ 编辑</button>
+  <button id="eb-export" type="button">↓ 导出 HTML</button>
+  <button id="eb-reset" type="button">↺ 还原原版</button>
+  <span id="eb-local">本地修改版</span>
+  <span class="sp"></span>
+  <span id="eb-note">改动存在本机浏览器，换设备或换人打开看不到</span>
+  <span id="eb-state"></span>
+</div>
 <div class="wrap">
 
 <header>
@@ -375,5 +406,96 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 </footer>
 
 </div>
+<script>
+(function () {
+  var KEY = 'gmgn-counterplay:v1';
+  var wrap = document.querySelector('.wrap');
+  var bEdit = document.getElementById('eb-edit');
+  var bExp = document.getElementById('eb-export');
+  var bRst = document.getElementById('eb-reset');
+  var state = document.getElementById('eb-state');
+  var local = document.getElementById('eb-local');
+  var timer = null;
+
+  function say(msg, cls) { state.textContent = msg; state.className = cls || ''; }
+
+  // 图是生成的，不参与编辑——否则一次误删就没了，且无法从 localStorage 复原。
+  function lockFigures(on) {
+    wrap.querySelectorAll('figure').forEach(function (f) {
+      f.setAttribute('contenteditable', on ? 'false' : 'true');
+    });
+  }
+
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved) { wrap.innerHTML = saved; local.classList.add('on'); say('已载入本地修改', 'saved'); }
+  } catch (e) { say('浏览器禁用了本地存储，改动无法保存'); bEdit.disabled = true; }
+
+  function persist() {
+    try {
+      localStorage.setItem(KEY, wrap.innerHTML);
+      local.classList.add('on');
+      say('已保存 ' + new Date().toTimeString().slice(0, 5), 'saved');
+    } catch (e) { say('保存失败：存储已满或被禁用', 'dirty'); }
+  }
+
+  bEdit.addEventListener('click', function () {
+    var on = wrap.getAttribute('contenteditable') !== 'true';
+    wrap.setAttribute('contenteditable', on ? 'true' : 'false');
+    lockFigures(on);
+    bEdit.classList.toggle('on', on);
+    bEdit.textContent = on ? '✓ 完成' : '✎ 编辑';
+    if (on) { say('编辑中，停手 1 秒自动保存', 'dirty'); wrap.focus(); } else { persist(); }
+  });
+
+  wrap.addEventListener('input', function () {
+    say('未保存…', 'dirty');
+    clearTimeout(timer);
+    timer = setTimeout(persist, 1000);
+  });
+
+  bRst.addEventListener('click', function () {
+    if (!confirm('丢弃本机上的全部改动，回到原始版本？')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  });
+
+  bExp.addEventListener('click', function () {
+    var wasOn = wrap.getAttribute('contenteditable') === 'true';
+    if (wasOn) bEdit.click();                       // 先退出编辑，避免把 contenteditable 烤进文件
+    var html = '<!doctype html>\n' + document.documentElement.outerHTML;
+    var name = 'gmgn-counterplay';
+
+    function viaAnchor() {                          // 本地打开时可用；Artifact 里被沙箱拦掉
+      var url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+      var a = document.createElement('a');
+      a.href = url; a.download = name + '.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      say('已导出', 'saved');
+    }
+
+    var dl = window.claude && window.claude.downloads;
+    if (!dl) { viaAnchor(); return; }
+
+    say('等待确认…');
+    dl.save({ filename: name + '.html', data: html })
+      .then(function () { say('已导出', 'saved'); })
+      .catch(function (err) {
+        var code = err && err.code;
+        if (code === 'declined') { say('已取消'); return; }
+        if (code === 'extension_not_enabled' || code === 'rejected_extension') {
+          // html 属扩展集，本视图可能没开——退到基础集，提示改回后缀即可打开
+          dl.save({ filename: name + '.html.txt', data: html })
+            .then(function () { say('已导出为 .txt，改回 .html 即可打开', 'saved'); })
+            .catch(function () { say('导出失败'); });
+          return;
+        }
+        if (code === 'rate_limited') { say('太频繁，稍后再试'); return; }
+        say('导出失败：' + (code || '未知'));
+      });
+  });
+})();
+</script>
 </body>
 </html>

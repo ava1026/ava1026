@@ -438,6 +438,28 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 @media (max-width:640px){.wrap{padding:0 16px 56px}figure{padding:14px 12px 12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+/* ── 在线编辑层 ───────────────────────────────────────── */
+#editbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:9px 24px;background:var(--surface);border-bottom:1px solid var(--line);
+  font-family:var(--sans);font-size:13px;color:var(--ink-2)}
+#editbar button{font:inherit;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:3px;
+  border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer}
+#editbar button:hover{border-color:var(--muted)}
+#editbar button.on{background:var(--ours);border-color:var(--ours);color:#fff}
+#editbar .sp{flex:1}
+#eb-state{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+#eb-state.dirty{color:var(--accent)}
+#eb-state.saved{color:var(--ours)}
+#eb-note{font-size:11.5px;color:var(--muted)}
+#eb-local{display:none;font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+#eb-local.on{display:inline-block}
+.wrap[contenteditable="true"]{outline:none}
+.wrap[contenteditable="true"] section:hover{background:var(--surface-2);
+  box-shadow:0 0 0 6px var(--surface-2);border-radius:3px}
+.wrap[contenteditable="true"] figure{opacity:.55}
+@media print{#editbar{display:none}}
+
 @media print{
   :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
     --ground:#FFFFFF; --surface:#FFFFFF; --surface-2:#F7F8FA;
@@ -463,6 +485,9 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 }
 '''
 
+EDIT_HTML = '<div id="editbar">\n  <button id="eb-edit" type="button">✎ 编辑</button>\n  <button id="eb-export" type="button">↓ 导出 HTML</button>\n  <button id="eb-reset" type="button">↺ 还原原版</button>\n  <span id="eb-local">本地修改版</span>\n  <span class="sp"></span>\n  <span id="eb-note">改动存在本机浏览器，换设备或换人打开看不到</span>\n  <span id="eb-state"></span>\n</div>\n'
+EDIT_JS = "<script>\n(function () {\n  var KEY = 'gmgn-counterplay:v1';\n  var wrap = document.querySelector('.wrap');\n  var bEdit = document.getElementById('eb-edit');\n  var bExp = document.getElementById('eb-export');\n  var bRst = document.getElementById('eb-reset');\n  var state = document.getElementById('eb-state');\n  var local = document.getElementById('eb-local');\n  var timer = null;\n\n  function say(msg, cls) { state.textContent = msg; state.className = cls || ''; }\n\n  // 图是生成的，不参与编辑——否则一次误删就没了，且无法从 localStorage 复原。\n  function lockFigures(on) {\n    wrap.querySelectorAll('figure').forEach(function (f) {\n      f.setAttribute('contenteditable', on ? 'false' : 'true');\n    });\n  }\n\n  try {\n    var saved = localStorage.getItem(KEY);\n    if (saved) { wrap.innerHTML = saved; local.classList.add('on'); say('已载入本地修改', 'saved'); }\n  } catch (e) { say('浏览器禁用了本地存储，改动无法保存'); bEdit.disabled = true; }\n\n  function persist() {\n    try {\n      localStorage.setItem(KEY, wrap.innerHTML);\n      local.classList.add('on');\n      say('已保存 ' + new Date().toTimeString().slice(0, 5), 'saved');\n    } catch (e) { say('保存失败：存储已满或被禁用', 'dirty'); }\n  }\n\n  bEdit.addEventListener('click', function () {\n    var on = wrap.getAttribute('contenteditable') !== 'true';\n    wrap.setAttribute('contenteditable', on ? 'true' : 'false');\n    lockFigures(on);\n    bEdit.classList.toggle('on', on);\n    bEdit.textContent = on ? '✓ 完成' : '✎ 编辑';\n    if (on) { say('编辑中，停手 1 秒自动保存', 'dirty'); wrap.focus(); } else { persist(); }\n  });\n\n  wrap.addEventListener('input', function () {\n    say('未保存…', 'dirty');\n    clearTimeout(timer);\n    timer = setTimeout(persist, 1000);\n  });\n\n  bRst.addEventListener('click', function () {\n    if (!confirm('丢弃本机上的全部改动，回到原始版本？')) return;\n    try { localStorage.removeItem(KEY); } catch (e) {}\n    location.reload();\n  });\n\n  bExp.addEventListener('click', function () {\n    var wasOn = wrap.getAttribute('contenteditable') === 'true';\n    if (wasOn) bEdit.click();                       // 先退出编辑，避免把 contenteditable 烤进文件\n    var html = '<!doctype html>\\n' + document.documentElement.outerHTML;\n    var name = 'gmgn-counterplay';\n\n    function viaAnchor() {                          // 本地打开时可用；Artifact 里被沙箱拦掉\n      var url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));\n      var a = document.createElement('a');\n      a.href = url; a.download = name + '.html';\n      document.body.appendChild(a); a.click(); a.remove();\n      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);\n      say('已导出', 'saved');\n    }\n\n    var dl = window.claude && window.claude.downloads;\n    if (!dl) { viaAnchor(); return; }\n\n    say('等待确认…');\n    dl.save({ filename: name + '.html', data: html })\n      .then(function () { say('已导出', 'saved'); })\n      .catch(function (err) {\n        var code = err && err.code;\n        if (code === 'declined') { say('已取消'); return; }\n        if (code === 'extension_not_enabled' || code === 'rejected_extension') {\n          // html 属扩展集，本视图可能没开——退到基础集，提示改回后缀即可打开\n          dl.save({ filename: name + '.html.txt', data: html })\n            .then(function () { say('已导出为 .txt，改回 .html 即可打开', 'saved'); })\n            .catch(function () { say('导出失败'); });\n          return;\n        }\n        if (code === 'rate_limited') { say('太频繁，稍后再试'); return; }\n        say('导出失败：' + (code || '未知'));\n      });\n  });\n})();\n</script>\n"
+
 import cp_body
 
 FIGS = {
@@ -477,9 +502,11 @@ HTML = ('<!doctype html>\n<html lang="zh-CN">\n<head>\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<meta name="color-scheme" content="light dark">\n'
         '<title>GMGN App 产品侧打法</title>\n'
-        '<style>' + CSS + '</style>\n</head>\n<body>\n<div class="wrap">\n'
+        '<style>' + CSS + '</style>\n</head>\n<body>\n'
+        + EDIT_HTML
+        + '<div class="wrap">\n'
         + cp_body.body(F, V, A, FIGS)
-        + '\n</div>\n</body>\n</html>\n')
+        + '\n</div>\n' + EDIT_JS + '</body>\n</html>\n')
 
 out = pathlib.Path(__file__).resolve().parents[1] / "gmgn-counterplay.html"
 out.write_text(HTML, encoding="utf-8")
