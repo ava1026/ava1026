@@ -15,6 +15,22 @@ def body(F, V, A, FIG):
   <p class="dek">在现有 App 基础上改，包袱重，兼容两个群体，拧巴。<br><strong>启动 fomo 栏目，为增长打法服务，丢包袱。</strong></p>
 </header>
 
+<section id="s0">
+  <p class="snum">00 — fomo 专栏</p>
+  <h2>把增长玩法装进一个新栏目，不动主 App</h2>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>问题</th><th>答案</th></tr></thead>
+    <tbody>
+      <tr><td><strong>为什么单开</strong></td><td>在现有 App 基础上改，包袱重，兼容两个群体，拧巴——<strong>fomo 专栏为增长打法服务，丢包袱</strong></td></tr>
+      <tr><td><strong>装什么</strong></td><td>发现层 · 放大层 · 拉新与承接（§03–§05 全部落在这个专栏里）</td></tr>
+      <tr><td><strong>不装什么</strong></td><td>专业执行与深度分析留在主 App / Web，主导区不动</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
 <section id="s1">
   <p class="snum">01 — 全局</p>
   <h2>五个模块</h2>
