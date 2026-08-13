@@ -84,7 +84,7 @@ def fig1():
         for i, l in enumerate(lines):
             o.append(txt(cx, base + i * 16, l, "dg-leak-t"))
 
-    leak(xs[1] + BW/2, True,  ["漏损：小额 ≤200U 实收 47.5%", "BNB 高波动不填充"])
+    leak(xs[1] + BW/2, True,  ["漏损：≤200U 固定 0.95U/笔", "对 <$95 小额不友好 · BNB 不填充"])
     leak(xs[2] + BW/2, True,  ["漏损：KOL listing 偏袒争议", "排行榜公信力受损"])
     leak(xs[2] + BW/2, False, ["漏损：跟单者成为退出流动性"])
     leak(xs[0] + BW/2, False, ["漏损：出金要跳去 Spritz", "提现是投诉最集中区"])
@@ -515,7 +515,7 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
     <thead><tr><th>闭环环节</th><th>FOMO 的做法</th><th>我们的位置</th><th>诊断</th></tr></thead>
     <tbody>
       <tr><td>① 零门槛进人</td><td>Apple Pay + USDC 统一余额 + gas 代付</td><td class="p-hi">明显落后</td><td>差距集中在<strong>入金与 gas 两处摩擦</strong>；其中统一余额 + gas 代付不依赖任何外部方，跨链无感才依赖 Relay</td></tr>
-      <tr><td>② 首笔交易达成</td><td>一键、跨链无感，但小额收 47.5%、BNB 会不填充</td><td class="p-us">我们更强</td><td>它对小额用户<strong>实收 47.5%</strong>；内盘 / 滑点 / 加速是它<strong>结构上做不到</strong>的（跨链只询价 Uniswap V3）</td></tr>
+      <tr><td>② 首笔交易达成</td><td>一键、跨链无感，但小额收 47.5%、BNB 会不填充</td><td class="p-us">我们更强</td><td>它 ≤200U 收<strong>固定 0.95U/笔</strong>，与我们 1% 的临界点是 <strong>$95</strong> —— 以上全线是它便宜；但内盘 / 滑点 / 加速是它<strong>结构上做不到</strong>的</td></tr>
       <tr><td>③ 交易即内容</td><td>交易自动进 Feed，零成本 UGC</td><td class="p-hi">缺失</td><td>闭环铰链所在，<strong>网络效应越晚介入越贵</strong>；但我们的差异资产是数据可信度，而非 Feed 形态本身</td></tr>
       <tr><td>④ 赚钱效应被看见</td><td>Leaderboard 造星，但有 KOL 偏袒争议</td><td class="p-us">可以打</td><td>它的排行榜有<strong>公信力缺口</strong>（KOL 偏袒争议，官方选择透明化而非否认）——这是可对冲的软肋</td></tr>
       <tr><td>⑤ 跟单 + 推送放大</td><td>已上线，激进推送建立心智</td><td class="p-us">质量更好但上线晚</td><td>07-23 实测我们覆盖 <strong>14/14</strong>、<strong>6 币首触更早</strong>，且质量闸能拦假热度；<strong>唯一劣势是上线时间</strong></td></tr>

@@ -60,6 +60,16 @@ FEES = {
     "platform_cut":     "75%",
 }
 
+# ── 我们自己的费率（对照基准，内部三源一致）──────────────
+#   《0427 运营活动方案》：每交易 $10 收 1% = $0.10
+#   《竞品社群更新》：官方对用户口径「平台仅收 1% 手续费」
+#   《App Store 投放策略》：中位月交易额 $609–630 → 月产生 ~$6 手续费 ≈ 0.98%
+#   ⚠️ 是否全链/全产品线一致、有无 VIP 折扣待确认，见待验证队列 #16
+GMGN_FEES = {
+    "flat":       "1%",
+    "breakeven":  "$95",     # 0.95 USDC 固定档 = 1% × 95
+}
+
 # ── 推送 / 信号 ─────────────────────────────────────────
 PUSH = {
     "tiers":            "20 / 40 / 80",
@@ -120,8 +130,8 @@ def all_values():
     """把所有标量事实摊平成 {名称: 值}，供 check-facts.py 校验。"""
     out = {}
     for group, d in (("CAPITAL", CAPITAL), ("SCALE", SCALE), ("REVENUE", REVENUE),
-                     ("FEES", FEES), ("PUSH", PUSH), ("VENDORS", VENDORS),
-                     ("ADDRESSES", ADDRESSES)):
+                     ("FEES", FEES), ("GMGN_FEES", GMGN_FEES), ("PUSH", PUSH),
+                     ("VENDORS", VENDORS), ("ADDRESSES", ADDRESSES)):
         for k, v in d.items():
             out[f"{group}.{k}"] = v
     out["INFLUENCE.x_spread"] = INFLUENCE["x_spread"]

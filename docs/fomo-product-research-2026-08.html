@@ -663,8 +663,34 @@ footer{
     </tbody>
   </table>
   </div>
-  <div class="note gain">
-    <p><strong>最重要的一条</strong>：买 $2 收 $0.95 = 47.5%。这解释了 App Store 上"只有你有 1 万美元以上才好用""费用太高不推荐"的负评来源，也是<strong>我们最直接的攻击点</strong>——对小额用户，GMGN 的比例费率完胜。</p>
+  <div class="note">
+    <p><strong>正确的读法是「固定费结构」，不是某个点位的百分比。</strong>≤200U 收固定 0.95 USDC/笔，意味着<strong>实际费率随交易额一路衰减</strong>：$2 时 47.5%、$50 时 1.9%、$95 时 1.0%、$200 时 0.48%。</p>
+    <p>拿「$2 交易收 47.5%」当结论是<strong>选择性取样</strong> —— 那是这个结构的最极端点，不代表这一档的普遍体验。它确实解释了 App Store 上「只有你有 1 万美元以上才好用」这类负评的来源，但<strong>不构成一个可用于对外传播的论点</strong>。</p>
+  </div>
+
+  <h3>与 GMGN 的费率对照 <span class="tag t1">一手 × 内部三源</span></h3>
+  <p><strong>GMGN 侧口径：1% 比例费率</strong>，三处内部资料一致 —— 《0427 运营活动方案》（每交易 $10 收 1%）、《竞品社群更新》（官方对用户口径「平台仅收 1% 手续费」）、《App Store 投放策略》（中位月交易额 $609–630 → 月产生 ~$6 手续费，反算 ≈0.98%）。⚠️ 是否全链 / 全产品线一致、有无 VIP 折扣档<strong>待确认</strong>，见 <a href="#s11">§11 第 16 项</a>。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th class="num">交易额</th><th class="num">FOMO 收费</th><th class="num">FOMO 实际费率</th><th class="num">GMGN 1%</th><th>谁便宜</th></tr></thead>
+    <tbody>
+      <tr><td class="num">$2</td><td class="num">0.95（固定）</td><td class="num">47.5%</td><td class="num">$0.02</td><td class="win-us">GMGN 47.5×</td></tr>
+      <tr><td class="num">$20</td><td class="num">0.95（固定）</td><td class="num">4.75%</td><td class="num">$0.20</td><td class="win-us">GMGN 4.7×</td></tr>
+      <tr><td class="num">$50</td><td class="num">0.95（固定）</td><td class="num">1.90%</td><td class="num">$0.50</td><td class="win-us">GMGN 1.9×</td></tr>
+      <tr><td class="num"><strong>$95</strong></td><td class="num">0.95（固定）</td><td class="num"><strong>1.00%</strong></td><td class="num">$0.95</td><td class="win-tie"><strong>持平（临界点）</strong></td></tr>
+      <tr><td class="num">$200</td><td class="num">0.95（固定）</td><td class="num">0.48%</td><td class="num">$2.00</td><td class="win-them">FOMO 2.1×</td></tr>
+      <tr><td class="num">$1,000</td><td class="num">0.5%</td><td class="num">0.50%</td><td class="num">$10.00</td><td class="win-them">FOMO 2.0×</td></tr>
+      <tr><td class="num">$9,999</td><td class="num">0.5%</td><td class="num">0.50%</td><td class="num">$99.99</td><td class="win-them">FOMO 2.0×</td></tr>
+      <tr><td class="num">$10,000</td><td class="num">0.05%</td><td class="num">0.05%</td><td class="num">$100.00</td><td class="win-them"><strong>FOMO 20×</strong></td></tr>
+      <tr><td class="num">$100,000</td><td class="num">0.05%</td><td class="num">0.05%</td><td class="num">$1,000.00</td><td class="win-them"><strong>FOMO 20×</strong></td></tr>
+    </tbody>
+    <caption>档位在 $10,000 处有断崖：$9,999 收 $50，$10,000 只收 $5。</caption>
+  </table>
+  </div>
+  <div class="note alert">
+    <h4>结论（对我们不利）</h4>
+    <p>① <strong>我们的价格优势只存在于 $95 以下</strong>，且随金额迅速收窄，到 $200 就已反转。② <strong>$200–$10,000 区间 FOMO 恒定便宜一半</strong> —— 这是零售交易的主力区间。③ <strong>$10,000 以上便宜 20 倍</strong>。</p>
+    <p>④ 这为 2025-11 KOL 反馈的「<strong>很多巨鲸交易中高市值代币都跑到 FOMO 上面去了</strong>」提供了一个机械解释 —— 大额段省 95% 手续费。此前这两个观察是分开记录的，<strong>现在应视为可能相关</strong>（仍需验证，见 §11 第 17 项）。</p>
   </div>
 
   <ul>
@@ -869,8 +895,8 @@ footer{
       <tr><td><strong>社交</strong></td><td>跟单 / 跟投在做</td><td>Feed + Leaderboard + Thesis + Friends + CLANS，与 perps 全打通</td><td class="win-them">FOMO 明显领先</td></tr>
       <tr><td>Perps</td><td>—</td><td>已上线（非美用户），可交易 pre-IPO / 股票 / 指数 / 商品</td><td class="win-them">FOMO 领先</td></tr>
       <tr><td>限价单 / TP / SL</td><td>有</td><td>在做，只 SOL</td><td class="win-us">我们领先</td></tr>
-      <tr><td><strong>费率（小额）</strong></td><td>比例费率</td><td>≤200U 固定 0.95U（$2 交易收 47.5%）</td><td class="win-us">我们大幅领先</td></tr>
-      <tr><td>费率（大额）</td><td>—</td><td>≥10,000U 仅 0.05%</td><td class="win-them">FOMO 更狠</td></tr>
+      <tr><td><strong>费率（&lt;$95）</strong></td><td>1% 比例</td><td>≤200U 固定 0.95 USDC/笔</td><td class="win-us">我们领先，但<strong>优势随金额迅速收窄</strong></td></tr>
+      <tr><td><strong>费率（&gt;$95）</strong></td><td>1% 比例</td><td>200–10k 收 0.5%；≥10k 仅 0.05%</td><td class="win-them"><strong>FOMO 全线更便宜</strong>：2× → 20×</td></tr>
       <tr><td>自托管真实性</td><td>用户自持</td><td>Privy 分片，Privy 持 recovery share</td><td class="win-us">我们更真</td></tr>
       <tr><td>移动端体验</td><td>专业但重</td><td>极简、消费级</td><td class="win-them">FOMO 领先</td></tr>
       <tr><td><strong>本地化</strong></td><td>多语言（阿拉伯语在做）</td><td>仅英文</td><td class="win-us">我们领先</td></tr>
@@ -910,7 +936,7 @@ footer{
       <tr><td>追踪缺口导致用户流失</td><td><span class="pill p-mid">中高</span></td><td><strong>这是我们的解析 bug，不是能力差距</strong>：Relay 代发使买单归属到 relayer，用户钱包只剩 0 金额转入 → 聪明钱转战 FOMO 后在我们这里「消失」。<strong>数据是我们的核心卖点，这个洞恰恰打在上面</strong>；盲区随 FOMO 增长扩大，Debot / basedbot 能解析而我们不能，KOL 已正式投诉。已定位，见 <a href="#s9">§9.1</a></td></tr>
       <tr><td>巨鲸 / 高市值币交易迁移</td><td><span class="pill p-mid">中</span></td><td>2025-11 KOL 反馈已有迁移迹象，需量化监控</td></tr>
       <tr><td>perps 打通社交</td><td><span class="pill p-mid">中</span></td><td>目前只占收入 1.5%，但一旦跑通就是第二增长曲线</td></tr>
-      <tr><td>费率战</td><td><span class="pill p-lo">低</span></td><td>它小额费率比我们贵，大额才便宜，不构成全面价格威胁</td></tr>
+      <tr><td><strong>费率结构</strong></td><td><span class="pill p-mid">中高</span></td><td>临界点 <strong>$95</strong>：以下我们便宜，<strong>以上全线是它便宜</strong> —— $200–$10k 便宜一半，$10k 以上便宜 20 倍。可能是巨鲸迁移的机械原因</td></tr>
     </tbody>
   </table>
   </div>
@@ -925,7 +951,7 @@ footer{
     <div class="act"><span class="prio prio-0">P0 本周</span><h3>上线 FOMO 收费钱包监控日报</h3><p>监控 <code>HrTf9CzXR1dRH4Sof5QrpmGWwpwAf3qZzwCsEjQpXcSq</code> 净流入作为 FOMO 收入的实时代理指标，比等第三方报道快一周。</p></div>
     <div class="act"><span class="prio prio-1">P1 本季度</span><h3>热门代币推送尽快全量上线</h3><p>PRD v1.2 已定稿。我们的规则在时效与覆盖上实测胜出，<strong>唯一劣势是时间</strong>。同档重推规则已按 FOMO 口径（够条件就推）调整——方向对。</p></div>
     <div class="act"><span class="prio prio-1">P1 本季度</span><h3>「用 U 买一切」专项，建议拆两步走</h3><p><strong>第一步：统一 USDC 余额 + gas 代付</strong> —— 用户体验的 80% 来自这里，不必先解决跨链。</p><p><strong>第二步：跨链无感。</strong>07-14 会议结论是自建桥不现实，Relay 是目前唯一可行方案，需与 Relay 建立深度商务合作以保障服务质量。<strong>建议尽快启动 Relay BD</strong> —— 它是 FOMO 的单点依赖，也应该是我们的谈判杠杆。</p></div>
-    <div class="act"><span class="prio prio-1">P1 本季度</span><h3>小额费率对比做成传播物料</h3><p>FOMO $2 交易收 47.5% 是硬事实，可验证、可传播。</p></div>
+    <div class="act"><span class="prio prio-3">已撤销</span><h3><s>小额费率对比做成传播物料</s></h3><p><strong>不建议做。</strong>我们的价格优势只在 $95 以下，$200 以上全线落后、$10k 以上落后 20 倍 —— 做这个对比等于把注意力引到一张我们大部分区间都输的对照表上。</p><p><strong>改为</strong>：把费率对照同步给增长与 BD，<strong>对外口径中避免主动挑起费率话题</strong>；被问到则按分段如实回应。大额段是否跟进属定价决策，需单独立项。</p></div>
     <div class="act"><span class="prio prio-2">P2 下季度</span><h3>社交 / 组队应对</h3><p>CLANS 与我们的跟投场景直接重叠。不一定是抄 CLANS —— 可以是"用真实链上数据背书的组队"：FOMO 的排行榜有 KOL 偏袒争议，我们有数据公信力。</p></div>
     <div class="act"><span class="prio prio-2">P2 下季度</span><h3>本地化打差异</h3><p>FOMO 仅英文。阿拉伯语等 RTL 语种是它短期不会碰的市场（我们阿语适配周期约 2 周）。低成本、高确定性的增量。</p></div>
     <div class="act"><span class="prio prio-2">P2 下季度</span><h3>攻它的"自托管"叙事</h3><p>Privy 持有 recovery share ≈ 实际具备全权控制。这是可验证的技术事实，不是攻击性言论。</p></div>
@@ -959,6 +985,8 @@ footer{
       <tr><td class="num">12</td><td>Pump.fun 挖角战果</td><td>检验 FOMO 用户粘性的天然实验</td><td>监控双方交易量与红人账号动向</td><td><span class="pill p-lo">P2</span></td><td>情报侧</td><td></td></tr>
       <tr><td class="num">13</td><td>是否会发币 / 上积分</td><td>会大幅改变增长曲线与用户质量</td><td>监控官方渠道</td><td><span class="pill p-lo">P2</span></td><td>情报侧</td><td></td></tr>
       <tr><td class="num">14</td><td><strong>X 抓取名单的句柄核验</strong></td><td>§7.5 全部数据的地基。源数据自身标注了匹配不确定性（@btc_goose vs @thebtcgoose）</td><td>逐个核对 X 句柄与粉丝数，标注抓取时点</td><td><span class="pill p-lo">P2</span></td><td>情报侧</td><td></td></tr>
+      <tr><td class="num">16</td><td><strong>GMGN 自身费率口径确认</strong></td><td>费率对照的基准。三处内部资料一致指向 1%，但是否全链 / 全产品线一致、有无 VIP 折扣未确认。<strong>基准错了整张对照表都错</strong></td><td>找计费 / 产品侧确认现行费率表</td><td><span class="pill p-hi">P0</span></td><td>产品 + 计费</td><td></td></tr>
+      <tr><td class="num">17</td><td>巨鲸迁移与费率的因果</td><td>大额段省 95% 可能是巨鲸迁移的机械原因，目前只是相关性猜测</td><td>取一批已迁移的大额钱包，看其在 FOMO 的交易额是否集中在 ≥$10k 档</td><td><span class="pill p-mid">P1</span></td><td>数据侧</td><td></td></tr>
       <tr><td class="num">15</td><td>团队规模与组织</td><td>判断它的迭代上限</td><td>LinkedIn / 招聘信息</td><td><span class="pill p-lo">P3</span></td><td>情报侧</td><td></td></tr>
     </tbody>
   </table>

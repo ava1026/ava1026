@@ -204,7 +204,7 @@ footer{{margin:44px 0 0;padding:18px 0 0;border-top:1px solid var(--line);
     <tr><td>社交护城河成型</td><td><span class="pill p-hi">高</span></td><td>能把 X 上 752 粉的素人造成站内两万粉红人，且影响力<strong>迁不走</strong></td></tr>
     <tr><td>追踪缺口伤专业用户</td><td><span class="pill p-mid">中高</span></td><td><strong>我们的解析 bug，非能力差距</strong>：FOMO 走 Relay 代发，买单被归到 relayer，用户钱包只剩 0 金额转入 → 聪明钱一转战 FOMO 就在我们这里「消失」。<strong>数据是我们的核心卖点，这个洞恰恰打在上面</strong>；且 Debot / basedbot 能解析。已定位，GMGN-8687 系列在修</td></tr>
     <tr><td>推送心智抢跑</td><td><span class="pill p-mid">中高</span></td><td>它先上线；我们信号质量更好（{P["our_coverage"]} vs {P["their_coverage"]}）但晚了</td></tr>
-    <tr><td>费率战</td><td><span class="pill p-us">低</span></td><td>它小额比我们贵（≤200U 实收 {FE["tier_small_eff"]}），不构成全面价格威胁</td></tr>
+    <tr><td><strong>费率结构</strong></td><td><span class="pill p-mid">中高</span></td><td>它 ≤200U 收<strong>固定 0.95 USDC/笔</strong>，之上按比例。与我们 1% 的临界点是 <strong>$95</strong>：以下我们便宜，<strong>以上全线是它便宜</strong> —— $200–$10k 便宜一半，<strong>$10k 以上便宜 20 倍</strong>。这可能正是 2025-11 KOL 反馈「巨鲸把中高市值代币交易搬去 FOMO」的机械原因</td></tr>
   </tbody>
 </table>
 </div>
@@ -225,8 +225,11 @@ footer{{margin:44px 0 0;padding:18px 0 0;border-top:1px solid var(--line);
 <ul>
   <li><strong>「用 U 买一切」拆两步走</strong> —— 先做<strong>统一 USDC 余额 + gas 代付</strong>（体验的 80% 在这里，且不依赖任何外部方），跨链无感放第二步。同时<strong>启动 Relay BD</strong>：它是 FOMO 的单点依赖，也该是我们的谈判杠杆。</li>
   <li><strong>热门代币推送全量上线</strong> —— 规则已定稿，实测覆盖与时效均胜出，唯一劣势是时间。</li>
-  <li><strong>小额费率对比做成传播物料</strong> —— FOMO 对 $2 交易实收 {FE["tier_small_eff"]}，是可验证的硬事实。</li>
 </ul>
+
+<div class="note warn">
+  <p><strong>已撤销的一条建议：</strong>原先把「小额费率对比」列为传播物料。<strong>不建议做</strong> —— 我们的价格优势只在 $95 以下，$200 以上全线落后、$10k 以上落后 20 倍。做这个 campaign 等于把注意力引到一张我们大部分区间都输的对照表上。</p>
+</div>
 
 <div class="note warn">
   <p><strong>两个数字别当成定论。</strong>其一，"{R["solana_share"]} 收入来自 Solana"是 DefiLlama 的测量口径产物 —— 跨链平台费在链上没有独立转账，<strong>Robinhood 等链的真实贡献未知</strong>。其二，影响力放大倍数来自二手 X 抓取，样本 n=5 且存在选择偏差。两者都已列入待验证队列。</p>
