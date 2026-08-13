@@ -25,21 +25,22 @@ def body(F, V, A, FIG):
 
 <section id="s2">
   <p class="snum">02 — 定位</p>
-  <h2>不按人群切，按环节切</h2>
+  <h2>按环节切不同人群</h2>
 
   <div class="scroll">
   <table>
-    <thead><tr><th>环节</th><th>归属</th><th>面向</th></tr></thead>
+    <thead><tr><th>环节</th><th>人群</th><th>归属</th><th>抓手</th></tr></thead>
     <tbody>
-      <tr><td><strong>发现</strong></td><td>App 主轴</td><td>全体，也是拉新入口</td></tr>
-      <tr><td><strong>执行</strong></td><td>App 与 Web 都保专业深度</td><td>参数可控 · 真限价 · 止盈止损</td></tr>
-      <tr><td><strong>深度分析</strong></td><td>Web 为主</td><td>专业交易员</td></tr>
+      <tr><td><strong>发现</strong></td><td>链上新用户 · 打二段用户</td><td>App 主轴</td><td>热门混链 · push · callout。<strong>同时是拉新入口</strong></td></tr>
+      <tr><td><strong>执行</strong></td><td>专业交易员 · 高意图执行用户</td><td>App 与 Web 都保专业深度</td><td>参数可控 · 真限价 · 止盈止损</td></tr>
+      <tr><td><strong>深度分析</strong></td><td>专业交易员 · Web3 老手</td><td>Web 为主</td><td>数据看板 · 钱包画像 · 资金关系</td></tr>
     </tbody>
   </table>
   </div>
 
   <div class="note key">
-    <p>这条回答了 v8 的待裁决 ①：那三个选项都在争「服务小白还是专业」，<strong>按环节切就不用二选一</strong>，也不必让出主导区。</p>
+    <p>这条回答 v8 待裁决 ①：不是否掉「分人群」，而是把<strong>分的位置</strong>定下来——<strong>在环节里分，不在端上分</strong>，所以不必二选一，也不让出主导区。</p>
+    <p>与婉云的「分端 × 分人群 × 分阶段」相容：人群照分，只是切口从「哪个端」移到「哪个环节」。</p>
   </div>
 </section>
 
