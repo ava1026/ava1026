@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""生成 FOMO 增长闭环页面（三张手绘 SVG + 说明）"""
+"""生成 FOMO 增长闭环页面（四张手绘 SVG + 说明）"""
 
 def defs(pfx):
     return f'''<defs>
@@ -93,10 +93,10 @@ def fig1():
     return "\n".join(o)
 
 
-# ══════════════════════════ 图二：三条加速支路 ══════════════════════════
+# ══════════════════════════ 图二：四条加速支路 ══════════════════════════
 def fig2():
     P = "f2"
-    W, H = 960, 522
+    W, H = 960, 680
     BW, BH = 250, 62
     xs = [30, 340, 650]
     PITCH = 158
@@ -111,6 +111,11 @@ def fig2():
             ["粉丝在排行榜", "看到 KOL 真实持仓"],
             ["跟单成交 → KOL 沉淀观众"],
         ], "CLANS 让 KOL 把观众变成可累积资产 → 更难离开"),
+        ("原生红人孵化回路　← X 数据新增，最强的一条", [
+            ["X 素人公开交易 + Thesis", "（@wwayfboss X 仅 752 粉）"],
+            ["爬 Leaderboard", "→ 官方点名庆祝"],
+            ["站内粉丝 8k–23k", "影响力只在 FOMO 内有效"],
+        ], "红人带来跟单者，跟单者又成为下一批候选红人 —— 且影响力迁不走"),
         ("资本回路", [
             ["交易量 / 用户数连创新高"],
             ["$550M 估值", "累计 $94M 到账"],
@@ -118,7 +123,7 @@ def fig2():
         ], "融资叙事本身成为获客预算的来源"),
     ]
     o = [f'<svg class="dg" role="img" viewBox="0 0 {W} {H}" '
-         f'aria-label="三条加速支路：推荐分润回路、KOL 与 CLANS 回路、资本回路，各自自我强化后注入主飞轮">',
+         f'aria-label="四条加速支路：推荐分润回路、KOL 与 CLANS 回路、原生红人孵化回路、资本回路，各自自我强化后注入主飞轮">',
          defs(P)]
 
     for ri, (name, nodes, ret) in enumerate(rows):
@@ -155,24 +160,31 @@ def fig3():
             "链官方号造势：@BNBCHAIN 3.9M · @base 1M",
             "日常 KOL 10k–400k，多为 Coinbase 系",
             "2k–10k 小号专职做增长（含创始人本人）",
+            "★ X Affiliation Badge：认证挂在 KOL 自己主页，零成本长期曝光",
+            "★ 2026.7–8 外部 KOL 转为主动加入：@orangie 377k · @EricCryptoman 267k",
         ]),
         ("产品即获客", "删摩擦", [
             "Apple Pay 直接买币 → 68,000 首次买币用户 / $25M",
             "USDC 单一余额，跨 4–5 条链无感",
             "gas 全代付，无需持有任何原生代币",
+            "★ Thesis：每笔交易附逻辑，把交易变成可验证的内容资产",
             "极简 UI，App Store 4.6★",
         ]),
         ("联盟裂变", "买增长，按效果付费", [
             "邀请码 10% 终身手续费折扣",
             "卖出侧 25% 实时分润，无上限",
             "SEO 套利者虚标 90% / 95% 折扣（官方仅 10%）",
+            "★ 红人自带 referral：@hdegrootvan 用 stimmy / 福利做转化",
             "实测：约 29% 手续费来自绑定推荐人的用户",
         ]),
-        ("社交裂变", "让用户互相拉", [
+        ("社交裂变", "让用户互相拉 · 更是造人", [
             "Friends：邀好友一起交易",
             "Feed：每笔交易自动成为内容",
             "Leaderboard：造星，制造可跟随对象",
             "CLANS（8/10 上线，50+）：组队、共建受众",
+            "★ 原生红人孵化：X 素人在站内涨到 8k–23k 粉（born on fomo）",
+            "★ 官方点名庆祝作为激励货币：涨粉 / Leaderboard 里程碑",
+            "★ 社交跟单：Follow → 通知 → 手动复制，后期趋近自动 Copy",
         ]),
         ("唤醒与复购", "缩短闭环周期", [
             "热门代币推送：20 / 40 / 80 traders 档位",
@@ -209,6 +221,57 @@ def fig3():
             o.append(f'<path d="M {BX+BW2} {bcy} C {LX-28} {bcy}, {LX-28} {lcy}, {LX} {lcy}" class="dg-edge dg-edge-thin"/>')
             o.append(box(LX, ly, LW, LH, "dg-box-soft"))
             o.append(txt(LX + 14, lcy + 5, l, "dg-t2", "start"))
+    o.append("</svg>")
+    return "\n".join(o)
+
+
+# ══════════════════ 图四：影响力发生器（X 粉丝 vs FOMO 粉丝）══════════════════
+def fig4():
+    P = "f4"
+    # (账号, X 粉丝, 倍数, FOMO 粉丝是否为自报)
+    rows = [
+        ("@wwayfboss",   752, 27.0, False),
+        ("@octoseaa",   2636,  5.1, False),
+        ("@hdegrootvan",7943,  2.9, True),
+        ("@f4vel",      3055,  2.7, False),
+        ("@thokani",    8073,  2.0, False),
+    ]
+    LX, BX, BWMAX = 150, 168, 500
+    RH, BARH = 60, 17
+    top = 68
+    H = top + len(rows) * RH + 96
+    W = 940
+    mx = max(x * m for _, x, m, _ in rows)
+    k = BWMAX / mx
+
+    o = [f'<svg class="dg" role="img" viewBox="0 0 {W} {H}" '
+         f'aria-label="五位被官方点名的原生交易员，X 粉丝与 FOMO 粉丝对比：X 粉丝跨度 10.7 倍，FOMO 粉丝跨度仅 2.8 倍，离散度塌缩">',
+         defs(P)]
+    o.append(txt(BX, 30, "X 粉丝", "dg-s", "start"))
+    o.append(f'<rect x="{BX+52}" y="21" width="26" height="10" rx="2" class="dg-bar-x"/>')
+    o.append(txt(BX + 96, 30, "FOMO 粉丝", "dg-s", "start"))
+    o.append(f'<rect x="{BX+168}" y="21" width="26" height="10" rx="2" class="dg-bar-f"/>')
+    o.append(txt(W - 20, 30, "放大倍数", "dg-s", "end"))
+    o.append(f'<line x1="{BX}" y1="46" x2="{W-20}" y2="46" class="dg-edge-thin"/>')
+
+    for i, (name, xf, m, self_rep) in enumerate(rows):
+        y = top + i * RH
+        ff = xf * m
+        o.append(txt(LX, y + 22, name, "dg-t2", "end"))
+        o.append(f'<rect x="{BX}" y="{y}" width="{max(2,round(xf*k))}" height="{BARH}" rx="2" class="dg-bar-x"/>')
+        o.append(txt(BX + max(2, round(xf*k)) + 8, y + 13, f"{xf:,}", "dg-s", "start"))
+        y2 = y + BARH + 5
+        o.append(f'<rect x="{BX}" y="{y2}" width="{round(ff*k)}" height="{BARH}" rx="2" class="dg-bar-f"/>')
+        lbl = f"{round(ff):,}" + ("（自报 23,000+）" if self_rep else "（推算）")
+        o.append(txt(BX + round(ff*k) + 8, y2 + 13, lbl, "dg-s", "start"))
+        o.append(txt(W - 20, y + 22, f"{m:g}×", "dg-mult", "end"))
+
+    yb = top + len(rows) * RH + 16
+    o.append(f'<line x1="{BX}" y1="{yb}" x2="{W-20}" y2="{yb}" class="dg-edge-thin"/>')
+    o.append(txt(BX, yb + 26, "X 粉丝跨度 10.7×（752 → 8,073）", "dg-s", "start"))
+    o.append(txt(BX, yb + 48, "FOMO 粉丝跨度仅 2.8×（8,248 → 23,035）", "dg-h", "start"))
+    o.append(txt(BX + 330, yb + 38, "→ 离散度塌缩：站内粉丝由战绩决定，", "dg-lab", "start"))
+    o.append(txt(BX + 330, yb + 56, "　 与你带进来的外部影响力基本无关", "dg-lab", "start"))
     o.append("</svg>")
     return "\n".join(o)
 
@@ -300,6 +363,9 @@ svg.dg{display:block;width:100%;height:auto;min-width:680px;font-family:var(--sa
 .dg-lab-hot{fill:var(--accent);font-size:12.5px;font-weight:700}
 .dg-lab-loop{fill:var(--ours);font-size:11.5px}
 .dg-leak-t{fill:var(--hot);font-size:11.5px}
+.dg-bar-x{fill:var(--muted);opacity:.45}
+.dg-bar-f{fill:var(--accent)}
+.dg-mult{fill:var(--accent);font-size:14px;font-weight:700;font-family:var(--mono)}
 
 .note{background:var(--surface-2);border:1px solid var(--line-soft);border-left:3px solid var(--muted);
       border-radius:3px;padding:16px 20px;margin:0 0 22px;font-size:15px}
@@ -331,7 +397,7 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 <header>
   <p class="kicker">竞品情报 · FOMO 系列 · 内部使用</p>
   <h1>FOMO 的增长闭环</h1>
-  <p class="dek">获客与交易不是两件事。在 FOMO 这里，<strong>一笔交易同时是三样东西</strong>：一次收入、一条内容、一个获客素材——这才是它转得比谁都快的原因。</p>
+  <p class="dek">获客与交易不是两件事。在 FOMO 这里，<strong>一笔交易同时是三样东西</strong>：一次收入、一条内容、一个获客素材。而这套机制的终点，是它能把一个 X 上 752 粉的素人，变成站内两万人的红人。</p>
 </header>
 
 <section>
@@ -351,11 +417,11 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 
 <section>
   <p class="snum">02 — 加速支路</p>
-  <h2>三条自我强化的支路，把飞轮越推越快</h2>
-  <p>主飞轮只是基础转速。真正让 FOMO 在 2026 年 7–8 月出现收入爆发的，是这三条各自也能自转、并持续向主飞轮注入动能的支路。</p>
+  <h2>四条自我强化的支路，把飞轮越推越快</h2>
+  <p>主飞轮只是基础转速。真正让 FOMO 在 2026 年 7–8 月出现收入爆发的，是这四条各自也能自转、并持续向主飞轮注入动能的支路。其中<strong>原生红人孵化回路</strong>是本轮 X 数据新增的一条，也是四条里最强的一条——详见第 04 节。</p>
   __FIG2__
   <div class="note gain">
-    <p>三条支路有个共同点：<strong>都把「用户」变成了「渠道」</strong>。推荐分润让普通用户变推广者，CLANS 让 KOL 把观众变成可累积的资产，融资则把增长数字本身变成下一轮获客预算。FOMO 几乎不需要自己去"投放"——它把投放外包给了利益相关者。</p>
+    <p>四条支路有个共同点：<strong>都把「用户」变成了「渠道」</strong>。推荐分润让普通用户变推广者，CLANS 让 KOL 把观众变成可累积的资产，融资则把增长数字本身变成下一轮获客预算。FOMO 几乎不需要自己去"投放"——它把投放外包给了利益相关者。</p>
   </div>
 </section>
 
@@ -370,7 +436,67 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 </section>
 
 <section>
-  <p class="snum">04 — 对我们的含义</p>
+  <p class="snum">04 — 影响力发生器</p>
+  <h2>它不是放大影响力，是从零制造影响力</h2>
+  <p>这是 X 全网数据里最硬的一条发现。看被官方点名的五位原生交易员——<strong>X 粉丝越少的人，在 FOMO 上的放大倍数越高</strong>。</p>
+  __FIG4__
+  <div class="note hinge">
+    <h3>离散度塌缩说明了什么</h3>
+    <p>五个人的 X 粉丝相差 <strong>10.7 倍</strong>（752 → 8,073），但他们的 FOMO 粉丝只相差 <strong>2.8 倍</strong>（8,248 → 23,035）。外部影响力的巨大差距，进了 FOMO 就被抹平了。</p>
+    <p>结论：<strong>在 FOMO 上，粉丝数由站内战绩决定，不由你带进来的外部影响力决定。</strong>它不是一个"把 X 影响力搬过来放大"的场子，而是一个<strong>平行的、自产自销的影响力市场</strong>。一个 X 上 752 粉的普通人，可以在这里拥有两万观众。</p>
+  </div>
+  <div class="note gain">
+    <h3>为什么这是最强的锁定</h3>
+    <p>这份影响力<strong>只在 FOMO 内部有效，迁不走</strong>。Pump.fun 挖角开出 $20k 签约 + $30k/月，却<strong>要求永久删除 FOMO 账号并签排他协议</strong>——因为它很清楚：账号本身就是资产，不删掉，人就等于没挖走。</p>
+    <p>反过来看，这也给我们提了个醒：<strong>费率补贴挖不动这批人</strong>，能挖动他们的只有"能不能在你那儿重建同等规模的观众"。</p>
+  </div>
+
+  <h3>策略切换：从造星到被投奔</h3>
+  <p>把名单按时间排开，能看到一次清晰的策略转向：</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>阶段</th><th>做法</th><th>代表账号</th><th>获客成本</th></tr></thead>
+    <tbody>
+      <tr><td><strong>2025 下半年 – 2026 上半年</strong><br>孵化期</td><td>点名原生素人，宣传"在 FOMO 建立声誉"，用官方庆祝当激励货币</td><td>@wwayfboss 752 · @octoseaa 2,636 · @f4vel 3,055 · @thokani 8,073 · @icemandot 8,091</td><td class="p-us">≈ 零现金</td></tr>
+      <tr><td><strong>2026 年 3–6 月</strong><br>放大期</td><td>密集庆祝个人里程碑（涨粉、Leaderboard 登顶），把个案变成可复制的模板</td><td>@remusofmars 36k · @jotagezin 12.8k · @ResellCalendar 104k · @pingucharts 8.6k</td><td class="p-us">低</td></tr>
+      <tr><td><strong>2026 年 7–8 月</strong><br>投奔期</td><td><strong>外部成名 KOL 与创始人主动宣布加入</strong>，平台不再需要买他们</td><td>@andyyy 76k · @mattkalish 44.8k（DraftKings 背景）· @0xyoshitaka 17k · @orangie 377k · @EricCryptoman 267k</td><td class="p-us">显著下降</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>这条曲线本身就是飞轮成立的证据：<strong>当平台被证明能凭空造出观众，外部 KOL 就会自己找上门——获客成本随规模下降。</strong>这正是图 1 那条铰链在人力侧的表现。</p>
+
+  <h3>跟单生态已经分化出三种类型</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>类型</th><th>代表</th><th>驱动力</th><th>社区黏性</th><th>对我们的启示</th></tr></thead>
+    <tbody>
+      <tr><td>社交情绪型</td><td>@hdegrootvan<br>X 7,943 → FOMO 23,000+</td><td>高透明度截图 + 心态分享 + 社区回馈（stimmy / referral 福利）</td><td class="p-hi">最高</td><td>纯数据产品替代不了"一起战斗"的归属感</td></tr>
+      <tr><td>资金实力型</td><td>@icemandot<br>X 8,091</td><td>钱包余额 + 单笔爆发，低调高胜率</td><td>中等</td><td>这类人本来就是我们 Smart Money 榜的强项</td></tr>
+      <tr><td>成长学习型</td><td>@thokani<br>X 8,073，2.0×</td><td>真实盈利 + 从零成长故事</td><td>中高</td><td>叙事门槛低、最易复制，是最该抢的一层</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note leak">
+    <h3>这条回路的阴暗面（可打击）</h3>
+    <p>头部交易员粉丝越多，其交易越容易产生<strong>自实现效应</strong>——跟风资金帮助其顺利出场。社区已有公开批评：<strong>KOL 可能用小号提前布局，再用主号带跟单</strong>。这与图 1 中④的「跟单者成为退出流动性」是同一个漏损点，只是这里能看到它的<strong>作案机制</strong>。</p>
+    <p>我们的反制不是也去造星，而是<strong>用链上数据把这件事查清楚并公示</strong>：关联地址识别、前置建仓检测、跟单者盈亏分布。这是 FOMO 结构上做不到的——它没有自研数据。</p>
+  </div>
+
+  <div class="note">
+    <h3>数据质量说明（重要）</h3>
+    <ul>
+      <li>本节数据来自 X 公开抓取的二手整理，<strong>非我们的一手观测</strong>，粉丝数为抓取时点值。</li>
+      <li><strong>FOMO 粉丝数是推算值</strong>（X 粉丝 × 官方公布倍数），仅 @hdegrootvan 的 23,000+ 为本人自报。</li>
+      <li><strong>存在明显选择偏差</strong>：被官方点名的必然是倍数高的样本，n=5，<strong>不能代表平台平均水平</strong>。真实的中位放大倍数很可能远低于此。</li>
+      <li>源数据自身标注了句柄匹配的不确定性（如 @btc_goose 系 @thebtcgoose 的最佳匹配），<strong>账号级准确性未经核验</strong>。</li>
+      <li>建议后续用 Sensor Tower / 站内爬取做一次无偏采样，验证"离散度塌缩"是否在全量用户上成立。</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <p class="snum">05 — 对我们的含义</p>
   <h2>不要照抄飞轮，要挑环节下手</h2>
   <p>完整复制这个闭环既不现实也没必要。更有效的做法是按"我们能不能做、做了打不打得中"两个维度，对每个环节单独定策。</p>
   <div class="scroll">
@@ -382,6 +508,7 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
       <tr><td>③ 交易即内容</td><td>交易自动进 Feed，零成本 UGC</td><td class="p-hi">缺失</td><td>这是闭环铰链，<strong>越晚做越贵</strong>。但不必抄 Feed 形态——我们的优势是数据可信度</td></tr>
       <tr><td>④ 赚钱效应被看见</td><td>Leaderboard 造星，但有 KOL 偏袒争议</td><td class="p-us">可以打</td><td>做<strong>用真实链上数据背书的排行榜 / 组队</strong>，直接对冲它的公信力弱点</td></tr>
       <tr><td>⑤ 跟单 + 推送放大</td><td>已上线，激进推送建立心智</td><td class="p-us">质量更好但上线晚</td><td>推送尽快全量；我们 07-23 实测覆盖 14/14、6 币首触更早，且有质量闸拦假热度</td></tr>
+      <tr><td>③b 原生红人孵化<br><span class="pill p-hi">X 数据新增</span></td><td>把 X 素人造成站内 8k–23k 粉的红人，影响力迁不走</td><td class="p-hi">缺失且最难补</td><td>不必造星。反制点是<strong>用链上数据审计跟单质量</strong>（关联地址、前置建仓、跟单者盈亏分布）——它没有自研数据，做不到</td></tr>
       <tr><td>⑥ 笔数 × 费率</td><td>小额高频，$0.76/笔</td><td class="p-us">费率结构更优</td><td>盯住它的收费钱包净流入做日报，实时掌握对手转速</td></tr>
     </tbody>
   </table>
@@ -410,9 +537,11 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 out = HTML.replace("__FIG1__",
         '<figure>' + fig1() + '<figcaption><b>图 1 · 主飞轮。</b>顺时针六个环节构成闭环，橙色边为铰链（交易即内容，零边际成本 UGC）；红色虚线为四个漏损点，标注在用户实际掉队的环节上。</figcaption></figure>'
     ).replace("__FIG2__",
-        '<figure>' + fig2() + '<figcaption><b>图 2 · 三条加速支路。</b>每条支路自身构成小循环（青色虚线为回流），并把动能注入主飞轮。共同机制：把用户、KOL、投资人都变成获客渠道。</figcaption></figure>'
+        '<figure>' + fig2() + '<figcaption><b>图 2 · 四条加速支路。</b>每条支路自身构成小循环（青色虚线为回流），并把动能注入主飞轮。共同机制：把用户、KOL、投资人都变成获客渠道——而原生红人孵化回路更进一步，<b>直接把素人造成红人</b>。</figcaption></figure>'
     ).replace("__FIG3__",
-        '<figure>' + fig3() + '<figcaption><b>图 3 · 获客侧思维导图。</b>五条并行通道及其具体手段。前四条持续烧钱，第二条「产品即获客」是一次性建设、永久生效——也是最难追平的一条。</figcaption></figure>'
+        '<figure>' + fig3() + '<figcaption><b>图 3 · 获客侧思维导图。</b>五条并行通道及其具体手段，<b>★ 为本轮 X 数据新增</b>。前四条持续烧钱，第二条「产品即获客」是一次性建设、永久生效——也是最难追平的一条。</figcaption></figure>'
+    ).replace("__FIG4__",
+        '<figure>' + fig4() + '<figcaption><b>图 4 · 影响力发生器。</b>五位被官方点名的原生交易员，X 粉丝（灰）与 FOMO 粉丝（橙）对比。FOMO 粉丝除 @hdegrootvan 为本人自报外均由「X 粉丝 × 官方倍数」推算。<b>注意选择偏差：官方只会点名倍数高的样本，n=5，不代表平台平均水平。</b></figcaption></figure>'
     )
 
 open("/home/user/ava1026/docs/fomo-growth-loop.html", "w", encoding="utf-8").write(out)
