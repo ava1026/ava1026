@@ -386,12 +386,20 @@ footer{
       <tr><td><strong>交易参数不可控</strong></td><td>无滑点自定义、无加速 / priority fee</td><td><span class="pill p-hi">高</span> 专业用户刚需</td></tr>
       <tr><td>跨链 ~3s 延迟</td><td>Intent-based 异步结算，非原子</td><td><span class="pill p-mid">中</span> 散户无感，大户敏感</td></tr>
       <tr><td><strong>分析深度浅</strong></td><td>无自研数据，靠外部路由 + 简单看板</td><td><span class="pill p-hi">高</span> 我们的护城河</td></tr>
-      <tr><td>BNB 链执行差</td><td>高波动时不填充 / 延迟填充，官方承认在修但方案未定</td><td><span class="pill p-mid">中</span> 窗口期有限</td></tr>
+      <tr><td><strong>新链支持慢</strong></td><td>需要等第三方（Relay 等）覆盖后才能上，自己无法自研</td><td><span class="pill p-mid">中</span> 见下方注</td></tr>
       <tr><td>"限价单"非链上真单</td><td>创始人公开承认非托管跨 5 链做真限价单"极难"，只能先做 SOL</td><td><span class="pill p-mid">中</span></td></tr>
       <tr><td>技术全外包</td><td>路由、跨链、密钥、入金、出金全靠第三方</td><td><span class="pill p-lo">长期</span> 短期反是它的速度优势</td></tr>
-      <tr><td><strong>本地化几乎为零</strong></td><td>仅英文，无阿拉伯语等 RTL</td><td><span class="pill p-hi">高</span> 新兴市场空白</td></tr>
+      <tr><td><strong>本地化几乎为零</strong></td><td>仅英文</td><td><span class="pill p-hi">高</span> 新兴市场空白</td></tr>
     </tbody>
   </table>
+  </div>
+
+  <div class="note alert">
+    <h4>⚠️「新链支持慢」这条与我们自己的另一条实测相矛盾，需要裁决</h4>
+    <p>结构上它确实<strong>受制于第三方</strong>——能上哪条链取决于 Relay 等供应商是否覆盖，自己无法自研。</p>
+    <p>但实际速度并不慢：<strong>Robinhood Chain 2026-07-01 主网上线，创始人 07-05 对「支持 RH 链」只回了一个 👀，我们 07-13 就抓到了它在 RH 链上的完整跨链交易 —— 从表态到落地 ≤ 8 天</strong>（见 §4.1、§12.1 的 RH 链地址索引）。</p>
+    <p>所以准确的表述是「<strong>新链支持受制于第三方的覆盖范围</strong>」（能力天花板），而不是「因此慢」（速度问题）。<strong>供应商支持了它就很快。</strong></p>
+    <p>若要在对外材料里用「慢」这个说法，先解决这个矛盾——否则我们自己的报告里同时写着「8 天上新链」和「上新链慢」。</p>
   </div>
 </section>
 
