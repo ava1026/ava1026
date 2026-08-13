@@ -82,13 +82,13 @@ def body(F, V, A, FIG):
 
 <section id="s5">
   <p class="snum">05 — 拉新与承接</p>
-  <h2>降低门槛，拉小白用户进来</h2>
+  <h2>降低门槛，为圈外用户做准备</h2>
 
   <div class="scroll">
   <table>
     <thead><tr><th>动作</th><th>状态</th><th>要点</th></tr></thead>
     <tbody>
-      <tr><td><strong>法币入金</strong></td><td><span class="pill p-us">已支持</span></td><td>已经支持 50+ 个国家法币入金。新链上的天然优势：新链没有原生资产存量，用户无从入金</td></tr>
+      <tr><td><strong>法币入金</strong></td><td><span class="pill p-us">已支持</span></td><td>已经支持 50+ 个国家法币入金</td></tr>
       <tr><td><strong>Apple Pay 直接购买 meme 代币</strong></td><td><span class="pill p-us">待调研</span></td><td>提升圈外用户第一笔交易成功率</td></tr>
       <tr><td><strong>USDC 交易</strong></td><td><span class="pill p-mid">推进中</span></td><td><strong>新用户充USDC - 默认本链开USDC交易模式</strong></td></tr>
       <tr><td>USDC自动跨链交易</td><td><span class="pill p-hi">新增调研</span></td><td>非华语新用户进此流程，不进老用户主路径</td></tr>
