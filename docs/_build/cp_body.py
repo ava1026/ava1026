@@ -4,7 +4,7 @@
 
 模块划分照 Ava 08-13 的口述：定位 → 发现层 → 放大层 → 拉新与承接 → 地基。
 写作约束（Ava 08-13 要求）：一模块一表，一行一动作；
-每处注释最多 1–2 句，不写大段解释。
+不带注释块与图注（Ava 08-13：注释文案全部去掉）。
 """
 
 
@@ -19,8 +19,8 @@ def body(F, V, A, FIG):
 <section id="s1">
   <p class="snum">01 — 全局</p>
   <h2>五个模块</h2>
-  <figure>{FIG["loop"]}<figcaption>{FIG["loop_cap"]}</figcaption></figure>
-  <figure>{FIG["map"]}<figcaption>{FIG["map_cap"]}</figcaption></figure>
+  <figure>{FIG["loop"]}</figure>
+  <figure>{FIG["map"]}</figure>
 </section>
 
 <section id="s2">
@@ -38,10 +38,6 @@ def body(F, V, A, FIG):
   </table>
   </div>
 
-  <div class="note key">
-    <p>这条回答 v8 待裁决 ①：不是否掉「分人群」，而是把<strong>分的位置</strong>定下来——<strong>在环节里分，不在端上分</strong>，所以不必二选一，也不让出主导区。</p>
-    <p>与婉云的「分端 × 分人群 × 分阶段」相容：人群照分，只是切口从「哪个端」移到「哪个环节」。</p>
-  </div>
 </section>
 
 <section id="s3">
@@ -66,7 +62,7 @@ def body(F, V, A, FIG):
   <p class="snum">04 — 放大层</p>
   <h2>放大真实的赚钱效应</h2>
 
-  <figure>{FIG["lanes"]}<figcaption>{FIG["lanes_cap"]}</figcaption></figure>
+  <figure>{FIG["lanes"]}</figure>
 
   <div class="scroll">
   <table>
@@ -74,25 +70,14 @@ def body(F, V, A, FIG):
     <tbody>
       <tr><td><strong>热门币里的 KOL 持仓</strong></td><td><span class="pill p-mid">本季度</span></td><td>谁在拿、拿多少、什么时候进的</td></tr>
       <tr><td><strong>大户持仓与动向</strong></td><td><span class="pill p-mid">本季度</span></td><td>接到热门列表与代币页，作为「为什么它热」的解释</td></tr>
-      <tr><td><strong>FOMO Leaderboard</strong></td><td><span class="pill p-us">新增</span></td><td>见下</td></tr>
+      <tr><td><strong>FOMO Leaderboard</strong></td><td><span class="pill p-us">新增</span></td><td><strong>重算，不镜像</strong>：按我们口径拆 站内买入 / 外部转入 / 关联钱包内转，PnL 默认只算买入；带来源标注与可信度提示</td></tr>
       <tr><td>relay 数据标注与可信度规范</td><td><span class="pill p-hi">前置</span></td><td>上面三条的合规底座</td></tr>
     </tbody>
   </table>
   </div>
 
-  <div class="note gain">
-    <h3>FOMO Leaderboard：重算，不镜像</h3>
-    <p>它一条解决三件事：满足用户对 FOMO 钱包的追踪需求、堵住「为看榜去装 FOMO」的流失、拆解它的造富效应。</p>
-    <p>机制事实是<strong>{A["leaderboard"]}</strong>，所以直接搬数字等于替它背书——每行按我们的口径拆成<strong>站内买入 / 外部转入 / 关联钱包内转</strong>，PnL 默认只算买入部分。</p>
-  </div>
 
-  <div class="note warn">
-    <p>两条红线：<strong>呈现为数据服务，不是打假</strong>（口径是「它的榜不区分来源」，不是「它造假」）；<strong>必须带来源标注与可信度提示</strong>，因为我们目前无法识别投毒，relay 交易只敢解析成转入/转出。</p>
-  </div>
 
-  <div class="note">
-    <p>一手样本：claymore（@claymorepx）确认是 {A["claymore_rank"]}、PnL {A["claymore_pnl"]}，而{A["claymore_fact"]}。<span class="tag">v8 要求保留</span> 他自述动机是移动端体验好、社交曝光强，引用时这句不能省。</p>
-  </div>
 </section>
 
 <section id="s5">
@@ -105,27 +90,14 @@ def body(F, V, A, FIG):
     <tbody>
       <tr><td><strong>法币入金</strong></td><td><span class="pill p-us">已支持</span></td><td>已经支持 50+ 个国家法币入金。新链上的天然优势：新链没有原生资产存量，用户无从入金</td></tr>
       <tr><td><strong>Apple Pay 直接购买 meme 代币</strong></td><td><span class="pill p-hi">待调研</span></td><td>我们目前不支持。这是 FOMO 的王牌入金通道（68k 首次买币用户），而它疑似已失效（§09 待核 ①）——若属实，这是个<strong>空出来的位置</strong>；调研可行性（支付合规 + 通道商）</td></tr>
-      <tr><td><strong>热门代币支持 USDC 购买</strong></td><td><span class="pill p-mid">本季度</span></td><td><strong>限新用户</strong>。见下</td></tr>
-      <tr><td>跨链</td><td><span class="pill p-hi">待调研</span></td><td>清单见下，不进老用户主路径</td></tr>
+      <tr><td><strong>热门代币支持 USDC 购买</strong></td><td><span class="pill p-mid">本季度</span></td><td><strong>限新用户 × 限热门代币</strong>；老用户主路径 relay 占比 = 0</td></tr>
+      <tr><td>跨链</td><td><span class="pill p-hi">待调研</span></td><td>调研四项：relay 延迟 p50/p95 · 报价覆盖范围 · 卡单资金状态 · Relay 商务条款。不进老用户主路径</td></tr>
       <tr><td><strong>迁移引导路径</strong></td><td><span class="pill p-us">新增</span></td><td>一键导入私钥 / 接管持仓 / 落地页。出口是它自己开的——官方建议用户「导出私钥到 Phantom 操作」</td></tr>
     </tbody>
   </table>
   </div>
 
-  <div class="note key">
-    <p>限定在<strong>已经热门的代币</strong>是对的：热门币已毕业、流动性好、Relay 报价源覆盖得到，<strong>恰好是 relay 唯一不拖后腿的集合</strong>，也正好是新用户会买的东西。</p>
-    <p>验收口径：<strong>老用户主交易路径上 relay 占比 = 0</strong>，且要能被监控查出来。</p>
-  </div>
 
-  <div class="note">
-    <h4>跨链调研清单</h4>
-    <ol>
-      <li>relay 分发延迟实测 p50 / p95，对比我们的{V["our_path"]}。<span class="tag">08-13 已核实</span> 它是{V["relay_path"]}，多一跳</li>
-      <li>哪些链 / 代币 relay 报价源覆盖不到（内盘、新链）</li>
-      <li>失败或卡单时的资金状态——FOMO 用户投诉的「资金冻结 1–3 工作日」是不是 relay 带来的</li>
-      <li>与 Relay 的商务条款。它是 FOMO 的单点依赖，也该是我们的谈判杠杆</li>
-    </ol>
-  </div>
 </section>
 
 <section id="s6">
@@ -149,7 +121,7 @@ def body(F, V, A, FIG):
   <p class="snum">07 — 打</p>
   <h2>它的四个结构性短板</h2>
 
-  <figure>{FIG["bite"]}<figcaption>{FIG["bite_cap"]}</figcaption></figure>
+  <figure>{FIG["bite"]}</figure>
 
   <div class="scroll">
   <table>
@@ -163,9 +135,6 @@ def body(F, V, A, FIG):
   </table>
   </div>
 
-  <div class="note">
-    <p>只收结构性短板。费率、本地化、出金体验属<strong>窗口期</strong>——它 08 月已在降费率，<strong>别写进产品叙事</strong>；参考它从创始人一个 👀 到上线 RH 链只用了 8 天。</p>
-  </div>
 </section>
 
 <section id="s8">
@@ -187,9 +156,6 @@ def body(F, V, A, FIG):
   </table>
   </div>
 
-  <div class="note">
-    <p>未提取：增长线与渠道线归 v8 主线，本文不重复排优先级。</p>
-  </div>
 </section>
 
 <section id="s9">
@@ -221,9 +187,6 @@ def body(F, V, A, FIG):
   </table>
   </div>
 
-  <div class="note warn">
-    <p>要盯：<strong>它的榜单口径会不会变</strong>。持仓页已经区分 transferred / bought，说明字段在数据结构里、只是榜没用，改的成本可能远低于我们的假设。建议加进 v8 观察哨。</p>
-  </div>
 </section>
 
 <footer>
