@@ -170,7 +170,7 @@ def fig3():
             "CLANS（8/10 上线，50+）：组队、共建受众",
             "★ 原生红人孵化：X 素人在站内涨到 8k–23k 粉（born on fomo）",
             "★ 官方点名庆祝作为激励货币：涨粉 / Leaderboard 里程碑",
-            "★ 社交跟单：Follow → 通知 → 手动复制，后期趋近自动 Copy",
+            "★ 社交跟单：Follow → 推送 → 用户自行下单，非自动镜像执行",
         ]),
         ("联盟裂变", "买增长，按效果付费", [
             "邀请码 10% 终身手续费折扣",
@@ -475,6 +475,14 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
       <tr><td>成长学习型</td><td>@thokani<br>X 8,073，2.0×</td><td>真实盈利 + 从零成长故事</td><td>中高</td><td>叙事门槛低、最易复制，是最该抢的一层</td></tr>
     </tbody>
   </table>
+  </div>
+
+  <div class="note">
+    <h3>澄清：FOMO 的「跟单」是手动的</h3>
+    <p>源报告原文是「Follow 后接收通知，<strong>用户手动决定是否复制</strong>」——即你关注的人成交后，你收到推送，<strong>再由你自己点进去下单</strong>，买不买、买多少全是你的决定。系统<strong>不会</strong>按预设比例自动镜像，你不在线就什么都不会发生。</p>
+    <p>所以它本质是<strong>推送驱动的交易</strong>，不是资管型跟单——与 callout 热门推送是同一套机制的延伸。</p>
+    <p><strong>为什么只能先做手动</strong>〔推断〕：真自动跟单要求平台能代用户签名，而 FOMO 用 Privy 分片密钥，签名必须由前端 iframe 拉 share、本地重组私钥完成，<strong>用户不在场就签不了</strong>。要做真自动，要么托管私钥（自托管叙事破功），要么上会话密钥 / 预授权。这与它做不了真限价单是<strong>同一个技术根因</strong>——创始人公开承认过非托管跨 5 链做真限价单「extremely technical」。跟单、限价单、止盈止损，卡的是同一道墙。</p>
+    <p><strong>两处不确定</strong>：源报告称「后期增加更接近自动 Copy 的功能」，用词是<em>更接近</em>，<strong>未说明已实现全自动</strong>；且其本身也承认「细粒度复制成交量属于 App 内部数据，外部无法完整获取」——<strong>跟单的真实执行率外部看不到</strong>。</p>
   </div>
 
   <div class="note leak">
