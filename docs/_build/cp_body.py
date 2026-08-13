@@ -13,7 +13,7 @@ def body(F, V, A, FIG):
 <header>
   <p class="kicker">竞品情报 · FOMO 系列 · 产品侧 · 内部使用 · {F.AS_OF} 起算</p>
   <h1>GMGN App 产品侧打法</h1>
-  <p class="dek">专业交易能力与专业交易员是主导区，不动。App 侧重<strong>发现层</strong>——第一时间发现热门币，放大其中 KOL 与大户的真实持仓，把链上新用户拉进来。</p>
+  <p class="dek">专业交易能力与专业交易员是主导区，不动。App 侧重<strong>发现层</strong>——第一时间发现热门币，放大其中 KOL 与大户的真实持仓，降低门槛，把圈外小白与链上新用户拉进来。</p>
 </header>
 
 <section id="s1">
@@ -31,7 +31,7 @@ def body(F, V, A, FIG):
   <table>
     <thead><tr><th>环节</th><th>人群</th><th>归属</th><th>抓手</th></tr></thead>
     <tbody>
-      <tr><td><strong>发现</strong></td><td>链上新用户 · 打二段用户</td><td>App 主轴</td><td>热门混链 · push · callout。<strong>同时是拉新入口</strong></td></tr>
+      <tr><td><strong>发现</strong></td><td>圈外小白 · 链上新用户 · 打二段用户</td><td>App 主轴</td><td>热门混链 · push · callout。<strong>同时是拉新入口</strong></td></tr>
       <tr><td><strong>执行</strong></td><td>专业交易员 · 高意图执行用户</td><td>App 与 Web 都保专业深度</td><td>参数可控 · 真限价 · 止盈止损</td></tr>
       <tr><td><strong>深度分析</strong></td><td>专业交易员 · Web3 老手</td><td>Web 为主</td><td>数据看板 · 钱包画像 · 资金关系</td></tr>
     </tbody>

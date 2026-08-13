@@ -131,19 +131,19 @@ def fig_lanes():
         ("发现", "热门代币第一时间抓到并推出"),
         ("放大", "KOL 与大户的真实持仓"),
         ("赚钱效应", "链上可验证，不是造出来的"),
-        ("链上新用户进来", "已在链上，但还没用我们"),
+        ("新用户进来", "圈外小白 ＋ 链上新用户"),
         ("交易", "专业执行 ＋ 参数可控"),
     ]
 
     p = [f'<svg class="dg" viewBox="0 0 {W} {H}" role="img" '
-         f'aria-label="FOMO 从圈外拉人与 GMGN 从链上拉人的两条链路对比">']
+         f'aria-label="FOMO 从圈外拉人与 GMGN 用真实赚钱效应拉人的两条链路对比">']
     p.append('<defs><marker id="ln-ar" viewBox="0 0 10 10" refX="9" refY="5" '
              'markerWidth="6" markerHeight="6" orient="auto">'
              '<path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>')
 
     p.append(f'<path d="M{MID} 12 V{Y0 + 5 * (NH + GAP) + 46}" class="dg-split"/>')
     p.append(txt(LX + CW / 2, 24, "FOMO：从圈外拉人", "dg-h"))
-    p.append(txt(RX + CW / 2, 24, "我们：从链上拉人", "dg-h"))
+    p.append(txt(RX + CW / 2, 24, "我们：用真实赚钱效应拉人", "dg-h"))
 
     for col_x, items, cls in ((LX, LEFT, "dg-box-them"), (RX, RIGHT, "dg-box-us")):
         cx = col_x + CW / 2
@@ -260,7 +260,7 @@ def fig_loop():
     NODES = [
         ("① 发现", "热门币第一时间抓到并推出", "§03"),
         ("② 放大", "KOL 与大户的真实持仓", "§04"),
-        ("③ 拉新承接", "法币入金 · USDC · 迁移引导", "§05"),
+        ("③ 拉新承接", "法币入金 · Apple Pay · USDC · 迁移引导", "§05"),
         ("④ 交易", "专业执行 · 参数可控", "—"),
     ]
 
