@@ -126,7 +126,9 @@ V8 = {
     "they_fix":       "已公开回应费率、给出 $0.10 floor 口径并预告 Solana 升级后继续降；同期上线 Clans 与 social perps",
     "they_cant":      "USDC 统一跨链＝速度天花板，改不动",
     # 我们自己的债（宣传前置）
-    "push_delay":     "6–20 min",       # 对比 Dexscreener 近实时
+    # ⚠️ 待核：v8 把「修推送延迟」列为产品线最高优先级，但未给测量来源，
+    #    App PM 亦不认这个数。对比对象是 Dexscreener，不是 FOMO。先测再排期。
+    "push_delay":     "6–20 min〔待核〕",
     # 渠道对照
     "pf_poach":       "约 $20K 签约 + 约 $30K/月，要求永久删除 FOMO 账号并签排他",
     # 榜单机制原话（Telegram，交易员自述）

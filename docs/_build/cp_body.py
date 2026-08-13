@@ -54,7 +54,7 @@ def body(F, V, A, FIG):
       <tr><td><strong>Callout 全方位铺开</strong></td><td><span class="pill p-mid">推进中</span></td><td>对标 FOMO thesis。K 线页 / 单人单币页 / 持仓页，监控默认推全局</td></tr>
       <tr><td><strong>热门列表混链整合</strong></td><td><span class="pill p-mid">推进中</span></td><td>弱化链概念，与热搜差异互补，解决金狗首页找不到</td></tr>
       <tr><td><strong>新用户第一屏＝热门榜单</strong></td><td><span class="pill p-mid">本季度</span></td><td>不是交易面板</td></tr>
-      <tr><td>推送延迟 {V["push_delay"]}</td><td><span class="pill p-hi">拦路</span></td><td>对比 Dexscreener 近实时。不修，「第一时间」站不住</td></tr>
+      <tr><td><strong>我们自己的推送延迟</strong>：{V["push_delay"]}<br><span class="tag">v8 最高优先级，但未给测量来源</span></td><td><span class="pill p-hi">待核</span></td><td>对比 Dexscreener 近实时（不是对比 FOMO）。若属实，「第一时间」这条主线站不住；<strong>先测出真实数字再决定要不要立项</strong></td></tr>
     </tbody>
   </table>
   </div>
@@ -135,7 +135,7 @@ def body(F, V, A, FIG):
     <tbody>
       <tr><td><strong>Relay 交易解析</strong><br><span class="tag">GMGN-8687 / 8688 / 8689 / 8665</span></td><td>FOMO Leaderboard · 迁移引导 · 进场点位</td><td>买单走 relay 代发，用户钱包只出现在最后一跳，买入被记在 relayer 名下。改按「路由合约收币后转给谁」定归属。Debot / basedbot 已能解析</td></tr>
       <tr><td><strong>标注与可信度规范</strong></td><td>放大层全部</td><td>无法识别投毒，所有 relay 来源数据都要带提示。产品侧交付物</td></tr>
-      <tr><td><strong>推送延迟 {V["push_delay"]}</strong></td><td>发现层 · 所有「快」的叙事</td><td>宣传比修复先落地＝自己给对手递素材</td></tr>
+      <tr><td><strong>我们自己的推送延迟</strong><br><span class="pill p-hi">待核</span> {V["push_delay"]}</td><td>发现层 · 所有「快」的叙事</td><td>数字来自 v8，未给测量来源。<strong>先测，不要直接当事实排期</strong>——但若属实，宣传比修复先落地就是自己给对手递素材</td></tr>
       <tr><td><strong>客服口径</strong></td><td>执行可靠性叙事</td><td>它的「清缓存 / 切节点」已被用户与我们的「检查 ms / fps / 切代理」并列批评</td></tr>
     </tbody>
   </table>
@@ -191,7 +191,7 @@ def body(F, V, A, FIG):
 
 <section id="s9">
   <p class="snum">09 — 要定的 / 待核</p>
-  <h2>三件要你定，三件要核</h2>
+  <h2>三件要你定，四件要核</h2>
 
   <h3>要定</h3>
   <div class="scroll">
@@ -213,6 +213,7 @@ def body(F, V, A, FIG):
       <tr><td><strong>FOMO 的 Apple Pay 是否已移除</strong></td><td>外部仍列为它最强护城河（约 {F.SCALE["first_time_buyers"]} 首次买币 / 约 {F.SCALE["first_time_value"]}），我方 08-13 产品债清单说疑似已移除。若属实，它「零门槛进人」这一环结构性倒退</td></tr>
       <tr><td><strong>我们法币入金的实际口径</strong></td><td>覆盖哪些链 / 国家？一键直购还是入金到余额再买？主报告 §9 现在写的是「入金门槛 ❌ FOMO 明显领先」，改这行得先有口径</td></tr>
       <tr><td><strong>持仓来源解析的多链准确率</strong></td><td>「重算」建立在能可靠区分 transferred / bought 上；没量化前不要对外承诺「可验真」</td></tr>
+      <tr><td><strong>我们自己的推送延迟到底是多少</strong></td><td>v8 把「修 6–20min 延迟」列为产品线最高优先级，<strong>但未给测量来源</strong>，App PM 也不认这个数。它决定「第一时间」这条主线能不能讲——<strong>先测，再决定要不要立项</strong></td></tr>
     </tbody>
   </table>
   </div>
