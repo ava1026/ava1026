@@ -200,7 +200,7 @@ footer{{margin:44px 0 0;padding:18px 0 0;border-top:1px solid var(--line);
 <table>
   <thead><tr><th>威胁</th><th>等级</th><th>理由</th></tr></thead>
   <tbody>
-    <tr><td>抢占新增用户入口</td><td><span class="pill p-hi">最高</span></td><td>Apple Pay + USDC 全链 + gas 代付；心智一旦形成极难夺回</td></tr>
+    <tr><td>抢占新增用户入口</td><td><span class="pill p-hi">最高</span></td><td>法币入金 + USDC 全链交易 +（无 gas、滑点等感知）；心智一旦形成极难夺回</td></tr>
     <tr><td>社交护城河成型</td><td><span class="pill p-hi">高</span></td><td>能把 X 上 752 粉的素人造成站内两万粉红人，且影响力<strong>迁不走</strong></td></tr>
     <tr><td>追踪缺口伤专业用户</td><td><span class="pill p-mid">中高</span></td><td>Smart Money / 跟单数据出现系统性盲区，第三方能做我们不能</td></tr>
     <tr><td>推送心智抢跑</td><td><span class="pill p-mid">中高</span></td><td>它先上线；我们信号质量更好（{P["our_coverage"]} vs {P["their_coverage"]}）但晚了</td></tr>
