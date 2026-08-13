@@ -82,16 +82,16 @@ def body(F, V, A, FIG):
 
 <section id="s5">
   <p class="snum">05 — 拉新与承接</p>
-  <h2>客源是链上新用户，不是圈外小白</h2>
+  <h2>降低门槛，拉小白用户进来</h2>
 
   <div class="scroll">
   <table>
     <thead><tr><th>动作</th><th>状态</th><th>要点</th></tr></thead>
     <tbody>
       <tr><td><strong>法币入金</strong></td><td><span class="pill p-us">已支持</span></td><td>已经支持 50+ 个国家法币入金。新链上的天然优势：新链没有原生资产存量，用户无从入金</td></tr>
-      <tr><td><strong>Apple Pay 直接购买 meme 代币</strong></td><td><span class="pill p-hi">待调研</span></td><td>我们目前不支持。这是 FOMO 的王牌入金通道（68k 首次买币用户），而它疑似已失效（§09 待核 ①）——若属实，这是个<strong>空出来的位置</strong>；调研可行性（支付合规 + 通道商）</td></tr>
-      <tr><td><strong>热门代币支持 USDC 购买</strong></td><td><span class="pill p-mid">本季度</span></td><td><strong>限新用户 × 限热门代币</strong>；老用户主路径 relay 占比 = 0</td></tr>
-      <tr><td>跨链</td><td><span class="pill p-hi">待调研</span></td><td>调研四项：relay 延迟 p50/p95 · 报价覆盖范围 · 卡单资金状态 · Relay 商务条款。不进老用户主路径</td></tr>
+      <tr><td><strong>Apple Pay 直接购买 meme 代币</strong></td><td><span class="pill p-us">待调研</span></td><td>提升圈外用户第一笔交易成功率</td></tr>
+      <tr><td><strong>USDC 交易</strong></td><td><span class="pill p-mid">推进中</span></td><td><strong>新用户充USDC - 默认本链开USDC交易模式</strong></td></tr>
+      <tr><td>USDC自动跨链交易</td><td><span class="pill p-hi">新增调研</span></td><td>非华语新用户进此流程，不进老用户主路径</td></tr>
       <tr><td><strong>迁移引导路径</strong></td><td><span class="pill p-us">新增</span></td><td>一键导入私钥 / 接管持仓 / 落地页。出口是它自己开的——官方建议用户「导出私钥到 Phantom 操作」</td></tr>
     </tbody>
   </table>
