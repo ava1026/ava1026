@@ -347,7 +347,7 @@ footer{
     <div class="metric"><span class="v">625k+</span><span class="k">用户（官方口径，未审计）</span><span class="d">日增 3,000+</span></div>
     <div class="metric"><span class="v">$4B+</span><span class="k">累计交易量</span><span class="d">2025-05 上线至今</span></div>
     <div class="metric"><span class="v">$550M</span><span class="k">B 轮估值 · 累计融资 $94M</span><span class="d">Index / USV / Benchmark</span></div>
-    <div class="metric"><span class="v">98.5%</span><span class="k">收入来自 Solana 现货</span><span class="d">perps 仅 $38.8K/周</span></div>
+    <div class="metric"><span class="v">98.5%</span><span class="k">收入来自 Solana 现货 · <strong>DefiLlama 口径</strong></span><span class="d">⚠️ 跨链收入不在该口径内</span></div>
     <div class="metric"><span class="v">≈$0.76</span><span class="k">每笔平均平台费（07-13 实测）</span><span class="d">笔数生意，非客单价</span></div>
   </div>
 
@@ -449,9 +449,38 @@ footer{
       <tr><td>周收入 ATH ①</td><td class="num">$1.39M</td><td>约 7 月中，Solana 协议收入第 3</td></tr>
       <tr><td>周收入 ATH ②</td><td class="num">$1.57M</td><td>截至 7/27</td></tr>
       <tr><td>周收入 ATH ③</td><td class="num"><strong>$2.64M</strong></td><td>截至 8/08 · 比 ATH② 高 68% · 超 Phantom（+86%）与 Jupiter（≈3×）</td></tr>
-      <tr><td>收入构成（8/08 周）</td><td class="num">Solana $2.6M<br>Hyperliquid perps $38.8K</td><td><strong>98.5% 来自 Solana 现货</strong></td></tr>
+      <tr><td>收入构成（8/08 周）</td><td class="num">Solana $2.6M<br>Hyperliquid perps $38.8K</td><td><strong>DefiLlama 口径下</strong> 98.5% 来自 Solana 现货 —— ⚠️ 见下方「口径陷阱」</td></tr>
+      <tr><td>近 30 天（截至 8/08）</td><td class="num">总手续费 $9.48M<br>协议收入 $8.79M</td><td>差额 $0.69M（7.3%）应为推荐人分润</td></tr>
       <tr><td>年化口径分歧</td><td class="num">$22.68M（DefiLlama）<br>$72M run-rate（第三方 ARR）</td><td>差异大，见下</td></tr>
     </tbody>
+  </table>
+  </div>
+
+  <div class="note alert">
+    <h4>⚠️ 口径陷阱：「98.5% 来自 Solana」很可能不包含 Robinhood 链</h4>
+    <p><strong>这个数字不能按字面理解为"FOMO 的收入 98.5% 产生在 Solana"。</strong>它只能读作：<strong>DefiLlama 所能测到的那部分收入里，98.5% 在 Solana。</strong></p>
+    <p><strong>理由（一手证据支撑的结构性原因）：</strong></p>
+    <ol>
+      <li><strong>DefiLlama 的 fomo 适配器只有两条线</strong> —— 公开拆分里只出现 Solana 与 Hyperliquid，<strong>没有 Base / BNB / Monad / Robinhood 的任何一行</strong>。<span class="tag t2">公开</span></li>
+      <li><strong>同链 Solana swap 的手续费是链上可见的独立转账</strong> —— 顶层 <code>transferChecked</code> 打进收费 ATA。这种形态适配器一抓一个准。<span class="tag t1">一手</span></li>
+      <li><strong>跨链 swap 的平台费在链上根本没有独立转账</strong> —— 实测原文："链上 token flow 看不到 Fomo 平台费的独立 transfer（与同链 swap 不同），因为平台费在 Relay 报价阶段已经内含扣除"。只有 HAR 里的 <code>feeTierBps: 50</code> / <code>usdFees.app</code> 能证明它存在。<strong>链上抓不到 ⇒ 适配器抓不到。</strong><span class="tag t1">一手</span></li>
+      <li><strong>而 FOMO 的架构决定了非 Solana 交易几乎全是跨链交易</strong> —— 用户资金以 USDC 沉淀在 Solana，其他链只是执行层。在 Robinhood / Base / BNB 上买币 = 从 Solana 发起的跨链买入，卖出 = 跨链卖回 Solana。<strong>所以非 Solana 链上的那部分收入，按其收费形态本来就是"隐形"的。</strong><span class="tag t1">一手</span><span class="tag t3">推断</span></li>
+    </ol>
+    <p><strong>结论</strong>：98.5% 是<strong>测量口径的产物，不是业务事实</strong>。FOMO 真实的链间收入结构目前<strong>未知</strong>，Robinhood 链的贡献既没有被证实、也没有被证伪。报告中所有"perps 只占 1.5%""收入几乎全在 Solana"的表述，都应加上"DefiLlama 口径"这个限定。</p>
+    <p><strong>同一批数字内部也不自洽</strong>：不同报道对同一周 Hyperliquid perps 的贡献给出 $38.8K 与 $47,484 两个值（后者被称作"约占 3.4%"，但 47,484 ÷ 2.64M = 1.8%）。<strong>这批第三方数字精度有限，不宜作为决策的唯一依据。</strong></p>
+  </div>
+
+  <h4>如何做实（建议交给数据侧执行，我们有全部所需地址）</h4>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>方法</th><th>做法</th><th>产出</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A. 跨链买入量反推</strong><br><span class="pill p-us">推荐 · 最易落地</span></td><td>统计 Solana 跨链桥程序 <code>99vQwtBwYtrqqD9YSXbdum3KBdxPAVxYTaQ3cfnJSrN2</code> 的 USDC 存入总量，× 0.5%</td><td>跨链买入平台费的<strong>下限</strong>，可直接与 Solana 同链费用对比得出真实比例</td></tr>
+      <tr><td>B. 跨链卖出量反推</td><td>统计 Solana Relayer <code>F7p3dFrjRTbtRp8FRF6qHLomXbKRBzpvBLjtQcfcgmNe</code> 转给用户的 USDC，× 0.5%。<strong>注意剔除纯 USDC 归集</strong>（该场景不收平台费），可按源链是否发生 swap 区分</td><td>跨链卖出平台费</td></tr>
+      <tr><td>C. 按链拆分</td><td>对 Robinhood（4663）上 <code>RelayRouterV3 0xb92fe925…fff4f</code> 的成交按链分别统计</td><td>Robinhood 链单独贡献</td></tr>
+      <tr><td>D. 直接问 Relay</td><td>我们本来就要启动 Relay BD —— app fee 的结算口径和账单可在商务谈判中直接问到</td><td>权威口径</td></tr>
+    </tbody>
+    <caption>方法 A 一个人一天就能出结果，且不依赖任何第三方数据源。在拿到之前，本报告涉及链间结构的判断请按"未验证"对待。</caption>
   </table>
   </div>
 
@@ -459,6 +488,7 @@ footer{
     <h4>交叉验证与解读</h4>
     <p>我们 07-13 实测 <strong>$96.8k/日 ≈ 周 $67.8 万</strong>，而外部报道 7/27 周 $157 万、8/08 周 $264 万 —— <strong>7 月中到 8 月初收入翻了约 3.9 倍</strong>。不是线性增长，是<strong>爆发段</strong>。<span class="tag t1">一手 × 公开交叉</span></p>
     <p><strong>年化分歧的解释</strong>：DefiLlama 的 $22.68M 更像滚动 / 加权年化（含低基数月份），$72M 是按近期峰值外推。按 8/08 周外推年化约 $137M。真实当期运行率大概在 <strong>$80M~$137M</strong> 区间。<span class="tag t3">推断</span></p>
+    <p><strong>推荐人分润的实际渗透率（新）</strong>：近 30 天总手续费 $9.48M、协议收入 $8.79M，差额占比 <strong>7.3%</strong>。若差额全部来自卖出侧 75/25 分润，则 <code>0.25 × r = 7.3%</code> → <strong>r ≈ 29%，即约三成手续费来自绑定了推荐人的用户</strong>。说明 FOMO 的联盟体系确实在贡献可观流量，但<strong>主体（七成）仍是自然增长</strong>。（前提：DefiLlama 的 fees / revenue 采用"用户支付 / 协议留存"的标准定义。）<span class="tag t3">推断</span></p>
     <p><strong>单笔经济学（重要）</strong>：$96,789 ÷ 128,000 笔 ≈ <strong>$0.76/笔</strong>，而 ≤200U 档是固定 0.95 USDC/笔 —— 绝大多数交易落在最低档，<strong>客单价极小</strong>。结论：FOMO 是<strong>笔数生意</strong>，用户是小额高频散户。与"巨鲸跑去 FOMO 交易高市值币"不矛盾：巨鲸带来心智与内容，散户带来笔数与收入。<span class="tag t3">推断</span></p>
   </div>
 
@@ -829,7 +859,7 @@ footer{
     <thead><tr><th class="num">#</th><th>待查</th><th>为什么重要</th><th>建议方法</th></tr></thead>
     <tbody>
       <tr><td class="num">1</td><td><strong>真实 DAU / 留存曲线</strong></td><td>625k 是注册数，29% trader/user 是单点观测。没有留存就无法判断增长质量</td><td>第三方 App 数据（Sensor Tower / data.ai）；链上活跃钱包估算</td></tr>
-      <tr><td class="num">2</td><td>各链交易量拆分</td><td>98.5% 收入来自 Solana → Base/BNB/Monad/RH 是不是"叙事链"？</td><td>各链收费地址链上统计</td></tr>
+      <tr><td class="num">2</td><td><strong>各链收入拆分</strong><br><span class="pill p-hi">升级为 P0</span></td><td>"98.5% 来自 Solana"是 DefiLlama 的测量口径产物；跨链平台费链上无独立转账，<strong>Robinhood / Base / BNB / Monad 的真实贡献完全未知</strong>。这直接影响我们对"要不要跟进 RH 链"的判断</td><td>见 §3 口径陷阱的方法 A/B/C/D —— 方法 A（跨链桥程序 USDC 存入量 × 0.5%）一天可出结果</td></tr>
       <tr><td class="num">3</td><td>Robinhood Chain 上的实际体量</td><td>已知技术支持，不知用量。RH 链 7 月上线即 $305M TVL、1M 周活地址，且 memecoin 而非股票主导</td><td>RH 链上 FOMO 相关合约统计</td></tr>
       <tr><td class="num">4</td><td>Privy recovery 的实际治理条件</td><td>"≈全权控制"目前是技术推断，对外使用需坐实</td><td>Privy 公开文档 / 安全审计报告</td></tr>
       <tr><td class="num">5</td><td>KOL / sponsored creator 商务条件</td><td>决定我们抢 KOL 的报价</td><td>BD 侧打听</td></tr>
