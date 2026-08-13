@@ -191,6 +191,9 @@ DOCS = {
     "full":  ("全面产品调研（参考层）",
               "https://claude.ai/code/artifact/0bf4ad28-129d-4594-83bf-7f5fa741271b",
               "资本 · 数据 · 技术拆解 · 费率 · 口碑 · 行动清单 · 附录"),
+    "play":  ("产品侧应对：抄 · 打 · 建",
+              "https://claude.ai/code/artifact/67b79931-8d26-49da-8c28-205966d1dd50",
+              "并入 Arthur v8 的产品侧 · 四个咬合点 · 排期 · 待核"),
 }
 
 
