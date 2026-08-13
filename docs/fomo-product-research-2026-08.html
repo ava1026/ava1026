@@ -339,8 +339,8 @@ footer{
   <table>
     <thead><tr><th>层</th><th>文档</th><th>回答什么</th><th>什么时候看</th></tr></thead>
     <tbody>
-      <tr><td><strong>Tier 0</strong></td><td><a href="fomo-brief.html">FOMO 决策简报</a></td><td>结论 · 威胁分级 · P0/P1</td><td>转发给决策层，一屏读完</td></tr>
-      <tr><td><strong>Tier 1</strong></td><td><a href="fomo-growth-loop.html">FOMO 增长闭环</a></td><td><strong>病在哪</strong> —— 飞轮机制、铰链、漏损点、获客导图</td><td>想理解它为什么转得快</td></tr>
+      <tr><td><strong>Tier 0</strong></td><td><a href="https://claude.ai/code/artifact/76b7997d-e74f-4e77-bb3e-66d986048bef">FOMO 决策简报</a></td><td>结论 · 威胁分级 · P0/P1</td><td>转发给决策层，一屏读完</td></tr>
+      <tr><td><strong>Tier 1</strong></td><td><a href="https://claude.ai/code/artifact/64861aa8-fe7c-4912-b01a-1ee52aae0087">FOMO 增长闭环</a></td><td><strong>病在哪</strong> —— 飞轮机制、铰链、漏损点、获客导图</td><td>想理解它为什么转得快</td></tr>
       <tr><td><strong>Tier 2</strong></td><td><strong>本文档</strong></td><td><strong>怎么治 + 全部证据</strong> —— 资本、数据、技术拆解、费率、口碑、行动清单、附录</td><td>查具体数字、地址、出处</td></tr>
     </tbody>
   </table>
@@ -655,12 +655,13 @@ footer{
   <h3>同链 Swap — 三档阶梯 <span class="tag t1">一手，链上多笔验证</span></h3>
   <div class="scroll">
   <table>
-    <thead><tr><th>交易额</th><th>费率</th><th>实测样本</th></tr></thead>
+    <thead><tr><th>交易额</th><th>计费方式</th><th class="num">实际费率区间</th><th>实测样本</th></tr></thead>
     <tbody>
-      <tr><td class="num">≤ 200 USDC</td><td><strong>固定 0.95 USDC / 笔</strong></td><td>2.00U 交易收 0.95 → <strong class="win-them">实际 47.5%</strong>；184.64U 收 0.95 → 0.51%</td></tr>
-      <tr><td class="num">200 ~ 10,000 USDC</td><td><strong>0.5%</strong></td><td>226.67U 收 1.133362 → 0.50%</td></tr>
-      <tr><td class="num">≥ 10,000 USDC</td><td><strong>0.05%</strong></td><td>—</td></tr>
+      <tr><td class="num">≤ 200 USDC</td><td><strong>固定 0.95 USDC / 笔</strong></td><td class="num"><strong>0.48% – 47.5%</strong><br>（随金额递减）</td><td>2.00U 收 0.95（47.5%）· 184.64U 收 0.95（0.51%）</td></tr>
+      <tr><td class="num">200 ~ 10,000 USDC</td><td><strong>0.5% 比例</strong></td><td class="num">0.50%</td><td>226.67U 收 1.133362（0.50%）</td></tr>
+      <tr><td class="num">≥ 10,000 USDC</td><td><strong>0.05% 比例</strong></td><td class="num">0.05%</td><td>—</td></tr>
     </tbody>
+    <caption>固定档的实际费率取决于交易额，<strong>单看某一端都不代表这一档</strong>。区间上界 47.5% 出现在 $2，下界 0.48% 出现在 200U。</caption>
   </table>
   </div>
   <div class="note">
@@ -718,7 +719,7 @@ footer{
 <section id="s7">
   <p class="snum">07 — 增长与市场策略</p>
   <div class="note">
-    <p><strong>📐 分层说明</strong>：增长机制的<strong>论证</strong>（飞轮如何闭合、铰链在哪、四条加速支路、影响力发生器）已移入 <a href="fomo-growth-loop.html">《FOMO 增长闭环》</a> —— 那份文档回答「病在哪」。本节只保留<strong>原始名单、实测数据与画像判断</strong>；行动建议统一在 <a href="#s10">§10</a>。</p>
+    <p><strong>📐 分层说明</strong>：增长机制的<strong>论证</strong>（飞轮如何闭合、铰链在哪、四条加速支路、影响力发生器）已移入 <a href="https://claude.ai/code/artifact/64861aa8-fe7c-4912-b01a-1ee52aae0087">《FOMO 增长闭环》</a> —— 那份文档回答「病在哪」。本节只保留<strong>原始名单、实测数据与画像判断</strong>；行动建议统一在 <a href="#s10">§10</a>。</p>
   </div>
   <h2>争夺 Coinbase / Robinhood 溢出的美国零售用户</h2>
 
@@ -776,7 +777,7 @@ footer{
       <tr><td class="mono">@thokani</td><td class="num">8,073</td><td class="num">2.0×</td><td class="num">≈16,146（推算）</td><td>曾自报 12k（时点更早）</td></tr>
       <tr><td class="mono">@icemandot</td><td class="num">8,091</td><td class="num">—</td><td class="num">—</td><td>钱包余额顶级，资金实力型</td></tr>
     </tbody>
-    <caption>FOMO 粉丝除 @hdegrootvan 为本人自报外，均由「X 粉丝 × 官方公布倍数」推算。X 粉丝跨度 <strong>10.7×</strong>，FOMO 粉丝跨度仅 <strong>2.8×</strong>。⚠️ 官方只会点名倍数高的样本，n=5，不代表平台平均水平。机制解读见<a href="fomo-growth-loop.html">增长闭环 §04</a>。</caption>
+    <caption>FOMO 粉丝除 @hdegrootvan 为本人自报外，均由「X 粉丝 × 官方公布倍数」推算。X 粉丝跨度 <strong>10.7×</strong>，FOMO 粉丝跨度仅 <strong>2.8×</strong>。⚠️ 官方只会点名倍数高的样本，n=5，不代表平台平均水平。机制解读见<a href="https://claude.ai/code/artifact/64861aa8-fe7c-4912-b01a-1ee52aae0087">增长闭环 §04</a>。</caption>
   </table>
   </div>
 
@@ -943,7 +944,7 @@ footer{
 
   <h3>建议行动</h3>
   <div class="note">
-    <p><strong>📐 这是唯一的行动清单。</strong><a href="fomo-growth-loop.html">《FOMO 增长闭环》</a>只做诊断（按闭环环节看我们的位置），不重复列行动 —— 避免两处优先级打架。需要一页纸转发给决策层的版本见 <a href="fomo-brief.html">《FOMO 决策简报》</a>。</p>
+    <p><strong>📐 这是唯一的行动清单。</strong><a href="https://claude.ai/code/artifact/64861aa8-fe7c-4912-b01a-1ee52aae0087">《FOMO 增长闭环》</a>只做诊断（按闭环环节看我们的位置），不重复列行动 —— 避免两处优先级打架。需要一页纸转发给决策层的版本见 <a href="https://claude.ai/code/artifact/76b7997d-e74f-4e77-bb3e-66d986048bef">《FOMO 决策简报》</a>。</p>
   </div>
   <div class="actions">
     <div class="act"><span class="prio prio-0">P0 本周</span><h3>修完 Relay 交易解析归属（GMGN-8687/8688/8689）</h3><p>这是<strong>正在流失专业用户信任</strong>的活口子。第三方（Debot / basedbot）能做，我们做不到，说明这不是不可解的技术问题。</p></div>

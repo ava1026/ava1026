@@ -507,7 +507,7 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
   <p class="snum">05 — 诊断：我们在每个环节的位置</p>
   <h2>不要照抄飞轮，要挑环节下手</h2>
   <div class="note">
-    <p><strong>📐 本页只做诊断，不开药方。</strong>下表回答「每个环节我们站在哪、能不能打」；<strong>具体行动与优先级统一在</strong><a href="fomo-product-research-2026-08.html">《FOMO 全面产品调研》§10</a>，避免两处优先级打架。需要一页纸转发的版本见<a href="fomo-brief.html">《FOMO 决策简报》</a>。</p>
+    <p><strong>📐 本页只做诊断，不开药方。</strong>下表回答「每个环节我们站在哪、能不能打」；<strong>具体行动与优先级统一在</strong><a href="https://claude.ai/code/artifact/0bf4ad28-129d-4594-83bf-7f5fa741271b">《FOMO 全面产品调研》§10</a>，避免两处优先级打架。需要一页纸转发的版本见<a href="https://claude.ai/code/artifact/76b7997d-e74f-4e77-bb3e-66d986048bef">《FOMO 决策简报》</a>。</p>
   </div>
   <p>完整复制这个闭环既不现实也没必要。按"我们能不能做、做了打不打得中"两个维度，逐环节看现状。</p>
   <div class="scroll">
@@ -537,9 +537,9 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 
 <div class="note">
   <h3>📐 这份文档在哪一层</h3>
-  <p><strong>Tier 0</strong> <a href="fomo-brief.html">FOMO 决策简报</a> —— 结论 · 威胁分级 · P0/P1，一屏读完，可直接转发。<br>
+  <p><strong>Tier 0</strong> <a href="https://claude.ai/code/artifact/76b7997d-e74f-4e77-bb3e-66d986048bef">FOMO 决策简报</a> —— 结论 · 威胁分级 · P0/P1，一屏读完，可直接转发。<br>
   <strong>Tier 1</strong> <strong>本页</strong> —— 回答「病在哪」：飞轮机制、铰链、漏损点、获客导图。<br>
-  <strong>Tier 2</strong> <a href="fomo-product-research-2026-08.html">FOMO 全面产品调研</a> —— 回答「怎么治」+ 全部证据：资本、数据、技术拆解、费率、口碑、行动清单、附录。</p>
+  <strong>Tier 2</strong> <a href="https://claude.ai/code/artifact/0bf4ad28-129d-4594-83bf-7f5fa741271b">FOMO 全面产品调研</a> —— 回答「怎么治」+ 全部证据：资本、数据、技术拆解、费率、口碑、行动清单、附录。</p>
 </div>
 
 <footer>

@@ -116,12 +116,17 @@ ADDRESSES = {
 }
 
 # ── 文档矩阵（三层结构，互相引用时用这里的路径）──────────
+#   URL 用 Artifact 绝对地址：三份发布后各自是独立 URL，
+#   相对路径（fomo-brief.html）只在本地同目录有效，线上必然 404。
 DOCS = {
-    "brief": ("一页纸决策简报", "fomo-brief.html",
+    "brief": ("一页纸决策简报",
+              "https://claude.ai/code/artifact/76b7997d-e74f-4e77-bb3e-66d986048bef",
               "结论 · 威胁分级 · P0/P1，一屏"),
-    "loop":  ("增长闭环（诊断层）", "fomo-growth-loop.html",
+    "loop":  ("增长闭环（诊断层）",
+              "https://claude.ai/code/artifact/64861aa8-fe7c-4912-b01a-1ee52aae0087",
               "飞轮机制 · 铰链 · 漏损点 · 获客导图"),
-    "full":  ("全面产品调研（参考层）", "fomo-product-research-2026-08.html",
+    "full":  ("全面产品调研（参考层）",
+              "https://claude.ai/code/artifact/0bf4ad28-129d-4594-83bf-7f5fa741271b",
               "资本 · 数据 · 技术拆解 · 费率 · 口碑 · 行动清单 · 附录"),
 }
 
