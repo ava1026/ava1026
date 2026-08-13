@@ -70,6 +70,41 @@ GMGN_FEES = {
     "breakeven":  "$95",     # 0.95 USDC 固定档 = 1% × 95
 }
 
+# ── 交易量对照（Arthur v5 · 同窗口同链重算）─────────────
+#   ⚠️ 口径警告（两边都适用）：DefiLlama 的链覆盖不完整——
+#     · 漏掉 FOMO 的跨链收入（平台费在 Relay 报价内含扣除，链上无独立转账）
+#     · 漏掉 GMGN 的 Robinhood 链（把我们算低了）
+#   所以"Axiom 第一 / 我们与 FOMO 差距不到 2%"的旧口径已作废。
+#   引用任何 DefiLlama 排名前，先确认它覆盖了哪几条链。
+VOLUME = {
+    "gmgn_30d":  "$2.6B",
+    "fomo_30d":  "$1.7B",
+    "axiom_30d": "$1.6B",
+    "gmgn_24h":  "$89M",
+    "fomo_24h":  "$71M",
+    "axiom_24h": "$69M",
+    "note":      "同窗口同链重算，两个窗口 GMGN 均第一",
+}
+
+# ── Arthur v5 带来的机制事实（一手对话 / 当事人亲述）──────
+#   这些是我们此前完全没有的一层：飞轮的燃料。
+ARTHUR = {
+    # BenTodar 亲述 Pump.fun「配合造战绩」四步
+    "pump_playbook": "给低市值币合约地址 → 让他先买 → 平台拉盘 → PnL 亮眼",
+    # Dani（daniworldwidee）亲历，2026-08-12
+    "dani_run":      "1万 → 7万",
+    "dani_outcome":  "卖出即归零，无承接盘",
+    "dani_quote":    "99% of all my trading is still GMGN",
+    # claymore（@claymorepx）私信确认
+    "claymore_rank": "FOMO 30 日榜第 20 名",
+    "claymore_pnl":  "+$278,533.79",
+    "claymore_fact": "仓位性质为 transferred（转入），主要交易在 GMGN 与 Robinhood",
+    # 排行榜机制
+    "leaderboard":   "持仓记录区分 transferred / bought，排行榜 PnL 不区分",
+    # PF 的 UGC 明码标价，2026-08-11 Alon 官方 Discord @everyone
+    "pf_ugc":        "$0.25/推荐 · $0.10/转发 · $0.05/评论",
+}
+
 # ── 推送 / 信号 ─────────────────────────────────────────
 PUSH = {
     "tiers":            "20 / 40 / 80",
@@ -135,7 +170,7 @@ def all_values():
     """把所有标量事实摊平成 {名称: 值}，供 check-facts.py 校验。"""
     out = {}
     for group, d in (("CAPITAL", CAPITAL), ("SCALE", SCALE), ("REVENUE", REVENUE),
-                     ("FEES", FEES), ("GMGN_FEES", GMGN_FEES), ("PUSH", PUSH),
+                     ("FEES", FEES), ("GMGN_FEES", GMGN_FEES), ("VOLUME", VOLUME), ("PUSH", PUSH),
                      ("VENDORS", VENDORS), ("ADDRESSES", ADDRESSES)):
         for k, v in d.items():
             out[f"{group}.{k}"] = v

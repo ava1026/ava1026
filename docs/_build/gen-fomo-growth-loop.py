@@ -93,7 +93,50 @@ def fig1():
     return "\n".join(o)
 
 
-# ══════════════════════════ 图二：四条加速支路 ══════════════════════════
+# ══════════════ 图二：造榜链路（飞轮的燃料）══════════════
+def fig_fuel():
+    P = "ff"
+    W, H = 960, 292
+    BW, BH = 160, 66
+    xs = [10, 206, 402, 598, 794]
+    y = 92
+    cy = y + BH / 2
+    o = [f'<svg class="dg" role="img" viewBox="0 0 {W} {H}" '
+         'aria-label="造榜链路：平台出资拉盘 → 种子交易员低价进场 → 人为拉升 → 亮眼 PnL 上榜 '
+         '→ 内容获得可信度；出口处标出卖不掉与大户 rug 两个后果">',
+         defs(P)]
+    steps = [
+        ("平台出资拉盘", "MM 成本至今无数"),
+        ("种子交易员低价进场", "先给合约地址"),
+        ("人为拉升价格", "平台自己出手"),
+        ("亮眼 PnL 上榜", "榜单不区分转入"),
+        ("内容获得可信度", "回灌飞轮 ②→③"),
+    ]
+    for i, (t, sub) in enumerate(steps):
+        cls = "dg-box-fuel" if i < 3 else "dg-box"
+        o.append(box(xs[i], y, BW, BH, cls))
+        o.append(txt(xs[i] + BW/2, y + 28, t, "dg-t2"))
+        o.append(txt(xs[i] + BW/2, y + 48, sub, "dg-s"))
+        if i < 4:
+            o.append(f'<line x1="{xs[i]+BW}" y1="{cy}" x2="{xs[i+1]-6}" y2="{cy}" '
+                     f'class="dg-edge" marker-end="url(#{P}a)"/>')
+    o.append(txt(480, 46, "飞轮的燃料：内容零边际成本，可信度是买来的", "dg-h"))
+    o.append(txt(480, 68, "证据：BenTodar 亲述 Pump.fun 四步操作 · Helen 当场确认「FOMO 不也一样」", "dg-s"))
+
+    # 两个出口后果
+    def leak(cx, lines):
+        o.append(f'<line x1="{cx}" y1="{y+BH}" x2="{cx}" y2="{y+BH+34}" '
+                 f'class="dg-edge dg-leak" marker-end="url(#{P}c)"/>')
+        for i, l in enumerate(lines):
+            o.append(txt(cx, y + BH + 54 + i * 17, l, "dg-leak-t"))
+    leak(xs[3] + BW/2, ["造出来的盘：无承接，卖出即归零", "Dani 实测 1万→7万，一卖归零"])
+    leak(xs[1] + BW/2, ["本身有热度的币：有真实承接", "→ 大户直接 rug（catecoin）"])
+    o.append(txt(480, 268, "两条出口都指向同一件事：渠道拿到的是账面数字与曝光，不是钱", "dg-lab"))
+    o.append("</svg>")
+    return "\n".join(o)
+
+
+# ══════════════════════════ 图三：四条加速支路 ══════════════════════════
 def fig2():
     P = "f2"
     W, H = 960, 680
@@ -347,6 +390,7 @@ svg.dg{display:block;width:100%;height:auto;min-width:680px;font-family:var(--sa
 .dg-box-soft{fill:var(--surface-2);stroke:var(--line-soft);stroke-width:1}
 .dg-box-accent{fill:var(--accent-soft);stroke:var(--accent-line);stroke-width:1}
 .dg-box-root{fill:var(--ours-soft);stroke:var(--ours);stroke-width:1.5}
+.dg-box-fuel{fill:var(--hot-soft);stroke:var(--hot);stroke-width:1}
 .dg-t{fill:var(--ink);font-size:13.5px;font-weight:600}
 .dg-t2{fill:var(--ink);font-size:12.5px}
 .dg-s{fill:var(--muted);font-size:11px}
@@ -447,7 +491,17 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
   </div>
   <div class="note leak">
     <h3>四个漏损点（红色虚线）</h3>
-    <p>闭环不是密封的。每个漏损点都是用户在某个环节掉队的地方，也正是<strong>我们可以插进去的位置</strong>——细节见第 04 节。</p>
+    <p>闭环不是密封的。每个漏损点都是用户在某个环节掉队的地方，也正是<strong>我们可以插进去的位置</strong>——细节见第 05 节。</p>
+  </div>
+
+  <h3>但这条铰链有个前提：内容零成本，可信度是买来的</h3>
+  <p>上面说「交易即内容、零边际成本」，那是<strong>内容供给</strong>这一侧。而内容之所以有人信，靠的是榜单上那些亮眼 PnL —— <strong>这部分是花钱造出来的。</strong></p>
+  '''+ '<figure>' + fig_fuel() + '<figcaption><b>图 2 · 造榜链路（飞轮的燃料）。</b>红框为需要平台真金白银投入的环节。两条虚线是两种出口：造出来的盘无承接、卖出即归零（Dani 实测）；本身有热度的币有真实承接，则大户直接 rug（catecoin）。</figcaption></figure>' + '''
+  <div class="note leak">
+    <h3>这一层是 Arthur v5 带来的，我们此前完全没有</h3>
+    <p><strong>BenTodar 亲述 Pump.fun 的四步操作</strong>：内部给他一个市值很低的币的合约地址 → 让他先用自己账号买入 → 平台团队再人为拉盘 → 他的账户 PnL 就显示出一个非常亮眼的数字。Helen 当场回应「FOMO 不也一样」。</p>
+    <p><strong>代价由 Dani（daniworldwidee）亲历印证</strong>：「I ran 10k wallet to 70k / Then I noticed I couldn't sell cause coin would go to 0 instantly」—— 亮眼 PnL 是真的，<strong>但没有承接盘</strong>。所以「渠道不能卖」不是平台给的约束，是<strong>卖不掉</strong>；约束由流动性实现，不靠自觉。</p>
+    <p><strong>对闭环判断的修正</strong>：渠道端边际成本确实接近零（不拿现金、只拿确定性与曝光），<strong>但平台端不是</strong> —— 平台仍要自己出手拉盘。<strong>渠道成本≈0 ≠ 平台成本≈0。</strong>这笔 MM 钱至今没人算过。</p>
   </div>
 </section>
 
@@ -479,12 +533,21 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
   <div class="note hinge">
     <h3>离散度塌缩说明了什么</h3>
     <p>五个人的 X 粉丝相差 <strong>10.7 倍</strong>（752 → 8,073），但他们的 FOMO 粉丝只相差 <strong>2.8 倍</strong>（8,248 → 23,035）。外部影响力的巨大差距，进了 FOMO 就被抹平了。</p>
-    <p>结论：<strong>在 FOMO 上，粉丝数由站内战绩决定，不由你带进来的外部影响力决定。</strong>它不是一个"把 X 影响力搬过来放大"的场子，而是一个<strong>平行的、自产自销的影响力市场</strong>。一个 X 上 752 粉的普通人，可以在这里拥有两万观众。</p>
+    <p>结论：<strong>在 FOMO 上，粉丝数由站内表现决定，不由你带进来的外部影响力决定。</strong>它不是一个"把 X 影响力搬过来放大"的场子，而是一个<strong>平行的、自产自销的影响力市场</strong>。一个 X 上 752 粉的普通人，可以在这里拥有两万观众。</p>
+    <p>⚠️ <strong>但「站内表现」不等于「站内交易」</strong> —— 见下方 transferred / bought 一节。这个影响力市场比表面看起来更合成。</p>
   </div>
   <div class="note gain">
     <h3>为什么这是最强的锁定</h3>
     <p>这份影响力<strong>只在 FOMO 内部有效，迁不走</strong>。Pump.fun 挖角开出 $20k 签约 + $30k/月，却<strong>要求永久删除 FOMO 账号并签排他协议</strong>——因为它很清楚：账号本身就是资产，不删掉，人就等于没挖走。</p>
     <p>反过来看，这也给我们提了个醒：<strong>费率补贴挖不动这批人</strong>，能挖动他们的只有"能不能在你那儿重建同等规模的观众"。</p>
+  </div>
+
+  <h3>造榜甚至不需要真实交易 —— 连「买入」都不需要</h3>
+  <div class="note leak">
+    <p><strong>FOMO App 的持仓记录<em>区分</em> transferred（转入）/ bought（买入），但排行榜 PnL <em>不区分</em>。</strong>换句话说，连上钱包展示已有仓位，就能完成「造榜」。</p>
+    <p><strong>一手证据</strong>：我方合作伙伴 <strong>claymore（@claymorepx）</strong>，FOMO 30 日排行榜<strong>第 20 名</strong>，展示 PnL <strong>+$278,533.79</strong>。私信确认主要交易在 <strong>GMGN 与 Robinhood</strong> 完成（原话「most of my trading i do on gmgn app」），其 FOMO 仓位性质经本人确认为 <strong>transferred</strong>，非平台内买入。</p>
+    <p><strong>这说明</strong>：排行榜制造的「平台能赚钱」，<strong>与平台实际交易活跃度是脱钩的</strong> —— 本质是<strong>展示层战绩</strong>。造榜门槛比「KOL 只买入不交易」的推测还要低。</p>
+    <p><strong>必须保留的客观补充</strong>：claymore 自述动机是移动端体验好、社交曝光强，<strong>不完全是被动配合平台策略</strong>。引用此案例时这句不能省。</p>
   </div>
 
   <h3>策略切换：从造星到被投奔</h3>
@@ -591,11 +654,11 @@ footer{margin:72px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
 out = HTML.replace("__FIG1__",
         '<figure>' + fig1() + '<figcaption><b>图 1 · 主飞轮。</b>顺时针六个环节构成闭环，橙色边为铰链（交易即内容，零边际成本 UGC）；红色虚线为四个漏损点，标注在用户实际掉队的环节上。</figcaption></figure>'
     ).replace("__FIG2__",
-        '<figure>' + fig2() + '<figcaption><b>图 2 · 四条加速支路。</b>每条支路自身构成小循环（青色虚线为回流），并把动能注入主飞轮。共同机制：把用户、KOL、投资人都变成获客渠道——而原生红人孵化回路更进一步，<b>直接把素人造成红人</b>。</figcaption></figure>'
+        '<figure>' + fig2() + '<figcaption><b>图 3 · 四条加速支路。</b>每条支路自身构成小循环（青色虚线为回流），并把动能注入主飞轮。共同机制：把用户、KOL、投资人都变成获客渠道——而原生红人孵化回路更进一步，<b>直接把素人造成红人</b>。</figcaption></figure>'
     ).replace("__FIG3__",
-        '<figure>' + fig3() + '<figcaption><b>图 3 · 获客侧思维导图。</b>五条并行通道及其具体手段，<b>★ 为本轮 X 数据新增</b>。两条「裂变」相邻：社交裂变靠关系带人、联盟裂变靠利益带人；而「产品即获客」是唯一一次性建设、永久生效的通道——也是最难追平的一条。</figcaption></figure>'
+        '<figure>' + fig3() + '<figcaption><b>图 4 · 获客侧思维导图。</b>五条并行通道及其具体手段，<b>★ 为本轮 X 数据新增</b>。两条「裂变」相邻：社交裂变靠关系带人、联盟裂变靠利益带人；而「产品即获客」是唯一一次性建设、永久生效的通道——也是最难追平的一条。</figcaption></figure>'
     ).replace("__FIG4__",
-        '<figure>' + fig4() + '<figcaption><b>图 4 · 影响力发生器。</b>五位被官方点名的原生交易员，X 粉丝（灰）与 FOMO 粉丝（橙）对比。FOMO 粉丝除 @hdegrootvan 为本人自报外均由「X 粉丝 × 官方倍数」推算。<b>注意选择偏差：官方只会点名倍数高的样本，n=5，不代表平台平均水平。</b></figcaption></figure>'
+        '<figure>' + fig4() + '<figcaption><b>图 5 · 影响力发生器。</b>五位被官方点名的原生交易员，X 粉丝（灰）与 FOMO 粉丝（橙）对比。FOMO 粉丝除 @hdegrootvan 为本人自报外均由「X 粉丝 × 官方倍数」推算。<b>注意选择偏差：官方只会点名倍数高的样本，n=5，不代表平台平均水平。</b></figcaption></figure>'
     )
 
 open("/home/user/ava1026/docs/fomo-growth-loop.html", "w", encoding="utf-8").write(out)
