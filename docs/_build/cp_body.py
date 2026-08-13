@@ -101,7 +101,7 @@ def body(F, V, A, FIG):
 
 <section id="s6">
   <p class="snum">06 — 地基</p>
-  <h2>四条在拦着上面的模块</h2>
+  <h2>两条在拦着上面的模块</h2>
 
   <div class="scroll">
   <table>
@@ -109,8 +109,6 @@ def body(F, V, A, FIG):
     <tbody>
       <tr><td><strong>Relay 交易解析</strong><br><span class="tag">GMGN-8687 / 8688 / 8689 / 8665</span></td><td>FOMO Leaderboard · 迁移引导 · 进场点位</td><td>买单走 relay 代发，用户钱包只出现在最后一跳，买入被记在 relayer 名下。改按「路由合约收币后转给谁」定归属。Debot / basedbot 已能解析</td></tr>
       <tr><td><strong>标注与可信度规范</strong></td><td>放大层全部</td><td>无法识别投毒，所有 relay 来源数据都要带提示。产品侧交付物</td></tr>
-      <tr><td><strong>我们自己的推送延迟</strong><br><span class="pill p-hi">待核</span> {V["push_delay"]}</td><td>发现层 · 所有「快」的叙事</td><td>数字来自 v8，未给测量来源。<strong>先测，不要直接当事实排期</strong>——但若属实，宣传比修复先落地就是自己给对手递素材</td></tr>
-      <tr><td><strong>客服口径</strong></td><td>执行可靠性叙事</td><td>它的「清缓存 / 切节点」已被用户与我们的「检查 ms / fps / 切代理」并列批评</td></tr>
     </tbody>
   </table>
   </div>
