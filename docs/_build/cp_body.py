@@ -33,6 +33,12 @@ def body(F, V, A, FIG):
   </div>
 </section>
 
+<section id="s001">
+  <p class="snum">001 — Fomo 专栏产品侧打法</p>
+  <h2>定位：配合增长打法，承接圈外用户</h2>
+  <figure>{FIG["map001"]}</figure>
+</section>
+
 <section id="s1">
   <p class="snum">01 —（原打法）全局</p>
   <h2>五个模块</h2>

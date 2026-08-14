@@ -174,6 +174,66 @@ FIG_LANES_CAP = (
 )
 
 
+# ── 图 001：Fomo 专栏产品侧打法（Ava 08-13 口述，粗排，待细化）──
+def fig_map001():
+    LEAF_H, LEAF_GAP, GROUP_GAP, TOP = 30, 7, 26, 18
+    RX, RW = 8, 168
+    BX, BW = 226, 190
+    LX, LW = 452, 500
+
+    GROUPS = [
+        ("定位", "dg-m1", [
+            "配合增长打法，承接圈外用户",
+            "照着 fomo 抄",
+        ]),
+        ("账号体系", "dg-m2", [
+            "账号体系",
+            "X 绑定",
+        ]),
+        ("入金与交易", "dg-m3", [
+            "法币",
+            "Apple Pay",
+            "USDC 跨链交易",
+        ]),
+        ("内容与发现", "dg-m4", [
+            "代币热门榜",
+            "top trader 排行榜",
+            "callout 信息流，对标 fomo thesis",
+            "TradingView 分时 K 线 等",
+        ]),
+    ]
+
+    heights = [len(g[2]) * LEAF_H + (len(g[2]) - 1) * LEAF_GAP for g in GROUPS]
+    H = TOP * 2 + sum(heights) + GROUP_GAP * (len(GROUPS) - 1)
+    W = LX + LW
+
+    p = [f'<svg class="dg" viewBox="0 0 {W} {H}" role="img" '
+         f'aria-label="Fomo 专栏产品侧打法思维导图">']
+    root_cy = H / 2
+    p.append(box(RX, root_cy - 30, RW, 60, "dg-box-root"))
+    p.append(txt(RX + RW / 2, root_cy - 4, "Fomo 专栏", "dg-troot"))
+    p.append(txt(RX + RW / 2, root_cy + 16, "产品侧打法", "dg-troot"))
+
+    y = TOP
+    for (name, cls, leaves), gh in zip(GROUPS, heights):
+        bcy = y + gh / 2
+        p.append(box(BX, bcy - 21, BW, 42, cls))
+        p.append(txt(BX + BW / 2, bcy + 5, name, "dg-t"))
+        p.append(f'<path d="M{RX + RW} {root_cy} C{RX + RW + 30} {root_cy}, '
+                 f'{BX - 30} {bcy}, {BX} {bcy}" class="dg-edge-thin"/>')
+        for i, leaf in enumerate(leaves):
+            ly = y + i * (LEAF_H + LEAF_GAP)
+            lcy = ly + LEAF_H / 2
+            p.append(box(LX, ly, LW, LEAF_H, "dg-box-leaf"))
+            p.append(txt(LX + 12, lcy + 4, leaf, "dg-t3", anchor="start"))
+            p.append(f'<path d="M{BX + BW} {bcy} C{BX + BW + 24} {bcy}, '
+                     f'{LX - 24} {lcy}, {LX} {lcy}" class="dg-edge-thin"/>')
+        y += gh + GROUP_GAP
+
+    p.append('</svg>')
+    return "".join(p)
+
+
 # ── 图 0：思维导图（模块全貌）────────────────────────────
 #   根在左，五个模块向右展开。叶子按模块分组，组内等距，组间留空。
 def fig_map():
@@ -489,6 +549,7 @@ import cp_body
 
 FIGS = {
     "map":       fig_map(),   "map_cap":   FIG_MAP_CAP,
+    "map001":    fig_map001(),
     "loop":      fig_loop(),  "loop_cap":  FIG_LOOP_CAP,
     "lanes":     fig_lanes(), "lanes_cap": FIG_LANES_CAP,
     "bite":      fig_bite(),  "bite_cap":  FIG_CAP,
