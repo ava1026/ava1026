@@ -38,6 +38,10 @@ def body(F, V, A, FIG):
   <p class="snum">001 — Fomo 专栏产品侧打法</p>
   <h2>定位：配合增长打法，承接圈外用户</h2>
   <figure>{FIG["map001"]}</figure>
+
+  <div class="note">
+    <p><strong>注释（阶梯手续费·待讨论）：</strong>FOMO 分段固定费（≤200U 每笔 0.95 USDC、200–10,000U 0.5%、≥10,000U 0.05%），我们 1% 固定比例，盈亏平衡点 $95——$95 以下我们便宜，之上它便宜，$10k 以上差 20 倍。要不要同步，本质是「fomo 专栏要不要给大额单让利」的定价决策。</p>
+  </div>
 </section>
 
 <section id="s1">
