@@ -34,14 +34,14 @@ def body(F, V, A, FIG):
 </section>
 
 <section id="s1">
-  <p class="snum">01 — 全局</p>
+  <p class="snum">01 —（原打法）全局</p>
   <h2>五个模块</h2>
   <figure>{FIG["loop"]}</figure>
   <figure>{FIG["map"]}</figure>
 </section>
 
 <section id="s2">
-  <p class="snum">02 — 定位</p>
+  <p class="snum">02 —（原打法）定位</p>
   <h2>按环节切不同人群</h2>
 
   <div class="scroll">
@@ -58,7 +58,7 @@ def body(F, V, A, FIG):
 </section>
 
 <section id="s3">
-  <p class="snum">03 — 发现层</p>
+  <p class="snum">03 —（原打法）发现层</p>
   <h2>第一时间发现，推到用户面前</h2>
 
   <div class="scroll">
@@ -75,7 +75,7 @@ def body(F, V, A, FIG):
 </section>
 
 <section id="s4">
-  <p class="snum">04 — 放大层</p>
+  <p class="snum">04 —（原打法）放大层</p>
   <h2>放大真实的赚钱效应</h2>
 
   <figure>{FIG["lanes"]}</figure>
@@ -97,7 +97,7 @@ def body(F, V, A, FIG):
 </section>
 
 <section id="s5">
-  <p class="snum">05 — 拉新与承接</p>
+  <p class="snum">05 —（原打法）拉新与承接</p>
   <h2>降低门槛，为圈外用户做准备</h2>
 
   <div class="scroll">
@@ -117,7 +117,7 @@ def body(F, V, A, FIG):
 </section>
 
 <section id="s6">
-  <p class="snum">06 — 地基</p>
+  <p class="snum">06 —（原打法）地基</p>
   <h2>两条在拦着上面的模块</h2>
 
   <div class="scroll">
@@ -132,7 +132,7 @@ def body(F, V, A, FIG):
 </section>
 
 <section id="s7">
-  <p class="snum">07 — 打</p>
+  <p class="snum">07 —（原打法）打</p>
   <h2>它的四个结构性短板</h2>
 
   <figure>{FIG["bite"]}</figure>
@@ -145,58 +145,6 @@ def body(F, V, A, FIG):
       <tr><td><strong>② 进场点位</strong></td><td>Relay 只询价标准 AMM，未毕业代币无法交易，它的用户<strong>结构性地只能毕业后进场</strong>——恰好对上它口碑里「总在当退出流动性」</td></tr>
       <tr><td><strong>③ 三件事一道墙</strong></td><td>真自动跟单 / 真限价 / 止盈止损都要平台代用户签名，而 Privy 分片密钥必须前端本地重组，用户不在场签不了<br><span class="tag">口径</span> 只说「它的跟单需要手动确认」，<strong>不说「它没有跟单」</strong></td></tr>
       <tr><td><strong>④ 资金进出</strong></td><td>卖不出（gas {V["gas_bump"]} 后门槛{V["sell_floor"]}，小仓位死锁）· 入不进 · 拿不走（{V["withdraw_only"]}）</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-</section>
-
-<section id="s8">
-  <p class="snum">08 — 并稿</p>
-  <h2>v8 里属于产品侧的七条</h2>
-
-  <div class="scroll">
-  <table>
-    <thead><tr><th>v8 内容</th><th>对产品做法的影响</th></tr></thead>
-    <tbody>
-      <tr><td><strong>三个功能卡在同一道墙上</strong></td><td>从「多一个功能」升级为「它的架构给不了」，素材保质期变长 → §07 ③</td></tr>
-      <tr><td><strong>债在资金进出，不在速度</strong></td><td>原来只盯出金复杂（体验），真正结构性的是小仓位卖不掉（死锁）→ §05、§07 ④</td></tr>
-      <tr><td><strong>速度机制被核实</strong><span class="tag">08-13</span></td><td>{V["relay_path"]}，「快」有了机制解释，并直接决定 USDC 边界 → §05</td></tr>
-      <tr><td><strong>它在主动补短板</strong>，但 {V["they_cant"]}</td><td>给「窗口期 vs 结构性」一个来自对手行为的验证 → §07</td></tr>
-      <tr><td><strong>用链上数据审计跟单质量</strong></td><td>与 FOMO Leaderboard 同向：<strong>我们的社交层卖可信度，不是 feed 形态</strong></td></tr>
-      <tr><td><strong>托管信任危机</strong>：{V["tos_date"]} {V["tos_risk"]}</td><td>攻自托管从技术论证升级为它自己写的条款，<strong>但只给 KOL 号，官方文案不碰</strong></td></tr>
-      <tr><td><strong>「清缓存 / 切节点」被与我们并列批评</strong></td><td>这是我们自己的债 → §06</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-</section>
-
-<section id="s9">
-  <p class="snum">09 — 要定的 / 待核</p>
-  <h2>三件要你定，四件要核</h2>
-
-  <h3>要定</h3>
-  <div class="scroll">
-  <table>
-    <thead><tr><th>事项</th><th>建议</th><th>时机</th></tr></thead>
-    <tbody>
-      <tr><td>USDC relay 的边界</td><td>限新用户 × 限热门代币；老用户主路径 relay 占比 = 0 且可监控</td><td><span class="pill p-hi">内部过稿前</span></td></tr>
-      <tr><td>FOMO Leaderboard 的呈现口径</td><td>重算，不镜像；数据服务，不是打假</td><td><span class="pill p-hi">立项时</span></td></tr>
-      <tr><td>Relay 解析的定性</td><td>从「P0 止血」改为「放大层与承接层的前置条件」——排期即启动时间</td><td><span class="pill p-hi">本周</span></td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h3>待核</h3>
-  <div class="scroll">
-  <table>
-    <thead><tr><th>事项</th><th>为什么会改结论</th></tr></thead>
-    <tbody>
-      <tr><td><strong>FOMO 的 Apple Pay 是否已移除</strong></td><td>外部仍列为它最强护城河（约 {F.SCALE["first_time_buyers"]} 首次买币 / 约 {F.SCALE["first_time_value"]}），我方 08-13 产品债清单说疑似已移除。若属实，它「零门槛进人」这一环结构性倒退</td></tr>
-      <tr><td><strong>我们法币入金的链覆盖</strong></td><td>已确认：50+ 国家（Ava 08-13）；<strong>Apple Pay 直购不支持，待调研</strong>。剩一问：<strong>覆盖哪些链</strong>——它决定「新链天然优势」能不能对外讲，也决定主报告 §9「入金门槛 ❌ FOMO 明显领先」那行怎么改</td></tr>
-      <tr><td><strong>持仓来源解析的多链准确率</strong></td><td>「重算」建立在能可靠区分 transferred / bought 上；没量化前不要对外承诺「可验真」</td></tr>
-      <tr><td><strong>我们自己的推送延迟到底是多少</strong></td><td>v8 把「修 6–20min 延迟」列为产品线最高优先级，<strong>但未给测量来源</strong>，App PM 也不认这个数。它决定「第一时间」这条主线能不能讲——<strong>先测，再决定要不要立项</strong></td></tr>
     </tbody>
   </table>
   </div>
