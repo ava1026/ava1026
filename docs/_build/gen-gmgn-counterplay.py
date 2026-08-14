@@ -174,35 +174,42 @@ FIG_LANES_CAP = (
 )
 
 
-# ── 图 001：Fomo 专栏产品侧打法（Ava 08-13 口述，粗排，待细化）──
+# ── 图 001：Fomo 专栏产品侧打法（Ava 08-13 口述 + 页内标注，粗排待细化）──
 def fig_map001():
     LEAF_H, LEAF_GAP, GROUP_GAP, TOP = 30, 7, 26, 18
     RX, RW = 8, 168
     BX, BW = 226, 190
     LX, LW = 452, 500
 
+    # 叶子 = (普通部分, 加粗部分)；模块名同理
     GROUPS = [
-        ("定位", "dg-m1", [
-            "配合增长打法，承接圈外用户",
-            "照着 fomo 抄",
+        (("定位", ""), "dg-m1", [
+            ("配合增长打法，承接圈外用户", ""),
+            ("照着 fomo 抄", ""),
         ]),
-        ("账号体系", "dg-m2", [
-            "账号体系",
-            "X 绑定",
-            "uid 对应的站内 关注数与粉丝数",
+        (("账号体系", "（重建）"), "dg-m2", [
+            ("账号体系", ""),
+            ("X 绑定", ""),
+            ("uid 对应的站内 关注数与粉丝数", ""),
         ]),
-        ("入金与交易", "dg-m3", [
-            "法币",
-            "Apple Pay",
-            "USDC 跨链交易",
+        (("入金与交易", ""), "dg-m3", [
+            ("法币", ""),
+            ("Apple Pay", ""),
+            ("USDC 跨链交易 ", "深度调研边界在哪里"),
         ]),
-        ("内容与发现", "dg-m4", [
-            "代币热门榜",
-            "top trader 排行榜",
-            "callout 信息流，对标 fomo thesis",
-            "TradingView 分时 K 线 等",
+        (("内容与发现", ""), "dg-m4", [
+            ("", "代币热门榜：混链 + 热门热搜算法整合"),
+            ("", "top trader 排行榜 + 好友排行榜 （新建）"),
+            ("callout 信息流，对标 fomo thesis", ""),
+            ("TradingView 分时 K 线 等", ""),
         ]),
     ]
+
+    def rich(x, y, plain, bold, cls, anchor="start"):
+        b = (f'<tspan style="font-weight:700;fill:var(--ink)">{esc(bold)}</tspan>'
+             if bold else "")
+        return (f'<text x="{x}" y="{y}" text-anchor="{anchor}" class="{cls}">'
+                f'{esc(plain)}{b}</text>')
 
     heights = [len(g[2]) * LEAF_H + (len(g[2]) - 1) * LEAF_GAP for g in GROUPS]
     H = TOP * 2 + sum(heights) + GROUP_GAP * (len(GROUPS) - 1)
@@ -216,17 +223,18 @@ def fig_map001():
     p.append(txt(RX + RW / 2, root_cy + 16, "产品侧打法", "dg-troot"))
 
     y = TOP
-    for (name, cls, leaves), gh in zip(GROUPS, heights):
+    for (name, gh) in zip(GROUPS, heights):
+        (nplain, nbold), cls, leaves = name
         bcy = y + gh / 2
         p.append(box(BX, bcy - 21, BW, 42, cls))
-        p.append(txt(BX + BW / 2, bcy + 5, name, "dg-t"))
+        p.append(rich(BX + BW / 2, bcy + 5, nplain, nbold, "dg-t", anchor="middle"))
         p.append(f'<path d="M{RX + RW} {root_cy} C{RX + RW + 30} {root_cy}, '
                  f'{BX - 30} {bcy}, {BX} {bcy}" class="dg-edge-thin"/>')
-        for i, leaf in enumerate(leaves):
+        for i, (lplain, lbold) in enumerate(leaves):
             ly = y + i * (LEAF_H + LEAF_GAP)
             lcy = ly + LEAF_H / 2
             p.append(box(LX, ly, LW, LEAF_H, "dg-box-leaf"))
-            p.append(txt(LX + 12, lcy + 4, leaf, "dg-t3", anchor="start"))
+            p.append(rich(LX + 12, lcy + 4, lplain, lbold, "dg-t3"))
             p.append(f'<path d="M{BX + BW} {bcy} C{BX + BW + 24} {bcy}, '
                      f'{LX - 24} {lcy}, {LX} {lcy}" class="dg-edge-thin"/>')
         y += gh + GROUP_GAP
