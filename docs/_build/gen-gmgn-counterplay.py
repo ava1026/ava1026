@@ -200,6 +200,9 @@ def fig_map001():
         (("内容与发现", ""), "dg-m4", [
             ("", "代币热门榜：混链 + 热门热搜算法整合"),
             ("", "top trader 排行榜 + 好友排行榜 （新建）"),
+            ("Weekly Top Trade", ""),
+            ("Hall of Fame （名人堂）", ""),
+            ("Clans 战队榜", ""),
             ("callout 信息流，对标 fomo thesis", ""),
             ("TradingView 分时 K 线 等", ""),
         ]),
