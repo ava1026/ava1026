@@ -28,6 +28,7 @@ def body(F, V, A, FIG):
       <tr><td><strong>不装什么</strong></td><td>专业执行与深度分析留在主 App / Web，主导区不动</td></tr>
       <tr><td><strong>给谁用</strong></td><td>圈外小白</td></tr>
       <tr><td><strong>前置地基</strong></td><td>USDC自动跨链交易</td></tr>
+      <tr><td><strong>可控性</strong></td><td>不需要走重新申请和新App的合规、审核等</td></tr>
     </tbody>
   </table>
   </div>
