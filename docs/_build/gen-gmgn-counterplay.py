@@ -196,6 +196,7 @@ def fig_map001():
             ("法币", ""),
             ("Apple Pay", ""),
             ("USDC 跨链交易 ", "深度调研边界在哪里"),
+            ("TradingView 分时 K 线 等", ""),
         ]),
         (("内容与发现", ""), "dg-m4", [
             ("", "代币热门榜：混链 + 热门热搜算法整合"),
@@ -204,7 +205,6 @@ def fig_map001():
             ("Hall of Fame （名人堂）", ""),
             ("Clans 战队榜", ""),
             ("callout 信息流，对标 fomo thesis", ""),
-            ("TradingView 分时 K 线 等", ""),
         ]),
     ]
 
