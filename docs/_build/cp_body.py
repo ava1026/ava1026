@@ -42,6 +42,16 @@ def body(F, V, A, FIG):
   <div class="note">
     <p><strong>注释（阶梯手续费·待讨论）：</strong>FOMO 分段固定费（≤200U 每笔 0.95 USDC、200–10,000U 0.5%、≥10,000U 0.05%），我们 1% 固定比例，盈亏平衡点 $95——$95 以下我们便宜，之上它便宜，$10k 以上差 20 倍。要不要同步，本质是「fomo 专栏要不要给大额单让利」的定价决策。pumpfun 目前是 SOL交易手续费为0，跨链交易手续费 0.2%。</p>
   </div>
+
+  <div class="note">
+    <p><strong>注释二（FOMO 用户反馈 · 交易核心功能需求，出现频率最高，约占有效反馈的 60%+）：</strong></p>
+    <ol>
+      <li><strong>限价单（Limit Orders）——绝对刚需。</strong>出现次数最多，几乎每隔几条就有人喊："Limit orders"、"for the love of god limit order"、"Limit orders should be priority"、"Need limit orders"、"Limit order buy and sell" 等。部分用户进一步要求<strong>止盈止损（TP/SL）</strong>功能一起上线。</li>
+      <li><strong>图表与交易界面优化。</strong>更好的图表体验；修复显示问题并启用买卖操作；网页端快速买卖浮动按钮（quick buy and sell floater）；支持同时多视图显示：Trending、Feed、Watchlist、Graduated 等面板同时打开（已有用户被官方回复可用分屏实现）。</li>
+      <li><strong>高级筛选与代币管理。</strong>类似 Dexscreener 的高级多重过滤功能；对已毕业代币（graduated tokens）提供更精细的筛选与管理方式；价格提醒（price notifications）。</li>
+      <li><strong>对标 Axiom 的全面补齐。</strong>直接说"想要 Axiom 有的、你们没有的所有功能"。</li>
+    </ol>
+  </div>
 </section>
 
 <section id="s1">
